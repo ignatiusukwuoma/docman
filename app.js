@@ -2,6 +2,8 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 
+require('dotenv').config();
+
 // Setup Express App
 const app = express();
 
