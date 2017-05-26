@@ -1,0 +1,24 @@
+// Server setup
+import http from 'http';
+import app from '../app';
+
+/**
+ * Normalize a port into a number, string, or false.
+ * @param {Number} val a string or number port
+ * @returns {Number} a number representing the port
+ */
+const normalizePort = (val) => {
+  const portNumber = parseInt(val, 10);
+  if (isNaN(portNumber)) {
+    return val;
+  }
+  if (portNumber >= 0) {
+    return portNumber;
+  }
+  return false;
+};
+
+const port = normalizePort(process.env.PORT || '3000');
+
+const server = http.createServer(app);
+server.listen(port);
