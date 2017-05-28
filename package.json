@@ -4,7 +4,7 @@
   "description": "Full-stack document management system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon  ./bin/www",
+    "start": "nodemon  --exec babel-node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
