@@ -13,7 +13,7 @@ export default (sequelize, DataTypes) => {
       }
     },
     access: {
-      type: DataTypes.ENUM('public', 'private'),
+      type: DataTypes.ENUM('public', 'private', 'role'),
       allowNull: false,
       defaultValue: 'public',
     },
