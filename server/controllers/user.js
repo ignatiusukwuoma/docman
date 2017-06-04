@@ -13,6 +13,7 @@ export default {
         const token = userUtils.generateJwtToken(userPayload);
         return res.status(201).json({
           message: 'User is successfully created',
+          user,
           token,
         });
       })
@@ -50,9 +51,9 @@ export default {
   },
 
   update(req, res) {
-    if (req.body.roleId <= 3 && req.decoded.data.roleId > 3) {
+    if (req.body.roleId <= 2 && req.decoded.data.roleId > 1) {
       return res.status(401).json({
-        message: 'Only an admin can upgrade user to admin role'
+        message: 'Only the superadmin can upgrade user to admin role'
       });
     }
     return User

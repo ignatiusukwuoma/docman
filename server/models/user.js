@@ -29,7 +29,7 @@ export default (sequelize, DataTypes) => {
     roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 4,
+      defaultValue: 3,
     },
     password: {
       type: DataTypes.STRING,

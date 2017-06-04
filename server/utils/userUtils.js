@@ -23,14 +23,14 @@ export default {
       return response;
     } else if (user) {
       if (!req.body.password) {
-        response = res.status(400)
+        response = res.status(401)
           .json({
             message: 'Invalid password'
           });
         return response;
       }
       if (!user.comparePassword(req.body.password)) {
-        response = res.status(400)
+        response = res.status(401)
           .json({
             message: 'Wrong password'
           });
