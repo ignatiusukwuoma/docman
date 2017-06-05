@@ -4,6 +4,7 @@ import authMiddlewares from '../middlewares/auth';
 const userControllers = controllers.user;
 const roleControllers = controllers.role;
 const documentControllers = controllers.document;
+const searchControllers = controllers.search;
 
 const validateToken = authMiddlewares.validateToken;
 
@@ -46,6 +47,12 @@ const Routes = (app) => {
     .get(documentControllers.retrieve)
     .put(documentControllers.update)
     .delete(documentControllers.destroy);
+
+  app.route('/search/users/')
+    .get(searchControllers.searchUsers);
+
+  app.route('/search/documents')
+    .get(searchControllers.searchDocuments);
 };
 
 export default Routes;
