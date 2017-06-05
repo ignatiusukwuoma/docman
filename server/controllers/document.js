@@ -13,7 +13,7 @@ export default {
         userId: req.decoded.data.id,
       })
       .then(document => res.status(201).json({
-        message: 'A new document has been created',
+        message: 'New document was successfully created',
         document
       }))
       .catch(error => res.status(400).send(error));
@@ -29,7 +29,8 @@ export default {
         include: [{
           model: models.User,
           attributes: ['username', 'roleId']
-        }]
+        }],
+        order: [['createdAt', 'DESC']]
       })
       .then(documentDatabase => res.status(200).json({
         documents: documentDatabase.rows,
@@ -43,25 +44,82 @@ export default {
       .findAll({
         where: {
           userId: req.params.userId
-        }
+        },
+        include: [{
+          model: models.User,
+          attributes: ['username', 'roleId']
+        }]
       })
       .then((documents) => {
         if (!documents) {
           return res.status(404).json({
-            success: false,
             message: 'No documents found for this user',
           });
         }
         return res.status(200).json({
-          success: true,
           message: `${documents.length} documents found for this user`,
           documents,
         });
       })
       .catch(error => res.send(400).json({
-        success: false,
-        message: 'There was an error while retrieving the documents',
+        message: 'There was an error retrieving the documents',
         error,
       }));
+  },
+
+  retrieve(req, res) {
+    return Document
+      .findById(req.params.documentId, {
+        include: [{
+          model: models.User,
+          attributes: ['username', 'roleId']
+        }]
+      })
+      .then((document) => {
+        if (!document) {
+          return res.status(404).json({
+            message: 'Document not found'
+          });
+        }
+        return res.status(200).send(document);
+      })
+      .catch(error => res.status(400).send(error));
+  },
+
+  update(req, res) {
+    return Document
+      .findById(req.params.documentId)
+      .then((document) => {
+        if (!document) {
+          return res.status(404).json({
+            message: 'Document not found'
+          });
+        }
+        return document
+          .update(req.body, { fields: Object.keys(req.body) })
+          .then(updatedDocument => res.status(200).json({
+            message: 'Document has been updated',
+            updatedDocument
+          }))
+          .catch(error => res.status(403).send(error));
+      })
+      .catch(error => res.status(400).send(error));
+  },
+
+  destroy(req, res) {
+    return Document
+      .findById(req.params.documentId)
+      .then((document) => {
+        if (!document) {
+          return res.status(404).json({
+            message: 'Document not found'
+          });
+        }
+        return document
+          .destroy()
+          .then(() => res.status(204).send())
+          .catch(error => res.status(403).send(error));
+      })
+      .catch(error => res.status(400).send(error));
   }
 };

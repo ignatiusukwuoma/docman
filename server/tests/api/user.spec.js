@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../../../app';
+import server from '../../app';
 import models from '../../models';
 import userData from '../testData/userData';
 

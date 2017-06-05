@@ -9,7 +9,7 @@ const validateToken = authMiddlewares.validateToken;
 
 const Routes = (app) => {
   app.get('/v1', (req, res) => res.status(200).send({
-    message: 'Welcome to my API',
+    message: 'Welcome to DocMan-Pro API',
   }));
 
   app.route('/roles')
@@ -41,6 +41,11 @@ const Routes = (app) => {
   app.route('/documents')
     .get(documentControllers.list)
     .post(documentControllers.create);
+
+  app.route('/documents/:documentId')
+    .get(documentControllers.retrieve)
+    .put(documentControllers.update)
+    .delete(documentControllers.destroy);
 };
 
 export default Routes;

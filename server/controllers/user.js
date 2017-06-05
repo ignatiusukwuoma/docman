@@ -28,6 +28,7 @@ export default {
         limit,
         offset,
         attributes: ['id', 'username', 'name', 'email', 'roleId'],
+        order: [['id']]
       })
       .then(userDatabase => res.status(200).json({
         users: userDatabase.rows,
@@ -67,7 +68,7 @@ export default {
         return user
           .update(req.body, { field: Object.keys(req.body) })
           .then(() => res.status(200).send(generalUtils.userPayload(user)))
-          .catch(error => res.status(400).send(error));
+          .catch(error => res.status(403).send(error));
       })
       .catch(error => res.status(400).send(error));
   },
