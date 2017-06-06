@@ -1,3 +1,6 @@
 node_modules
-seeders
 .env
+npm-debug.log
+coverage
+.nyc_output
+.DS_Store
