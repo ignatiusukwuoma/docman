@@ -52,9 +52,15 @@ export default {
   },
 
   update(req, res) {
-    if (req.body.roleId <= 2 && req.decoded.data.roleId > 1) {
+    const userId = parseInt(req.params.userId, 10);
+    if (req.body.roleId <= 2 && req.decoded.data.roleId !== 1) {
       return res.status(401).json({
-        message: 'Only the superadmin can upgrade user to admin role'
+        message: 'Access denied: SuperAdmin credentials required'
+      });
+    }
+    if (req.decoded.data.roleId !== 1 && req.decoded.data.id !== userId) {
+      return res.status(401).json({
+        message: 'You do not have the permission to do that'
       });
     }
     return User
@@ -74,11 +80,17 @@ export default {
   },
 
   destroy(req, res) {
+    const userId = parseInt(req.params.userId, 10);
+    if (req.decoded.data.roleId !== 1 && req.decoded.data.id !== userId) {
+      return res.status(401).json({
+        message: 'You do not have the permission to do that'
+      });
+    }
     return User
       .findById(req.params.userId)
       .then((user) => {
         if (!user) {
-          return res.status(400).send({
+          return res.status(404).send({
             message: 'User not found'
           });
         }
@@ -103,7 +115,6 @@ export default {
       })
       .catch(error => res.status(400)
         .json({
-          success: false,
           message: 'There was an error logging into the account',
           error,
         }));
@@ -113,7 +124,6 @@ export default {
     res.setHeader['x-access-token'] = '';
     res.status(200)
       .json({
-        success: true,
         message: 'You have signed out'
       });
   }

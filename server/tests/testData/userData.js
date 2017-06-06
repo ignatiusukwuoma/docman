@@ -1,7 +1,7 @@
 import faker from 'faker';
 
 export default {
-  superadmin: {
+  superadmin1: {
     id: 1,
     name: 'Ignatius Ukwuoma',
     username: 'income',
@@ -12,10 +12,10 @@ export default {
     updatedAt: new Date()
   },
   admin1: {
-    id: 2,
+    id: 7,
     name: faker.name.findName(),
     username: faker.internet.userName(),
-    email: faker.internet.email(),
+    email: 'admin@gmail.com',
     password: faker.internet.password(),
     roleId: 2,
     createdAt: new Date(),
@@ -31,12 +31,13 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  author1: {
-    id: 20,
+  admin3: {
+    id: 6,
     name: faker.name.findName(),
-    username: faker.internet.userName(),
+    username: 'admin',
+    email: faker.internet.email(),
     password: faker.internet.password(),
-    roleId: 3,
+    roleId: 2,
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -50,7 +51,15 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  editor: {
+  author3: {
+    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  editor1: {
     id: 22,
     name: faker.name.findName(),
     username: faker.internet.userName(),
@@ -60,6 +69,10 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
+  superadmin: {
+    username: 'superadmin',
+    password: 'password'
+  },
   admin: {
     username: 'admin',
     password: 'password'
@@ -67,5 +80,37 @@ export default {
   author: {
     username: 'author',
     password: 'password'
+  },
+  editor: {
+    username: 'editor',
+    password: 'password'
+  },
+  noEmail: {
+    id: 20,
+    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    password: faker.internet.password(),
+    roleId: 3,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  invalidEmail: {
+    id: 20,
+    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    email: 'odinaka@gmail',
+    password: faker.internet.password(),
+    roleId: 3,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  noUsername: {
+    id: 20,
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    roleId: 3,
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
 };

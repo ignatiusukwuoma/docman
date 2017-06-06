@@ -10,9 +10,12 @@ export default {
       .findAndCount({
         limit,
         offset,
-        where: { username: {
-          $iLike: query
-        } },
+        where: {
+          $or: [
+          { username: { $iLike: query } },
+          { name: { $iLike: query } },
+          { email: { $iLike: query } }
+          ] },
         attributes: ['id', 'username', 'name', 'email', 'roleId'],
         order: [['id']],
       })

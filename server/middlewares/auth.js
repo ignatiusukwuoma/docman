@@ -19,7 +19,7 @@ export default {
           message: 'Token Authentication failed'
         });
       }
-      User.findById(decoded.data.id)
+      return User.findById(decoded.data.id)
         .then((user) => {
           if (!user) {
             return res.status(404).json({
@@ -27,7 +27,7 @@ export default {
             });
           }
           req.decoded = decoded;
-          next();
+          return next();
         })
         .catch(error => res.status(403)
           .json({
@@ -35,5 +35,23 @@ export default {
             error,
           }));
     });
+  },
+
+  isSuperAdmin(req, res, next) {
+    if (req.decoded.data.roleId !== 1) {
+      return res.status(401).json({
+        message: 'Access denied: SuperAdmin credentials required'
+      });
+    }
+    next();
+  },
+
+  isAdminOrSuperadmin(req, res, next) {
+    if (req.decoded.data.roleId > 2) {
+      return res.status(401).json({
+        message: 'Access denied: Admin credentials required'
+      });
+    }
+    next();
   }
 };

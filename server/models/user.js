@@ -5,25 +5,26 @@ export default (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: { args: true, msg: 'Username already exist' },
       validate: {
-        notEmpty: true,
+        notEmpty: { args: true, msg: 'Username cannot be empty' },
+        not: { args: ['\\s+'], msg: 'Username cannot contain spaces' }
       },
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
+        notEmpty: { args: true, msg: 'Please input your full name' },
       },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: { args: true, msg: 'Email already exist' },
       validate: {
-        isEmail: true,
-        notEmpty: true,
+        isEmail: { args: true, msg: 'Use a valid email' },
+        notEmpty: { args: true, msg: 'Email cannot be empty' },
       },
     },
     roleId: {

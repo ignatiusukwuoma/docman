@@ -7,6 +7,7 @@ const documentControllers = controllers.document;
 const searchControllers = controllers.search;
 
 const validateToken = authMiddlewares.validateToken;
+const isAdminOrSuperadmin = authMiddlewares.isAdminOrSuperadmin;
 
 const Routes = (app) => {
   app.get('/v1', (req, res) => res.status(200).send({
@@ -20,14 +21,14 @@ const Routes = (app) => {
     .delete(roleControllers.destroy);
 
   app.route('/users')
-    .get(validateToken, userControllers.list)
+    .get(validateToken, isAdminOrSuperadmin, userControllers.list)
     .post(userControllers.create);
 
   app.route('/users/login')
     .post(userControllers.login);
 
   app.route('/users/logout')
-    .get(userControllers.logout);
+    .post(userControllers.logout);
 
   app.use('/users/:userId', validateToken);
   app.route('/users/:userId')
