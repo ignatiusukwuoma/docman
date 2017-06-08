@@ -1,4 +1,5 @@
 import faker from 'faker';
+import bcrypt from 'bcrypt';
 
 export default {
   superadmin1: {
@@ -21,13 +22,21 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  admin2: {
-    id: 3,
-    name: 'Mark Edomwande',
-    username: 'moe',
-    email: 'moe@gmail.com',
-    password: faker.internet.password(),
-    roleId: 2,
+  advertizer1: {
+    id: 25,
+    name: 'advertizer',
+    username: 'advertizer',
+    email: 'advertizer@gmail.com',
+    password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  advertizer2: {
+    id: 26,
+    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -41,16 +50,16 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  author2: {
-    id: 21,
-    name: 'John Doe',
-    username: 'johndoe',
-    email: 'johndoe@gmail.com',
-    password: 'j0hnd0e',
-    roleId: 3,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
+  // author2: {
+  //   id: 21,
+  //   name: 'John Doe',
+  //   username: 'johndoe',
+  //   email: 'johndoe@gmail.com',
+  //   password: 'j0hnd0e',
+  //   roleId: 3,
+  //   createdAt: new Date(),
+  //   updatedAt: new Date()
+  // },
   author3: {
     name: faker.name.findName(),
     username: faker.internet.userName(),

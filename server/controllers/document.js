@@ -1,5 +1,6 @@
 import models from '../models';
 import generalUtils from '../utils/generalUtils';
+import documentUtils from '../utils/documentUtils';
 
 const Document = models.Document;
 
@@ -20,10 +21,13 @@ export default {
   },
 
   list(req, res) {
-    const limit = req.query.limit || 12;
-    const offset = req.query.offset || 0;
+    const documentQuery = documentUtils.documentQuery(req);
+    const limit = (req.query.limit > 0) ? req.query.limit : 12;
+    const offset = (req.query.offset > 0) ? req.query.offset : 0;
+    const roleId = req.decoded.data.roleId;
     return Document
       .findAndCountAll({
+        where: documentQuery.where,
         limit,
         offset,
         include: [{
@@ -32,39 +36,64 @@ export default {
         }],
         order: [['createdAt', 'DESC']]
       })
-      .then(documentDatabase => res.status(200).json({
-        documents: documentDatabase.rows,
-        pageData: generalUtils.formatPage(documentDatabase.count, limit, offset)
-      }))
+      .then((documentDatabase) => {
+        let omitted = 0;
+        const visibleDocuments = roleId <= 2 ? documentDatabase.rows :
+        documentDatabase.rows.filter((document) => {
+          if (document.access === 'role' &&
+            document.User.roleId !== roleId) {
+            omitted += 1;
+            return false;
+          }
+          return true;
+        });
+        const response = {
+          documents: visibleDocuments,
+          pageData: generalUtils
+            .formatPage(documentDatabase.count - omitted, limit, offset)
+        };
+        res.status(200).send(response);
+      })
       .catch(error => res.status(400).send(error));
   },
 
   listUserDocuments(req, res) {
-    return Document
-      .findAll({
-        where: {
-          userId: req.params.userId
-        },
-        include: [{
-          model: models.User,
-          attributes: ['username', 'roleId']
-        }]
-      })
-      .then((documents) => {
-        if (!documents) {
+    return models.User.findById(req.params.userId)
+      .then((user) => {
+        if (!user) {
           return res.status(404).json({
-            message: 'No documents found for this user',
+            message: 'User not found',
           });
         }
-        return res.status(200).json({
-          message: `${documents.length} documents found for this user`,
-          documents,
-        });
+        return Document
+          .findAll({
+            where: {
+              userId: req.params.userId
+            },
+            include: [{
+              model: models.User,
+              attributes: ['username', 'roleId']
+            }]
+          })
+          .then((documents) => {
+            if (!documents) {
+              return res.status(404).json({
+                message: 'No document found',
+              });
+            }
+            return res.status(200).json({
+              message: documents.length > 1 ?
+                `${documents.length} documents found` :
+                `${documents.length} document found`,
+              documents,
+            });
+          })
+          .catch(error => res.status(400).json({
+            message: 'There was an error retrieving the documents',
+            error,
+          }));
       })
-      .catch(error => res.send(400).json({
-        message: 'There was an error retrieving the documents',
-        error,
-      }));
+      .catch(error => res.status(400).send(error));
   },
 
   retrieve(req, res) {
@@ -81,6 +110,16 @@ export default {
             message: 'Document not found'
           });
         }
+        const userId = req.decoded.data.id;
+        const roleId = req.decoded.data.roleId;
+        if (document.access !== 'public' && roleId > 2
+          && document.userId !== userId
+          && !(document.access === 'role'
+            && document.User.roleId === roleId)) {
+          return res.status(401).json({
+            message: 'You are not permitted to access this document'
+          });
+        }
         return res.status(200).send(document);
       })
       .catch(error => res.status(400).send(error));
@@ -93,6 +132,13 @@ export default {
         if (!document) {
           return res.status(404).json({
             message: 'Document not found'
+          });
+        }
+        const userId = req.decoded.data.id;
+        const roleId = req.decoded.data.roleId;
+        if (roleId > 2 && document.userId !== userId) {
+          return res.status(401).json({
+            message: 'You are not permitted to access this document'
           });
         }
         return document
@@ -113,6 +159,13 @@ export default {
         if (!document) {
           return res.status(404).json({
             message: 'Document not found'
+          });
+        }
+        const userId = req.decoded.data.id;
+        const roleId = req.decoded.data.roleId;
+        if (roleId > 2 && document.userId !== userId) {
+          return res.status(401).json({
+            message: 'You are not permitted to delete this document'
           });
         }
         return document

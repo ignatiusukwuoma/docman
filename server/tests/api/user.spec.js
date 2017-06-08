@@ -1,10 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../../app';
-import models from '../../models';
 import userData from '../testData/userData';
 
-const User = models.User;
 const { superadmin, admin, admin1, admin3, author, author3,
   noEmail, invalidEmail, noUsername, editor } = userData;
 const expect = chai.expect;
@@ -91,6 +89,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.have.property('token');
+          expect(res.body.user.roleId).to.equal(3);
           expect(res.body.message)
             .to.equal('User is successfully created');
           done();
@@ -153,10 +152,10 @@ describe('Users', () => {
       });
   });
 
-  after((done) => {
-    User.destroy({ where: { id: { $and: [1, 2, 3] } } });
-    done();
-  });
+  // after((done) => {
+  //   User.destroy({ where: { id: { $and: [1, 2, 3, 4, 5] } } });
+  //   done();
+  // });
 
 
   // GET /users
