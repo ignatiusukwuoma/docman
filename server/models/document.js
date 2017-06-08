@@ -3,19 +3,21 @@ export default (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: { args: true, msg: 'Title already exist' },
+      validate: { notEmpty: { args: true, msg: 'Title cannot be empty' } }
     },
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
+      validate: { notEmpty: { args: true, msg: 'Content cannot be empty' } }
     },
     access: {
-      type: DataTypes.ENUM('public', 'private', 'role'),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'public',
+      validate: { notEmpty: { msg: 'Access field cannot be empty' },
+        isIn: { args: [['public', 'private', 'role']],
+          msg: 'Choose either public, private or role' } }
     },
   }, {
     classMethods: {

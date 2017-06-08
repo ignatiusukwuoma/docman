@@ -37,13 +37,13 @@ export default {
     });
   },
 
-  isSuperAdmin(req, res, next) {
+  isSuperadmin(req, res, next) {
     if (req.decoded.data.roleId !== 1) {
       return res.status(401).json({
         message: 'Access denied: SuperAdmin credentials required'
       });
     }
-    next();
+    return next();
   },
 
   isAdminOrSuperadmin(req, res, next) {
@@ -52,6 +52,6 @@ export default {
         message: 'Access denied: Admin credentials required'
       });
     }
-    next();
+    return next();
   }
 };

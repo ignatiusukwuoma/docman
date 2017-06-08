@@ -7,6 +7,7 @@ const documentControllers = controllers.document;
 const searchControllers = controllers.search;
 
 const validateToken = authMiddlewares.validateToken;
+const isSuperadmin = authMiddlewares.isSuperadmin;
 const isAdminOrSuperadmin = authMiddlewares.isAdminOrSuperadmin;
 
 const Routes = (app) => {
@@ -14,7 +15,9 @@ const Routes = (app) => {
     message: 'Welcome to DocMan-Pro API',
   }));
 
+  app.use('/roles', validateToken, isSuperadmin);
   app.route('/roles')
+    .get(roleControllers.list)
     .post(roleControllers.create);
 
   app.route('/roles/:roleId')
@@ -49,6 +52,7 @@ const Routes = (app) => {
     .put(documentControllers.update)
     .delete(documentControllers.destroy);
 
+  app.use('/search', validateToken, isAdminOrSuperadmin);
   app.route('/search/users/')
     .get(searchControllers.searchUsers);
 
