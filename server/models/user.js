@@ -29,7 +29,6 @@ export default (sequelize, DataTypes) => {
     },
     roleId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 3,
     },
     password: {
