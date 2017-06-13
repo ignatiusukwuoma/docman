@@ -177,7 +177,7 @@ describe('Documents', () => {
         });
     });
 
-    it('should not return role documents with hgher User roleId', (done) => {
+    it('should not return role documents with higher User roleId', (done) => {
       chai.request(server)
         .get('/documents')
         .set({ 'x-access-token': advertizer1Token })

@@ -1,13 +1,13 @@
 import path from 'path';
 import webpack from 'webpack';
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const extractPlugin = new ExtractTextPlugin({
-  filename: 'main.css'
-});
+// const extractPlugin = new ExtractTextPlugin({
+//   filename: 'main.css'
+// });
 
 // require('dotenv').config();
 // const envsDefinePlugin = new webpack.DefinePlugin({
@@ -37,9 +37,10 @@ export default {
       },
       {
         test: /\.scss$/,
-        use: extractPlugin.extract({
-          use: ['css-loader', 'sass-loader']
-        })
+        // use: extractPlugin.extract({
+        //   use: ['css-loader', 'sass-loader']
+        // })
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       // {
       //   test: /\.html$/,
@@ -61,7 +62,7 @@ export default {
     ],
   },
   plugins: [
-    extractPlugin,
+    // extractPlugin,
     // envsDefinePlugin,
     // new HtmlWebpackPlugin({
     //   template: 'client/index.html'

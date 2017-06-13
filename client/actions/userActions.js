@@ -11,10 +11,8 @@ export function signupSuccess(message) {
 }
 
 export function login(token, type) {
-  console.log('Token', token);
   setAccessToken(token);
   const decoded = jwt.decode(token);
-  console.log('Decoded', decoded);
   const user = {
     id: decoded.data.id,
     roleId: decoded.data.roleId,
@@ -28,7 +26,6 @@ export function login(token, type) {
 }
 
 export function signup(signupDetails) {
-  console.log('signupDetails', signupDetails);
   return (dispatch) => {
     return axios.post('/users', signupDetails)
       .then((res) => {
@@ -44,15 +41,30 @@ export function signup(signupDetails) {
 }
 
 export function signin(signinDetails) {
-  console.log('signinDetails', signinDetails);
   return (dispatch) => {
     return axios.post('/users/login', signinDetails)
       .then((res) => {
         const token = res.data.token;
-        console.log('res.data', res.data);
-        localStorage.setItem('jwToken', token);
+        const tokenStorage = JSON.stringify({
+          jwt: token
+        });
+        localStorage.setItem('docman-pro', tokenStorage);
 
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
       });
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    localStorage.removeItem('docman-pro');
+    setAccessToken(null);
+    dispatch({ type: actionTypes.LOGOUT });
+    // return axios.post('/users/logout')
+    //   .then((res) => {
+    //     const message = res.data.message;
+    //     dispatch({ type: actionTypes.LOGOUT, message });
+    //   })
+    //   .catch(err => console.log(err));
   };
 }

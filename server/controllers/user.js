@@ -121,7 +121,6 @@ export default {
   },
 
   logout(req, res) {
-    res.setHeader['x-access-token'] = '';
     res.status(200)
       .json({
         message: 'You have signed out'

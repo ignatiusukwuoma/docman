@@ -1,0 +1,19 @@
+@import 'common/variables';
+
+body {
+  margin: 0;
+}
+
+#landing-nav {
+  width: 100vw;
+  height: 80px;
+  background-color: $primary-color;
+  h2 {
+    color: white;
+    font-family: $secondary-font;
+    padding-top: 25px;
+    margin-left: 40px;
+    margin-top: 0px;
+  }
+}
+

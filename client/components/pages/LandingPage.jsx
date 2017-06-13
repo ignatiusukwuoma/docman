@@ -63,17 +63,24 @@ class LandingPage extends React.Component {
   render() {
     return (
       <div>
-        <h2>Docman Pro</h2>
-        <SigninForm
-          onSigninSubmit={this.onSigninSubmit}
-          handleSigninChange={this.handleSigninChange}
-          signinDetails={this.state.signinDetails}
-        />
-        <SignupForm
-          onSubmit={this.onSubmit}
-          handleChange={this.handleChange}
-          signupDetails={this.state.signupDetails}
-        />
+        <div id="landing-nav">
+          <h2>Docman Pro</h2>
+        </div>
+        <div id="about">
+          <h2>Docman Pro Info</h2>
+        </div>
+        <div id="forms">
+          <SigninForm
+            onSigninSubmit={this.onSigninSubmit}
+            handleSigninChange={this.handleSigninChange}
+            signinDetails={this.state.signinDetails}
+          />
+          <SignupForm
+            onSubmit={this.onSubmit}
+            handleChange={this.handleChange}
+            signupDetails={this.state.signupDetails}
+          />
+        </div>
       </div>
     );
   }
