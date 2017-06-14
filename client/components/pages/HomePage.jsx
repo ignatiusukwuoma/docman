@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import Nav from '../layouts/Nav.jsx';
+import Sidebar from '../layouts/Sidebar.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
 
@@ -10,11 +12,9 @@ class HomePage extends React.Component {
     super(props, context);
     this.state = {
       documents: [],
-      // documents: [...props.documents],
-      // pageData: Object.assign({}, props.pageData)
+      pageData: {}
     };
     this.logout = this.logout.bind(this);
-    // this.placeDocs = this.placeDocs.bind(this);
   }
 
   componentWillMount() {
@@ -23,25 +23,48 @@ class HomePage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     console.log('NexPropss', nextProps);
-    this.setState({ documents: nextProps.documents });
+    this.setState({
+      documents: nextProps.documents,
+      pageData: nextProps.pageData
+    });
   }
 
   logout() {
     this.props.actions.logout();
   }
 
-  placeDocs(doc) {
-    return <div key={doc.id}>{doc.title}</div>;
+  placeDocuments(document) {
+    return (
+      <div className="col m6 l4" key={document.id}>
+        <div className="card">
+          <div className="card-content white-text enlarge-card">
+            <span className="card-title flow-text">{document.title}</span>
+            <p dangerouslySetInnerHTML={{ __html: document.content }}></p>
+          </div>
+          <div className="card-action">
+            <a href="#">VIEW</a>
+            <a href="#">{document.access}</a>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-
   render() {
-    debugger;
     return (
       <div>
-        <h2>Home Page</h2>
-        <Link to="" onClick={this.logout}> Logout </Link>
-        {this.state.documents && this.state.documents.map(this.placeDocs)}
+        <Nav logout={this.logout}/>
+        <div className="home-page">
+          <div className="row">
+            <Sidebar />
+            <div className="col s12 m8 l9">
+              <div className="row">
+                {this.state.documents &&
+                this.state.documents.map(this.placeDocuments)}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -52,10 +75,9 @@ HomePage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  debugger;
   return {
-    documents: state.documentData.documents,
-    pageData: state.documentData.pageData,
+    documents: state.documentData,
+    pageData: state.pageData,
     access: state.userAccess
   };
 }

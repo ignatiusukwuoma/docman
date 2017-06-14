@@ -3,15 +3,16 @@ import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
 import signinStyles from '../layouts/materialStyle';
 
-const SigninForm = ({ onSigninSubmit, handleSigninChange, signinDetails }) =>
+function SigninForm({ onSigninSubmit, handleSigninChange, signinDetails, signinErrors }) {
+  return (
     <form onSubmit={onSigninSubmit} id="signin-form">
       <div>
         <TextInput
           name="username"
           type="text"
-          errorText=""
+          errorText={signinErrors.username}
           floatText="Username"
-          floatingLabelFixed={true}
+          hint="Enter Your Username"
           floatingLabelStyle={signinStyles.signinForm}
           handleChange={handleSigninChange}
           value={signinDetails.username}
@@ -22,9 +23,9 @@ const SigninForm = ({ onSigninSubmit, handleSigninChange, signinDetails }) =>
           id="password"
           name="password"
           type="password"
-          errorText=""
+          errorText={signinErrors.password}
           floatText="Password"
-          floatingLabelFixed={true}
+          hint="Enter Your Password"
           floatingLabelStyle={signinStyles.signinForm}
           handleChange={handleSigninChange}
           value={signinDetails.password}
@@ -36,6 +37,8 @@ const SigninForm = ({ onSigninSubmit, handleSigninChange, signinDetails }) =>
         label="Log In"
         onClick={onSigninSubmit}
       />
-    </form>;
+    </form>
+  );
+}
 
 export default SigninForm;

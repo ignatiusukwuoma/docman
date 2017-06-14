@@ -13,16 +13,15 @@ import './scss/style.scss';
 
 const store = configureStore();
 // localStorage.clear();
-// if (localStorage.getItem('docman-pro')) {
-//   const tokenStorage = JSON.parse(localStorage.getItem('docman-pro'));
-//   console.log('tokenStorage', tokenStorage);
-//   const token = tokenStorage.jwt;
-//   console.log('token', token);
-//   if (token) {
-//     store.dispatch(login(token, LOGIN_SUCCESS));
-//     store.dispatch(getDocuments());
-//   }
-// }
+if (localStorage.getItem('docman-pro')) {
+  const tokenStorage = JSON.parse(localStorage.getItem('docman-pro'));
+  const token = tokenStorage.jwt;
+  if (token) {
+    store.dispatch(login(token, LOGIN_SUCCESS));
+    store.dispatch(getDocuments());
+    browserHistory.push('/home');
+  }
+}
 
 render(
   <MuiThemeProvider>
