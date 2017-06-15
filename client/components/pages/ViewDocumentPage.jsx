@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import toastr from 'toastr';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 import Sidebar from '../layouts/Sidebar.jsx';
 
@@ -17,6 +18,7 @@ class ViewDocumentPage extends React.Component {
 
   deleteDocument(documentId) {
     this.props.deleteDocument(this.props.params.id);
+    toastr.success('Document deleted successfully');
   }
 
   render() {

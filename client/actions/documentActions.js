@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
+import handleError from '../utils/errorHandler';
 
 export function getDocuments() {
   return (dispatch) => {
@@ -13,7 +14,7 @@ export function getDocuments() {
           pageData: res.data.pageData,
         });
       })
-      .catch(err => console.log(err));
+      .catch(error => handleError(error, dispatch));
   };
 }
 
@@ -28,7 +29,7 @@ export function createDocument(document) {
           document: res.data.document
         });
       })
-      .catch(err => console.log('Create Error', err));
+      .catch(error => handleError(error, dispatch));
   };
 }
 
@@ -42,7 +43,7 @@ export function getDocument(documentId) {
           document: res.data
         });
       })
-      .catch(error => console.log(error));
+      .catch(error => handleError(error, dispatch));
   };
 }
 
@@ -58,7 +59,7 @@ export function updateDocument(document) {
           document: res.data.updatedDocument
         });
       })
-      .catch(err => console.log(err));
+      .catch(error => handleError(error, dispatch));
   };
 }
 
@@ -71,6 +72,6 @@ export function deleteDocument(documentId) {
           type: actionTypes.DELETE_DOCUMENT_SUCCESS
         });
       })
-      .catch(error => console.log(error));
+      .catch(error => handleError(error, dispatch));
   };
 }

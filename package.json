@@ -51,6 +51,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "istanbul": "^0.4.5",
+    "jquery": "^3.2.1",
     "jsonwebtoken": "^7.4.1",
     "material-ui": "^0.16.7",
     "morgan": "^1.8.2",
@@ -70,6 +71,7 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "superagent": "^3.5.2",
+    "toastr": "^2.1.2",
     "validator": "^7.0.0"
   },
   "devDependencies": {

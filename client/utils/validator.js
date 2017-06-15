@@ -46,3 +46,9 @@ export function signinValidator({ username = '', password = '' }) {
   return validate;
 }
 
+export function documentValidator({ title = '', access = '', content = '' }) {
+  const validate = validateFields(
+    [title, access, content],
+    ['title', 'access', 'content']);
+  return validate;
+}

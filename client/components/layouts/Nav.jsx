@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import toastr from 'toastr';
 import { logout } from '../../actions/userActions';
+import handleError from '../../utils/errorHandler';
 
 class Nav extends React.Component {
   constructor(props) {

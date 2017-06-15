@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import setAccessToken from '../utils/setAccessToken';
 import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
+import handleError from '../utils/errorHandler';
 
 export function signupSuccess(message) {
   return {
@@ -38,7 +39,8 @@ export function signup(signupDetails) {
         localStorage.setItem('docman-pro', tokenStorage);
         // dispatch(signupSuccess(res.data.message)); TODO - Create Reducer
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
-      });
+      })
+      .catch(error => handleError(error, dispatch));
   };
 }
 
@@ -54,7 +56,8 @@ export function signin(signinDetails) {
         localStorage.setItem('docman-pro', tokenStorage);
 
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
-      });
+      })
+      .catch(error => handleError(error, dispatch));
   };
 }
 

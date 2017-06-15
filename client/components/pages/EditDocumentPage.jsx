@@ -2,19 +2,22 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
+import handleError from '../../utils/errorHandler';
 
 class EditDocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       document: Object.assign({}, props.document),
-      error: {}
+      error: {},
+      saving: false
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -49,10 +52,20 @@ class EditDocumentPage extends React.Component {
     this.setState({ document });
   }
 
-  onSubmit() {
-    console.log('State', this.state);
-    this.props.actions
-      .updateDocument(this.state.document);
+  onSubmit(event) {
+    event.preventDefault();
+    this.setState({ saving: true });
+    this.props.actions.updateDocument(this.state.document)
+    .then(() => this.redirect())
+    .catch((error) => {
+      this.setState({ saving: false });
+      handleError(error);
+    });
+  }
+
+  redirect() {
+    this.setState({ saving: false });
+    toastr.success('Document updated successfully');
     this.context.router.push('/home');
   }
 
@@ -100,7 +113,8 @@ class EditDocumentPage extends React.Component {
                 <FlatButton
                   backgroundColor="#a4c639"
                   hoverColor="#8AA62F"
-                  label="Update Document"
+                  disable={this.props.saving}
+                  label={this.props.saving ? 'Updating' : 'Update Document'}
                   onClick={this.onSubmit}
                 />
               </form>

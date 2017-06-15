@@ -2,12 +2,15 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
+import * as validator from '../../utils/validator';
+import handleError from '../../utils/errorHandler';
 
 class DocumentPage extends React.Component {
   constructor(props, context) {
@@ -15,7 +18,9 @@ class DocumentPage extends React.Component {
     this.state = {
       title: '',
       access: '',
-      content: ''
+      content: '',
+      saving: false,
+      errors: {}
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -36,9 +41,20 @@ class DocumentPage extends React.Component {
     this.setState({ content: event.target.getContent() });
   }
 
-  onSubmit() {
-    console.log('State', this.state);
-    this.props.actions.createDocument(this.state);
+  onSubmit(event) {
+    event.preventDefault();
+    this.setState({ saving: true });
+    this.props.actions.createDocument(this.state)
+    .then(() => this.redirect())
+    .catch((error) => {
+      this.setState({ saving: false });
+      handleError(error);
+    });
+  }
+
+  redirect() {
+    this.setState({ saving: false });
+    toastr.success('Document added successfully');
     this.context.router.push('/home');
   }
 
@@ -85,7 +101,8 @@ class DocumentPage extends React.Component {
                 <FlatButton
                   backgroundColor="#a4c639"
                   hoverColor="#8AA62F"
-                  label="Create New Document"
+                  disable={this.state.saving}
+                  label={this.state.saving ? 'Creating' : 'Create New Document'}
                   onClick={this.onSubmit}
                 />
               </form>

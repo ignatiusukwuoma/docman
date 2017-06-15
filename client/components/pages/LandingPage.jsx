@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import toastr from 'toastr';
 import SignupForm from '../forms/SignupForm.jsx';
 import SigninForm from '../forms/SigninForm.jsx';
+import handleError from '../../utils/errorHandler';
 import * as validator from '../../utils/validator';
 import * as userActions from '../../actions/userActions';
 
@@ -60,8 +62,11 @@ class LandingPage extends React.Component {
     .signupValidator(this.state.signupDetails, this.state.confirmPassword);
     if (valid) {
       this.props.actions.signup(this.state.signupDetails)
-      .then(() => this.context.router.push('/home'))
-      .catch(e => console.log(e));
+      .then(() => {
+        this.context.router.push('/home');
+        toastr.success('You have signed up successfully');
+      })
+      .catch(error => handleError(error));
     } else {
       this.setState({ signupErrors: errors });
     }
@@ -73,8 +78,11 @@ class LandingPage extends React.Component {
     .signinValidator(this.state.signinDetails);
     if (valid) {
       this.props.actions.signin(this.state.signinDetails)
-      .then(() => this.context.router.push('/home'))
-      .catch(e => console.log(e));
+      .then(() => {
+        this.context.router.push('/home');
+        toastr.success('You are successfully logged in');
+      })
+      .catch(error => handleError(error));
     } else {
       this.setState({ signinErrors: errors });
     }
