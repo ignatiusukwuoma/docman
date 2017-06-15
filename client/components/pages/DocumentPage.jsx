@@ -6,7 +6,6 @@ import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
-import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
 
@@ -40,12 +39,12 @@ class DocumentPage extends React.Component {
   onSubmit() {
     console.log('State', this.state);
     this.props.actions.createDocument(this.state);
+    this.context.router.push('/home');
   }
 
   render() {
     return (
-      <div>
-        <Nav />
+      <div class="documentPage">
         <div className="row">
           <Sidebar />
           <div className="col s12 m8 l9">
@@ -102,9 +101,13 @@ DocumentPage.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 
+DocumentPage.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
 function mapStateToProps(state, ownProps) {
   return {
-    documents: state.documentData
+    documents: state.documents,
   };
 }
 

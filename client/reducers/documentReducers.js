@@ -1,20 +1,29 @@
 import * as actionTypes from '../actions/actionTypes';
 import initialState from '../store/initialState';
 
-function documentReducers(state = initialState.documentDatabase, action) {
+export function documents(state = initialState.documents, action) {
   const newDocument = Object.assign({}, action.document);
-  let newState;
   switch (action.type) {
     case actionTypes.GET_DOCUMENTS_SUCCESS:
       return action.documents;
 
     case actionTypes.CREATE_DOCUMENT_SUCCESS:
-      console.log('Reducer State', state);
-      newState = [...state, newDocument];
-      return newState;
+      return [newDocument, ...state];
+
+    case actionTypes.UPDATE_DOCUMENT_SUCCESS:
+      return [newDocument, ...state.filter(file => file.id !== newDocument.id)];
+
     default:
       return state;
   }
 }
 
-export default documentReducers;
+export function document(state = initialState.document, action) {
+  switch (action.type) {
+    case actionTypes.GET_DOCUMENT_SUCCESS:
+      console.log('Reducer State', state);
+      return action.document;
+    default:
+      return state;
+  }
+}

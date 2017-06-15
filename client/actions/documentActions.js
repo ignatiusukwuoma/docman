@@ -16,11 +16,9 @@ export function getDocuments() {
 }
 
 export function createDocument(document) {
-  console.log('Doc to send', document);
   return (dispatch) => {
     return axios.post('/documents', document)
       .then((res) => {
-        console.log('Doc Response', res.data);
         dispatch({
           type: actionTypes.CREATE_DOCUMENT_SUCCESS,
           message: res.data.message,
@@ -28,5 +26,34 @@ export function createDocument(document) {
         });
       })
       .catch(err => console.log('Create Error', err));
+  };
+}
+
+export function getDocument(documentId) {
+  return (dispatch) => {
+    return axios.get(`/documents/${documentId}`)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.GET_DOCUMENT_SUCCESS,
+          document: res.data
+        });
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+export function updateDocument(documentId) {
+  console.log('id to send', documentId);
+  return (dispatch) => {
+    return axios.put(`/documents/${documentId}`)
+      .then((res) => {
+        console.log('Doc Response', res.data);
+        dispatch({
+          type: actionTypes.UPDATE_DOCUMENT_SUCCESS,
+          message: res.data.message,
+          document: res.data.updatedDocument
+        });
+      })
+      .catch(err => console.log(err));
   };
 }

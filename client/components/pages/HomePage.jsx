@@ -14,7 +14,6 @@ class HomePage extends React.Component {
       documents: [],
       pageData: {}
     };
-    this.logout = this.logout.bind(this);
   }
 
   componentWillMount() {
@@ -22,15 +21,10 @@ class HomePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('NexPropss', nextProps);
     this.setState({
       documents: nextProps.documents,
       pageData: nextProps.pageData
     });
-  }
-
-  logout() {
-    this.props.actions.logout();
   }
 
   placeDocuments(document) {
@@ -42,8 +36,8 @@ class HomePage extends React.Component {
             <p dangerouslySetInnerHTML={{ __html: document.content }}></p>
           </div>
           <div className="card-action">
-            <a href="#">VIEW</a>
-            <a href="#">{document.access}</a>
+            <Link to={`/document/${document.id}`}>VIEW</Link>
+            <Link to={`/document/${document.id}`}>{document.access}</Link>
           </div>
         </div>
       </div>
@@ -52,16 +46,13 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div>
-        <Nav logout={this.logout}/>
-        <div className="home-page">
-          <div className="row">
-            <Sidebar />
-            <div className="col s12 m8 l9">
-              <div className="row">
-                {this.state.documents &&
-                this.state.documents.map(this.placeDocuments)}
-              </div>
+      <div className="home-page">
+        <div className="row">
+          <Sidebar />
+          <div className="col s12 m8 l9">
+            <div className="row">
+              {this.state.documents &&
+              this.state.documents.map(this.placeDocuments)}
             </div>
           </div>
         </div>
@@ -76,7 +67,7 @@ HomePage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    documents: state.documentData,
+    documents: state.documents,
     pageData: state.pageData,
     access: state.userAccess
   };

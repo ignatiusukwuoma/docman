@@ -84,11 +84,6 @@ class LandingPage extends React.Component {
   render() {
     return (
       <div className="landing-page">
-        <nav className="navbar-main">
-          <div className="nav-wrapper">
-            <a href="/" className="brand-logo">Docman Pro</a>
-          </div>
-        </nav>
         <div className="container">
           <div className="row landing-content">
             <div className="col s12 m7 l8">
