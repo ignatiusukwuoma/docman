@@ -42,12 +42,11 @@ export function getDocument(documentId) {
   };
 }
 
-export function updateDocument(documentId) {
-  console.log('id to send', documentId);
+export function updateDocument(document) {
+  const documentId = document.id;
   return (dispatch) => {
-    return axios.put(`/documents/${documentId}`)
+    return axios.put(`/documents/${documentId}`, document)
       .then((res) => {
-        console.log('Doc Response', res.data);
         dispatch({
           type: actionTypes.UPDATE_DOCUMENT_SUCCESS,
           message: res.data.message,
@@ -55,5 +54,18 @@ export function updateDocument(documentId) {
         });
       })
       .catch(err => console.log(err));
+  };
+}
+
+export function deleteDocument(documentId) {
+  console.log('id to send', documentId);
+  return (dispatch) => {
+    return axios.delete(`/documents/${documentId}`)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_DOCUMENT_SUCCESS
+        });
+      })
+      .catch(error => console.log(error));
   };
 }

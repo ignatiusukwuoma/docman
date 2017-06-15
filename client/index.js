@@ -19,7 +19,9 @@ if (localStorage.getItem('docman-pro')) {
   if (token) {
     store.dispatch(login(token, LOGIN_SUCCESS));
     store.dispatch(getDocuments());
-    browserHistory.push('/home');
+    if (window.location.pathname === '/') {
+      browserHistory.push('/home');
+    }
   }
 }
 

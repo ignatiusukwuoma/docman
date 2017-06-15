@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 
 const TextInput = ({
 name, type, hint, errorText, floatText, fullWidth,
-value, handleChange, floatingLabelFixed, floatingLabelStyle }) =>
+value, handleChange, floatingLabelFixed, floatingLabelStyle }) => (
   <TextField
     name={name}
     type={type}
@@ -15,6 +15,7 @@ value, handleChange, floatingLabelFixed, floatingLabelStyle }) =>
     floatingLabelText={floatText}
     floatingLabelFixed={floatingLabelFixed}
     floatingLabelStyle={floatingLabelStyle}
-  />;
+  />
+);
 
 export default TextInput;
