@@ -1,8 +1,10 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import { beginAjaxCall } from './ajaxStatusActions';
 
 export function getDocuments() {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.get('/documents')
       .then((res) => {
         dispatch({
@@ -17,6 +19,7 @@ export function getDocuments() {
 
 export function createDocument(document) {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.post('/documents', document)
       .then((res) => {
         dispatch({
@@ -31,6 +34,7 @@ export function createDocument(document) {
 
 export function getDocument(documentId) {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.get(`/documents/${documentId}`)
       .then((res) => {
         dispatch({
@@ -45,6 +49,7 @@ export function getDocument(documentId) {
 export function updateDocument(document) {
   const documentId = document.id;
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.put(`/documents/${documentId}`, document)
       .then((res) => {
         dispatch({

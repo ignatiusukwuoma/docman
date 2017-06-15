@@ -2,6 +2,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAccessToken from '../utils/setAccessToken';
 import * as actionTypes from './actionTypes';
+import { beginAjaxCall } from './ajaxStatusActions';
 
 export function signupSuccess(message) {
   return {
@@ -27,6 +28,7 @@ export function login(token, type) {
 
 export function signup(signupDetails) {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.post('/users', signupDetails)
       .then((res) => {
         const token = res.data.token;
@@ -42,6 +44,7 @@ export function signup(signupDetails) {
 
 export function signin(signinDetails) {
   return (dispatch) => {
+    dispatch(beginAjaxCall());
     return axios.post('/users/login', signinDetails)
       .then((res) => {
         const token = res.data.token;

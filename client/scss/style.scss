@@ -4,6 +4,15 @@ body {
   margin: 0;
 }
 
+.mainLoader {
+  position: absolute;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
 .landing-page {
   background-color: whitesmoke;
   height: 100%;
