@@ -22,7 +22,7 @@ export default {
 
   list(req, res) {
     const documentQuery = documentUtils.documentQuery(req);
-    const limit = (req.query.limit > 0) ? req.query.limit : 12;
+    const limit = (req.query.limit > 0) ? req.query.limit : 6;
     const offset = (req.query.offset > 0) ? req.query.offset : 0;
     const roleId = req.decoded.data.roleId;
     return Document

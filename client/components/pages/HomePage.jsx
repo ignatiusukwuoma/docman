@@ -6,6 +6,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
+import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
 
@@ -14,8 +15,11 @@ class HomePage extends React.Component {
     super(props, context);
     this.state = {
       documents: [],
-      pageData: {}
+      pageData: {},
+      documentsLoaded: false
     };
+    this.nextPage = this.nextPage.bind(this);
+    this.prevPage = this.prevPage.bind(this);
   }
 
   componentWillMount() {
@@ -25,8 +29,19 @@ class HomePage extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       documents: nextProps.documents,
-      pageData: nextProps.pageData
+      pageData: nextProps.pageData,
+      documentsLoaded: true
     });
+  }
+
+  nextPage() {
+    if (this.state.documents.length < 6) return;
+    return this.props.actions.getDocuments(this.state.pageData.offset + 6);
+  }
+
+  prevPage() {
+    if (this.state.pageData.offset < 1) return;
+    return this.props.actions.getDocuments(this.state.pageData.offset - 6);
   }
 
   placeDocuments(document) {
@@ -67,6 +82,12 @@ class HomePage extends React.Component {
                   this.state.documents.map(this.placeDocuments)}
               </CSSTransitionGroup>
             </div>
+            {this.state.documentsLoaded &&
+            <Pagination
+              documents={this.state.documents}
+              nextPage={this.nextPage}
+              prevPage={this.prevPage}
+              pageData={this.state.pageData} />}
           </div>
         </div>
       </div>
