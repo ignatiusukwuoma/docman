@@ -50,5 +50,8 @@ export function documentValidator({ title = '', access = '', content = '' }) {
   const validate = validateFields(
     [title, access, content],
     ['title', 'access', 'content']);
+  if (access === 'null') {
+    validate.errors.access = 'Please select an access level';
+  }
   return validate;
 }

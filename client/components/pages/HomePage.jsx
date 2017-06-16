@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import { CSSTransitionGroup } from 'react-transition-group';
+import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as userActions from '../../actions/userActions';
@@ -32,8 +34,14 @@ class HomePage extends React.Component {
       <div className="col m6 l4" key={document.id}>
         <div className="card">
           <div className="card-content white-text enlarge-card">
-            <span className="card-title flow-text">{document.title}</span>
-            <p dangerouslySetInnerHTML={{ __html: document.content }}></p>
+            <span className="card-title flow-text">
+              {document.title.length > 30 ?
+              `${document.title.substr(0, 30)}...` : document.title}
+            </span>
+            <Divider />
+            <p dangerouslySetInnerHTML=
+              {{ __html: document.content.substr(0, 220) }}>
+            </p>
           </div>
           <div className="card-action">
             <Link to={`/document/${document.id}`}>VIEW</Link>
@@ -51,8 +59,13 @@ class HomePage extends React.Component {
           <Sidebar />
           <div className="col s12 m8 l9">
             <div className="row">
-              {this.state.documents &&
-              this.state.documents.map(this.placeDocuments)}
+              <CSSTransitionGroup
+                transitionName="swim"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={300}>
+                  {this.state.documents &&
+                  this.state.documents.map(this.placeDocuments)}
+              </CSSTransitionGroup>
             </div>
           </div>
         </div>

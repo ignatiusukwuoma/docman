@@ -16,9 +16,11 @@ class DocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      title: '',
-      access: '',
-      content: '',
+      document: {
+        title: '',
+        access: '',
+        content: ''
+      },
       saving: false,
       errors: {}
     };
@@ -33,23 +35,33 @@ class DocumentPage extends React.Component {
   }
 
   handleChange(event) {
-    console.log('Value', event.target.value);
-    this.setState({ [event.target.name]: event.target.value });
+    const document = this.state.document;
+    document[event.target.name] = event.target.value.substr(0, 60);
+    this.setState({ document });
   }
 
   handleEditorChange(event) {
-    this.setState({ content: event.target.getContent() });
+    const document = this.state.document;
+    document.content = event.target.getContent();
+    this.setState({ document });
   }
 
   onSubmit(event) {
     event.preventDefault();
-    this.setState({ saving: true });
-    this.props.actions.createDocument(this.state)
-    .then(() => this.redirect())
-    .catch((error) => {
-      this.setState({ saving: false });
-      handleError(error);
-    });
+    console.log('Document State', this.state.document);
+    const { valid, errors } = validator
+      .documentValidator(this.state.document);
+    if (valid) {
+      this.setState({ saving: true });
+      this.props.actions.createDocument(this.state.document)
+      .then(() => this.redirect())
+      .catch((error) => {
+        this.setState({ saving: false });
+        handleError(error);
+      });
+    } else {
+      this.setState({ errors });
+    }
   }
 
   redirect() {
@@ -72,24 +84,25 @@ class DocumentPage extends React.Component {
                     fullWidth
                     name="title"
                     type="text"
-                    errorText=""
+                    errorText={this.state.errors.title}
                     floatText="Title"
                     hint="Title of the document"
                     handleChange={this.handleChange}
-                    value={this.state.title}
+                    value={this.state.document.title}
                   />
                 </div>
                 <div className="select-input">
                   <SelectInput
                     id="select-box"
                     name="access"
+                    error={this.state.errors.access}
                     handleChange={this.handleChange}
-                    value={this.state.access}
+                    value={this.state.document.access}
                   />
                 </div>
                 <div className="tiny-mce">
                   <TinyMCE
-                    content={this.state.content}
+                    content={this.state.document.content}
                     config={{
                       plugins: 'link image code',
                       toolbar: 'undo redo | bold italic |\
@@ -98,6 +111,10 @@ class DocumentPage extends React.Component {
                     onChange={this.handleEditorChange}
                   />
                 </div>
+                {this.state.errors.content &&
+                <div className="red-text">
+                  {this.state.errors.content}
+                </div>}
                 <FlatButton
                   backgroundColor="#a4c639"
                   hoverColor="#8AA62F"

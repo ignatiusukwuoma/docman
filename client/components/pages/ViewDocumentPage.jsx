@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import Divider from 'material-ui/Divider';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 import Sidebar from '../layouts/Sidebar.jsx';
 
@@ -31,11 +32,18 @@ class ViewDocumentPage extends React.Component {
             <div className="container center-align">
               <h2>{document.title}</h2>
               <h6>
-                Posted on {new Date(document.createdAt).toDateString()}
+                Posted on {new Date(document.createdAt).toDateString()},
+                by: <span className="blue-text">
+                  <strong>
+                    {document.User ? document.User.username : ''}
+                  </strong>
+                </span>
               </h6>
+              <Divider />
               <p dangerouslySetInnerHTML={{ __html: document.content }}></p>
               <Link to={`/document/${document.id}/edit`}
-                className="btn-floating btn-large waves-effect waves-light green">
+                className=
+                "btn-floating btn-large waves-effect waves-light green">
                 <i className="material-icons">mode_edit</i>
               </Link>
               <Link to="/home" onClick={this.deleteDocument}

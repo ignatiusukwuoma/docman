@@ -37,15 +37,13 @@ class EditDocumentPage extends React.Component {
   }
 
   handleChange(event) {
-    console.log('Value', event.target.value);
     const document = this.state.document;
-    document[event.target.name] = event.target.value;
+    document[event.target.name] = event.target.value.substr(0, 60);
     // debugger;
     this.setState({ document });
   }
 
   handleEditorChange(event) {
-    console.log('Value', event.target.getContent());
     const document = this.state.document;
     document.content = event.target.getContent();
     // debugger;
@@ -70,7 +68,6 @@ class EditDocumentPage extends React.Component {
   }
 
   render() {
-    console.log('this.state.document', this.state.document);
     return (
       <div class="EditdocumentPage">
         <div className="row">
@@ -126,6 +123,11 @@ class EditDocumentPage extends React.Component {
   }
 }
 
+EditDocumentPage.propTypes = {
+  documents: PropTypes.array,
+  document: PropTypes.object.isRequired
+};
+
 EditDocumentPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
@@ -138,6 +140,7 @@ function getDocumentById(allDocuments, id) {
 }
 
 function mapStateToProps(state, ownProps) {
+  console.log('state', state);
   const documentId = ownProps.params.id;
   const documentToEdit = {};
   let currentDocument;
@@ -158,10 +161,5 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(documentActions, dispatch)
   };
 }
-
-EditDocumentPage.propTypes = {
-  documents: PropTypes.array.isRequired,
-  document: PropTypes.object.isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditDocumentPage);

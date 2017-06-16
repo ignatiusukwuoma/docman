@@ -5,7 +5,7 @@ function pageData(state = initialState.pageData, action) {
   switch (action.type) {
     case types.GET_DOCUMENTS_SUCCESS:
       return Object.assign(
-        {}, action.pageData, { offset: action.offset, query: action.query }
+        {}, action.pageData, { offset: action.offset }
       );
     default:
       return state;

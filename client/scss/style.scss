@@ -1,5 +1,6 @@
 @import '/common/variables';
 @import '/common/toastr';
+@import '/common/transitions';
 
 body {
   margin: 0;
@@ -68,6 +69,9 @@ body {
       height: 200px;
       .card-title {
         font-family: $secondary-font;
+      }
+      p {
+        margin-top: 10px;
       }
     }
   }

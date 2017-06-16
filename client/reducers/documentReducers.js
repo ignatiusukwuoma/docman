@@ -21,7 +21,6 @@ export function documents(state = initialState.documents, action) {
 export function document(state = initialState.document, action) {
   switch (action.type) {
     case actionTypes.GET_DOCUMENT_SUCCESS:
-      console.log('Reducer State', state);
       return action.document;
     default:
       return state;
