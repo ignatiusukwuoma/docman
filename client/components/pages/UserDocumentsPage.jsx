@@ -10,10 +10,11 @@ import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
 
-class HomePage extends React.Component {
+class UserDocumentsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      access: props.access,
       documents: [],
       pageData: {},
       documentsLoaded: false
@@ -23,7 +24,7 @@ class HomePage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getDocuments();
+    this.props.actions.getUserDocuments(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,12 +37,14 @@ class HomePage extends React.Component {
 
   nextPage() {
     if (this.state.documents.length < 9) return;
-    return this.props.actions.getDocuments(this.state.pageData.offset + 9);
+    return this.props.actions.getUserDocuments(this.state.access.user.id,
+    this.state.pageData.offset + 9);
   }
 
   prevPage() {
     if (this.state.pageData.offset < 1) return;
-    return this.props.actions.getDocuments(this.state.pageData.offset - 9);
+    return this.props.actions.getUserDocuments(this.state.access.user.id,
+    this.state.pageData.offset - 9);
   }
 
   placeDocuments(document) {
@@ -97,8 +100,11 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.propTypes = {
+UserDocumentsPage.propTypes = {
   actions: PropTypes.object.isRequired,
+  documents: PropTypes.array.isRequired,
+  pageData: PropTypes.object.isRequired,
+  access: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -117,4 +123,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserDocumentsPage);

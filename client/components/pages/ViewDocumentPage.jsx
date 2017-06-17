@@ -6,7 +6,6 @@ import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 import Sidebar from '../layouts/Sidebar.jsx';
-import AdminSidebar from '../layouts/AdminSidebar.jsx';
 
 
 class ViewDocumentPage extends React.Component {
@@ -19,7 +18,7 @@ class ViewDocumentPage extends React.Component {
     this.props.getDocument(this.props.params.id);
   }
 
-  deleteDocument(documentId) {
+  deleteDocument() {
     this.props.deleteDocument(this.props.params.id);
     toastr.success('Document deleted successfully');
   }
@@ -31,7 +30,6 @@ class ViewDocumentPage extends React.Component {
         <div className="row">
           <div className="col s12 m4 l3">
             <Sidebar />
-            <AdminSidebar />
           </div>
           <div className="col s12 m8 l9">
             <div className="container center-align">

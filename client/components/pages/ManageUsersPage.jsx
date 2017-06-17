@@ -8,11 +8,10 @@ import { Card } from 'material-ui/Card';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
-import AdminSidebar from '../layouts/AdminSidebar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 
-class ManageUsers extends React.Component {
+class ManageUsersPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -80,7 +79,6 @@ class ManageUsers extends React.Component {
         <div className="row">
           <div className="col s12 m4 l3">
             <Sidebar />
-            <AdminSidebar />
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
@@ -119,7 +117,7 @@ class ManageUsers extends React.Component {
   }
 }
 
-ManageUsers.propTypes = {
+ManageUsersPage.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 
@@ -137,4 +135,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageUsers);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageUsersPage);

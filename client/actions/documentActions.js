@@ -3,17 +3,34 @@ import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import handleError from '../utils/errorHandler';
 
+export function getDocumentSuccess(documents, pageData, offset) {
+  return {
+    type: actionTypes.GET_DOCUMENTS_SUCCESS,
+    documents,
+    pageData,
+    offset
+  };
+}
+
 export function getDocuments(offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
     return axios.get(`/documents?offset=${offset}`)
       .then((res) => {
-        dispatch({
-          type: actionTypes.GET_DOCUMENTS_SUCCESS,
-          documents: res.data.documents,
-          pageData: res.data.pageData,
-          offset,
-        });
+        dispatch(getDocumentSuccess(res.data.documents,
+          res.data.pageData, offset));
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}
+
+export function getUserDocuments(userId, offset = 0) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.get(`/users/${userId}/documents?offset=${offset}`)
+      .then((res) => {
+        dispatch(getDocumentSuccess(res.data.documents,
+          res.data.pageData, offset));
       })
       .catch(error => handleError(error, dispatch));
   };
