@@ -1,10 +1,15 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import Nav from '../components/layouts/Nav.jsx';
+import loader from '../img/loader.gif';
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
+        <Nav />
         {this.props.children}
+        { this.props.loading && <img className="mainLoader" src={loader} />}
       </div>
     );
   }
@@ -13,3 +18,11 @@ export default class App extends React.Component {
 App.propTypes = {
   children: PropTypes.object.isRequired
 };
+
+function mapStateToProps(state, ownProps) {
+  return {
+    loading: state.ajaxCallsInProgress > 0
+  };
+}
+
+export default connect(mapStateToProps)(App);

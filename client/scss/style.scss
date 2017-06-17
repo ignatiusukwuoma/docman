@@ -1,0 +1,99 @@
+@import '/common/variables';
+@import '/common/toastr';
+@import '/common/transitions';
+
+body {
+  margin: 0;
+}
+
+.mainLoader {
+  position: absolute;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.landing-page {
+  background-color: whitesmoke;
+  height: 100%;
+  .landing-content {
+    .about{
+      margin-top: 100px;
+      text-align: center;
+      padding-right: 50px;
+      h4 {
+        font-family: $secondary-font;
+      }
+      h5 {
+        margin-top: 50px;
+      }
+    }
+    .forms {
+      h6 {
+        font-family: $secondary-font;
+        font-weight: bold;
+        margin-top: 40px;
+      }
+    }
+  }
+  
+}
+
+.navbar-main {
+  background-color: $primary-color;
+  .nav-wrapper {
+    margin-left: 30px;
+    margin-right: 30px;
+    .brand-logo {
+      font-family: $secondary-font;
+    }
+  }
+}
+
+.sidebar {
+  .document-icons {
+    float: right;
+  }
+}
+
+.home-page {
+  .card {
+    background-color: $primary-color;
+    .card-action {
+      display: flex;
+      justify-content: space-between;
+    }
+    .enlarge-card {
+      height: 200px;
+      .card-title {
+        font-family: $secondary-font;
+      }
+      p {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.create-document {
+  .select-input {
+    width: 200px;
+  }
+  .tiny-mce {
+    margin-bottom: 50px;
+  }
+}
+
+.pagination {
+  #paginationText {
+    margin-top: 4px;
+    font-weight: 500;
+  }
+}
+
+.users-page {
+  .users-card {
+    margin-top: 20px;
+  }
+}

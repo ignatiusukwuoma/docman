@@ -64,7 +64,7 @@ describe('Documents', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object')
-            .that.have.keys('message', 'documents');
+            .that.have.keys('message', 'documents', 'pageData');
           expect(res.body.message).to.be.a('string').that.includes('found');
           done();
         });
@@ -177,7 +177,7 @@ describe('Documents', () => {
         });
     });
 
-    it('should not return role documents with hgher User roleId', (done) => {
+    it('should not return role documents with higher User roleId', (done) => {
       chai.request(server)
         .get('/documents')
         .set({ 'x-access-token': advertizer1Token })

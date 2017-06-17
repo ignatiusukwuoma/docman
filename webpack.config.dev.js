@@ -1,13 +1,13 @@
 import path from 'path';
 import webpack from 'webpack';
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const extractPlugin = new ExtractTextPlugin({
-  filename: 'main.css'
-});
+// const extractPlugin = new ExtractTextPlugin({
+//   filename: 'main.css'
+// });
 
 // require('dotenv').config();
 // const envsDefinePlugin = new webpack.DefinePlugin({
@@ -37,31 +37,33 @@ export default {
       },
       {
         test: /\.scss$/,
-        use: extractPlugin.extract({
-          use: ['css-loader', 'sass-loader']
-        })
+        // use: extractPlugin.extract({
+        //   use: ['css-loader', 'sass-loader']
+        // })
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       // {
       //   test: /\.html$/,
       //   use: ['html-loader']
       // },
       {
-        test: /\.(jpg|png|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'img/',
-              publicPath: 'img/'
-            }
-          }
-        ]
+        test: /\.(jpg|png|svg|gif)$/,
+        loader: 'url-loader',
+        // use: [
+        //   {
+        //     loader: 'file-loader',
+        //     options: {
+        //       name: '[name].[ext]',
+        //       outputPath: 'img/',
+        //       publicPath: 'img/'
+        //     }
+        //   }
+        // ]
       },
     ],
   },
   plugins: [
-    extractPlugin,
+    // extractPlugin,
     // envsDefinePlugin,
     // new HtmlWebpackPlugin({
     //   template: 'client/index.html'

@@ -22,7 +22,7 @@ export default {
 
   list(req, res) {
     const documentQuery = documentUtils.documentQuery(req);
-    const limit = (req.query.limit > 0) ? req.query.limit : 12;
+    const limit = (req.query.limit > 0) ? req.query.limit : 9;
     const offset = (req.query.offset > 0) ? req.query.offset : 0;
     const roleId = req.decoded.data.roleId;
     return Document
@@ -58,6 +58,8 @@ export default {
   },
 
   listUserDocuments(req, res) {
+    const limit = (req.query.limit > 0) ? req.query.limit : 9;
+    const offset = (req.query.offset > 0) ? req.query.offset : 0;
     return models.User.findById(req.params.userId)
       .then((user) => {
         if (!user) {
@@ -66,14 +68,17 @@ export default {
           });
         }
         return Document
-          .findAll({
+          .findAndCountAll({
             where: {
               userId: req.params.userId
             },
+            limit,
+            offset,
             include: [{
               model: models.User,
               attributes: ['username', 'roleId']
-            }]
+            }],
+            order: [['createdAt', 'DESC']]
           })
           .then((documents) => {
             if (!documents) {
@@ -83,9 +88,11 @@ export default {
             }
             return res.status(200).json({
               message: documents.length > 1 ?
-                `${documents.length} documents found` :
-                `${documents.length} document found`,
-              documents,
+                `${documents.rows.length} documents found` :
+                `${documents.rows.length} document found`,
+              documents: documents.rows,
+              pageData: generalUtils
+                .formatPage(documents.count, limit, offset)
             });
           })
           .catch(error => res.status(400).json({

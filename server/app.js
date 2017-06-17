@@ -12,7 +12,7 @@ require('dotenv').config();
 
 // Setup Express App
 const app = express();
-
+app.use(express.static('client'));
 const compiler = webpack(webpackConfig);
 app.use(webpackMiddleware(compiler, {
   hot: true,
