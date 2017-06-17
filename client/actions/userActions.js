@@ -84,3 +84,17 @@ export function getUsers(offset = 0) {
       .catch(error => handleError(error, dispatch));
   };
 }
+
+export function getUser(userId) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.get(`/users/${userId}`)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.GET_USER_SUCCESS,
+          user: res.data
+        });
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}

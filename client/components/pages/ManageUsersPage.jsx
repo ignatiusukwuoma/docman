@@ -10,6 +10,7 @@ import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
+import insertRole from '../../utils/insertRole';
 
 class ManageUsersPage extends React.Component {
   constructor(props, context) {
@@ -21,7 +22,6 @@ class ManageUsersPage extends React.Component {
     };
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    this.insertRole = this.insertRole.bind(this);
   }
 
   componentWillMount() {
@@ -46,29 +46,15 @@ class ManageUsersPage extends React.Component {
     return this.props.actions.getUsers(this.state.pageData.offset - 9);
   }
 
-  insertRole(role) {
-    switch (role) {
-      case 1:
-        return 'SuperAdmin';
-      case 2:
-        return 'Admin';
-      case 3:
-        return 'Author';
-      case 4:
-        return 'Editor';
-      default:
-        return role;
-    }
-  }
-
-
   placeUsers = (user) => {
     return (
       <TableRow key={user.id}>
         <TableRowColumn>{user.id}</TableRowColumn>
         <TableRowColumn>{user.name}</TableRowColumn>
         <TableRowColumn>{user.username}</TableRowColumn>
-        <TableRowColumn>{this.insertRole(user.roleId)}</TableRowColumn>
+        <TableRowColumn>{insertRole(user.roleId)}</TableRowColumn>
+        <TableRowColumn><Link to={`/users/${user.id}`}>
+          Visit Profile</Link></TableRowColumn>
       </TableRow>
     );
   }
@@ -94,6 +80,7 @@ class ManageUsersPage extends React.Component {
                         <TableHeaderColumn>Name</TableHeaderColumn>
                         <TableHeaderColumn>Username</TableHeaderColumn>
                         <TableHeaderColumn>Role</TableHeaderColumn>
+                        <TableHeaderColumn>Profile</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
                     <TableBody>

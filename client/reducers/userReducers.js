@@ -17,3 +17,10 @@ export function users(state = initialState.users, action) {
       return state;
   }
 }
+
+export function user(state = initialState.user, action) {
+  if (action.type === actionTypes.GET_USER_SUCCESS) {
+    return action.user;
+  }
+  return state;
+}
