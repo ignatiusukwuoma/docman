@@ -6,6 +6,8 @@ import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 import Sidebar from '../layouts/Sidebar.jsx';
+import AdminSidebar from '../layouts/AdminSidebar.jsx';
+
 
 class ViewDocumentPage extends React.Component {
   constructor(props) {
@@ -27,7 +29,10 @@ class ViewDocumentPage extends React.Component {
     return (
       <div className="viewDocument">
         <div className="row">
-          <Sidebar />
+          <div className="col s12 m4 l3">
+            <Sidebar />
+            <AdminSidebar />
+          </div>
           <div className="col s12 m8 l9">
             <div className="container center-align">
               <h2>{document.title}</h2>

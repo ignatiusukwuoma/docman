@@ -18,7 +18,6 @@ if (localStorage.getItem('docman-pro')) {
   const token = tokenStorage.jwt;
   if (token) {
     store.dispatch(login(token, LOGIN_SUCCESS));
-    store.dispatch(getDocuments());
     if (window.location.pathname === '/') {
       browserHistory.push('/home');
     }

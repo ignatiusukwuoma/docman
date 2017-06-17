@@ -8,6 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
+import AdminSidebar from '../layouts/AdminSidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
 import * as validator from '../../utils/validator';
 import handleError from '../../utils/errorHandler';
@@ -74,7 +75,10 @@ class DocumentPage extends React.Component {
     return (
       <div class="documentPage">
         <div className="row">
-          <Sidebar />
+          <div className="col s12 m4 l3">
+            <Sidebar />
+            <AdminSidebar />
+          </div>
           <div className="col s12 m8 l9">
             <div className="create-document container center-align">
               <h2>Create New Document</h2>

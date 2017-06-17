@@ -66,11 +66,21 @@ export function logout() {
     localStorage.removeItem('docman-pro');
     setAccessToken(null);
     dispatch({ type: actionTypes.LOGOUT });
-    // return axios.post('/users/logout')
-    //   .then((res) => {
-    //     const message = res.data.message;
-    //     dispatch({ type: actionTypes.LOGOUT, message });
-    //   })
-    //   .catch(err => console.log(err));
+  };
+}
+
+export function getUsers(offset = 0) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.get(`/users?offset=${offset}`)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.GET_USERS_SUCCESS,
+          users: res.data.users,
+          pageData: res.data.pageData,
+          offset,
+        });
+      })
+      .catch(error => handleError(error, dispatch));
   };
 }

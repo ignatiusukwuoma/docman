@@ -6,6 +6,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
+import AdminSidebar from '../layouts/AdminSidebar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
@@ -35,13 +36,13 @@ class HomePage extends React.Component {
   }
 
   nextPage() {
-    if (this.state.documents.length < 6) return;
-    return this.props.actions.getDocuments(this.state.pageData.offset + 6);
+    if (this.state.documents.length < 9) return;
+    return this.props.actions.getDocuments(this.state.pageData.offset + 9);
   }
 
   prevPage() {
     if (this.state.pageData.offset < 1) return;
-    return this.props.actions.getDocuments(this.state.pageData.offset - 6);
+    return this.props.actions.getDocuments(this.state.pageData.offset - 9);
   }
 
   placeDocuments(document) {
@@ -71,7 +72,10 @@ class HomePage extends React.Component {
     return (
       <div className="home-page">
         <div className="row">
-          <Sidebar />
+          <div className="col s12 m4 l3">
+            <Sidebar />
+            <AdminSidebar />
+          </div>
           <div className="col s12 m8 l9">
             <div className="row">
               <CSSTransitionGroup

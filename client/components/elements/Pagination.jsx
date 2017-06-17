@@ -9,8 +9,10 @@ function Pagination({ documents, nextPage, prevPage, pageData }) {
             <i className="material-icons">chevron_left</i>
           </a>
         </li>
-        <li id="paginationText">Page {pageData.pageNumber} of {pageData.totalPages}</li>
-        <li className={documents.length < 6 ? 'disabled' : 'waves-effect'}>
+        <li id="paginationText">
+          Page {pageData.pageNumber} of {pageData.totalPages}
+        </li>
+        <li className={documents.length < 9 ? 'disabled' : 'waves-effect'}>
           <a onClick={nextPage} href="javascript:void(0)">
             <i className="material-icons">chevron_right</i>
           </a>
@@ -24,7 +26,8 @@ function Pagination({ documents, nextPage, prevPage, pageData }) {
 }
 
 Pagination.propTypes = {
-  documents: PropTypes.array.isRequired,
+  users: PropTypes.array,
+  documents: PropTypes.array,
   pageData: PropTypes.object.isRequired,
   nextPage: PropTypes.func.isRequired,
   prevPage: PropTypes.func.isRequired,
