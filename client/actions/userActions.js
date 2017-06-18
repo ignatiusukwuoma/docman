@@ -20,7 +20,6 @@ export function login(token, type) {
     roleId: decoded.data.roleId,
     username: decoded.data.username
   };
-  console.log('User', user);
   return {
     type,
     user
@@ -92,6 +91,20 @@ export function getUser(userId) {
       .then((res) => {
         dispatch({
           type: actionTypes.GET_USER_SUCCESS,
+          user: res.data
+        });
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}
+
+export function updateUser(userId, newProfileDetails) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.put(`/users/${userId}`, newProfileDetails)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.UPDATE_USER_SUCCESS,
           user: res.data
         });
       })

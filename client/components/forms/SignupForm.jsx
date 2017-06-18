@@ -64,7 +64,8 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
       <FlatButton
         backgroundColor="#a4c639"
         hoverColor="#8AA62F"
-        label="Create an Account"
+        label={location.pathname === '/' ?
+        'Create an Account' : 'Update Account'}
         onClick={onSubmit}
       />
     </form>

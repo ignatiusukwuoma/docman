@@ -9,6 +9,7 @@ import NewDocumentPage from './components/pages/NewDocumentPage.jsx';
 import ViewDocumentPage from './components/pages/ViewDocumentPage.jsx';
 import EditDocumentPage from './components/pages/EditDocumentPage.jsx';
 import UserDocumentsPage from './components/pages/UserDocumentsPage.jsx';
+import EditProfilePage from './components/pages/EditProfilePage.jsx';
 
 
 
@@ -22,5 +23,6 @@ export default (
     <Route path="/users/manage" component={ManageUsersPage} />
     <Route path="/users/:id/documents" component={UserDocumentsPage} />
     <Route path="/users/:id" components={ProfilePage} />
+    <Route path="/users/:id/edit" components={EditProfilePage} />
   </Route>
 );
