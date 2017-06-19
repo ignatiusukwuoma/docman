@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import insertRole from '../../utils/insertRole';
 import avatar from '../../img/avatar.png';
 
-function ProfileSidebar({ user, access }) {
+function ProfileSidebar({ user, access, deleteUser }) {
   return (
     <Card>
       <CardMedia
@@ -21,7 +21,9 @@ function ProfileSidebar({ user, access }) {
         <Link to={`/users/${user.id}/edit`}>
           <RaisedButton label="EDIT PROFILE" primary={true} />
         </Link>
-        <RaisedButton label="DELETE ACCOUNT" secondary={true} />
+        <Link to="" onClick={deleteUser}>
+          <RaisedButton label="DELETE ACCOUNT" secondary={true} />
+        </Link>
       </CardActions>
       }
     </Card>

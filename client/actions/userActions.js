@@ -111,3 +111,16 @@ export function updateUser(userId, newProfileDetails) {
       .catch(error => handleError(error, dispatch));
   };
 }
+
+export function deleteUser(userId) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.delete(`/users/${userId}`)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_USER_SUCCESS
+        });
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}
