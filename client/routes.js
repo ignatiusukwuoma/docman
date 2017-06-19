@@ -10,8 +10,7 @@ import ViewDocumentPage from './components/pages/ViewDocumentPage.jsx';
 import EditDocumentPage from './components/pages/EditDocumentPage.jsx';
 import UserDocumentsPage from './components/pages/UserDocumentsPage.jsx';
 import EditProfilePage from './components/pages/EditProfilePage.jsx';
-
-
+import ManageRolesPage from './components/pages/ManageRolesPage.jsx';
 
 export default (
   <Route path="/" component={App}>
@@ -24,5 +23,6 @@ export default (
     <Route path="/users/:id/documents" component={UserDocumentsPage} />
     <Route path="/users/:id" components={ProfilePage} />
     <Route path="/users/:id/edit" components={EditProfilePage} />
+    <Route path="/roles/manage" component={ManageRolesPage} />
   </Route>
 );

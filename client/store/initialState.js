@@ -5,5 +5,6 @@ export default {
   access: { loggedIn: false, user: {} },
   ajaxCallsInProgress: 0,
   users: [],
-  user: {}
+  user: {},
+  roles: []
 };
