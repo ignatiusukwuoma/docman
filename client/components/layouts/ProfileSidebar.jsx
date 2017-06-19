@@ -21,9 +21,9 @@ function ProfileSidebar({ user, access, deleteUser }) {
         <Link to={`/users/${user.id}/edit`}>
           <RaisedButton label="EDIT PROFILE" primary={true} />
         </Link>
-        <Link to="" onClick={deleteUser}>
+        <a href="#!" onClick={deleteUser}>
           <RaisedButton label="DELETE ACCOUNT" secondary={true} />
-        </Link>
+        </a>
       </CardActions>
       }
     </Card>

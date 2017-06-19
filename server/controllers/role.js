@@ -22,6 +22,25 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  update(req, res) {
+    return Role
+      .findById(req.params.roleId)
+      .then((role) => {
+        if (!role) {
+          return res.status(404).send({
+            message: 'Role not found'
+          });
+        }
+        return role
+          .update(req.body)
+            .then((updatedRole) => {
+              res.status(200).send({ updatedRole });
+            })
+            .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(400).send(error));
+  },
+
   destroy(req, res) {
     return Role
       .findById(req.params.roleId)

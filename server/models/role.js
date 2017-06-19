@@ -2,10 +2,10 @@ export default (sequelize, DataTypes) => {
   const Role = sequelize.define('Role', {
     title: {
       allowNull: false,
-      unique: true,
+      unique: { args: true, msg: 'Role already exist' },
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: { args: true, msg: 'Name cannot be empty' }
       },
     },
   }, {

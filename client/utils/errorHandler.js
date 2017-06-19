@@ -10,3 +10,8 @@ export default function handleError(error, dispatch) {
   }
   return toastr.error('Something went wrong');
 }
+
+export function throwError(error, dispatch) {
+  dispatch(ajaxCallError());
+  throw error;
+}

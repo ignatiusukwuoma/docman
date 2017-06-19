@@ -47,7 +47,8 @@ class Sidebar extends React.Component {
         location.pathname.match(regExp) &&
         <ProfileSidebar {...this.state} deleteUser={this.deleteUser}/>}
         <DocumentSidebar {...this.state} />
-        {this.state.access.user.roleId <= 2 && <AdminSidebar />}
+        {this.state.access.user.roleId <= 2 &&
+        <AdminSidebar access={this.state.access}/>}
       </div>
     );
   }
