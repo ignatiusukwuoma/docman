@@ -20,7 +20,6 @@ export function login(token, type) {
     roleId: decoded.data.roleId,
     username: decoded.data.username
   };
-  console.log('User', user);
   return {
     type,
     user
@@ -79,6 +78,47 @@ export function getUsers(offset = 0) {
           users: res.data.users,
           pageData: res.data.pageData,
           offset,
+        });
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}
+
+export function getUser(userId) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.get(`/users/${userId}`)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.GET_USER_SUCCESS,
+          user: res.data
+        });
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}
+
+export function updateUser(userId, newProfileDetails) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.put(`/users/${userId}`, newProfileDetails)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.UPDATE_USER_SUCCESS,
+          user: res.data
+        });
+      })
+      .catch(error => handleError(error, dispatch));
+  };
+}
+
+export function deleteUser(userId) {
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return axios.delete(`/users/${userId}`)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_USER_SUCCESS
         });
       })
       .catch(error => handleError(error, dispatch));

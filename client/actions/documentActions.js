@@ -82,7 +82,6 @@ export function updateDocument(document) {
 }
 
 export function deleteDocument(documentId) {
-  console.log('id to send', documentId);
   return (dispatch) => {
     return axios.delete(`/documents/${documentId}`)
       .then(() => {

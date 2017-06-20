@@ -10,6 +10,9 @@ import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
+import * as searchActions from '../../actions/searchActions';
+import insertRole from '../../utils/insertRole';
+import SearchBar from '../forms/Searchbar.jsx';
 
 class ManageUsersPage extends React.Component {
   constructor(props, context) {
@@ -21,7 +24,6 @@ class ManageUsersPage extends React.Component {
     };
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    this.insertRole = this.insertRole.bind(this);
   }
 
   componentWillMount() {
@@ -38,29 +40,21 @@ class ManageUsersPage extends React.Component {
 
   nextPage() {
     if (this.state.users.length < 9) return;
+    if (this.state.pageData.query) {
+      return this.props.actions.searchUsers(this.state.pageData.query,
+        this.state.pageData.offset + 9);
+    }
     return this.props.actions.getUsers(this.state.pageData.offset + 9);
   }
 
   prevPage() {
     if (this.state.pageData.offset < 1) return;
+    if (this.state.pageData.query) {
+      return this.props.actions.searchUsers(this.state.pageData.query,
+        this.state.pageData.offset - 9);
+    }
     return this.props.actions.getUsers(this.state.pageData.offset - 9);
   }
-
-  insertRole(role) {
-    switch (role) {
-      case 1:
-        return 'SuperAdmin';
-      case 2:
-        return 'Admin';
-      case 3:
-        return 'Author';
-      case 4:
-        return 'Editor';
-      default:
-        return role;
-    }
-  }
-
 
   placeUsers = (user) => {
     return (
@@ -68,7 +62,9 @@ class ManageUsersPage extends React.Component {
         <TableRowColumn>{user.id}</TableRowColumn>
         <TableRowColumn>{user.name}</TableRowColumn>
         <TableRowColumn>{user.username}</TableRowColumn>
-        <TableRowColumn>{this.insertRole(user.roleId)}</TableRowColumn>
+        <TableRowColumn>{insertRole(user.roleId)}</TableRowColumn>
+        <TableRowColumn><Link to={`/users/${user.id}`}>
+          Visit Profile</Link></TableRowColumn>
       </TableRow>
     );
   }
@@ -82,6 +78,7 @@ class ManageUsersPage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
+              <SearchBar />
               <CSSTransitionGroup
                 transitionName="swim"
                 transitionEnterTimeout={500}
@@ -94,6 +91,7 @@ class ManageUsersPage extends React.Component {
                         <TableHeaderColumn>Name</TableHeaderColumn>
                         <TableHeaderColumn>Username</TableHeaderColumn>
                         <TableHeaderColumn>Role</TableHeaderColumn>
+                        <TableHeaderColumn>Profile</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -131,7 +129,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators(
+      Object.assign(userActions, searchActions),
+      dispatch)
   };
 }
 

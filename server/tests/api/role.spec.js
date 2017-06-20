@@ -58,7 +58,8 @@ describe('Roles', () => {
         });
     });
 
-    it('should deny access when others try to view roles', (done) => {
+    it('should deny access when others users including the admin\
+      try to view roles', (done) => {
       chai.request(server)
         .get('/roles')
         .set('x-access-token', adminToken)
@@ -97,7 +98,7 @@ describe('Roles', () => {
         .send(role7)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.errors[0].message).to.equal('title must be unique');
+          expect(res.body.errors[0].message).to.equal('Role already exist');
           done();
         });
     });

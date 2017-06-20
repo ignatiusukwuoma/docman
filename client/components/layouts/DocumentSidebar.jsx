@@ -5,9 +5,12 @@ function DocumentSidebar({ access }) {
   const homePage = location.pathname === '/home' ? ' active' : '';
   const newDocumentPage = location.pathname === '/document/new'
     ? ' active' : '';
-  const regularExpression = new RegExp(`^/users/${access.user.id}`);
-  const myDocumentPage = location.pathname.match(regularExpression)
+  const myDocumentRegExp = new RegExp(`^/users/${access.user.id}/documents`);
+  const myDocumentPage = location.pathname.match(myDocumentRegExp)
   ? ' active' : '';
+  const myProfilePage = location.pathname === `/users/${access.user.id}`
+  ? ' active' : '';
+
   return (
     <div className="collection sidebar">
       <Link to="/document/new"
@@ -24,9 +27,9 @@ function DocumentSidebar({ access }) {
         My Documents
         <i className="material-icons document-icons">person_pin</i>
       </Link>
-      <Link to="/document/new" className="collection-item">
-        Private Documents
-        <i className="material-icons document-icons">lock</i>
+      <Link to={`/users/${access.user.id}`}
+        className={`collection-item${myProfilePage}`}>My Profile
+        <i className="material-icons document-icons">account_box</i>
       </Link>
     </div>
   );

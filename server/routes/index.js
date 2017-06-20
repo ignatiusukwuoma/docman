@@ -21,6 +21,7 @@ const Routes = (app) => {
     .post(roleControllers.create);
 
   app.route('/roles/:roleId')
+    .put(roleControllers.update)
     .delete(roleControllers.destroy);
 
   app.route('/users')

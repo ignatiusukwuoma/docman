@@ -6,16 +6,16 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
-import SearchBar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
-import * as searchActions from '../../actions/searchActions';
 
-class HomePage extends React.Component {
+class ProfilePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      user: props.user,
+      access: props.access,
       documents: [],
       pageData: {},
       documentsLoaded: false
@@ -25,11 +25,13 @@ class HomePage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getDocuments();
+    this.props.actions.getUser(this.props.params.id);
+    this.props.actions.getUserDocuments(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      user: nextProps.user,
       documents: nextProps.documents,
       pageData: nextProps.pageData,
       documentsLoaded: true
@@ -38,20 +40,14 @@ class HomePage extends React.Component {
 
   nextPage() {
     if (this.state.documents.length < 9) return;
-    if (this.state.pageData.query) {
-      return this.props.actions.searchDocuments(this.state.pageData.query,
-        this.state.pageData.offset + 9);
-    }
-    return this.props.actions.getDocuments(this.state.pageData.offset + 9);
+    return this.props.actions.getUserDocuments(this.state.user.id,
+    this.state.pageData.offset + 9);
   }
 
   prevPage() {
     if (this.state.pageData.offset < 1) return;
-    if (this.state.pageData.query) {
-      return this.props.actions.searchDocuments(this.state.pageData.query,
-        this.state.pageData.offset - 9);
-    }
-    return this.props.actions.getDocuments(this.state.pageData.offset - 9);
+    return this.props.actions.getUserDocuments(this.state.user.id,
+    this.state.pageData.offset - 9);
   }
 
   placeDocuments(document) {
@@ -86,7 +82,6 @@ class HomePage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
-              <SearchBar />
               <CSSTransitionGroup
                 transitionName="swim"
                 transitionEnterTimeout={500}
@@ -108,24 +103,29 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.propTypes = {
+ProfilePage.propTypes = {
+  user: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
+  documents: PropTypes.array.isRequired,
+  pageData: PropTypes.object.isRequired,
+  access: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
   return {
     documents: state.documents,
     pageData: state.pageData,
-    access: state.userAccess
+    access: state.userAccess,
+    user: state.user,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
-      Object.assign(documentActions, userActions, searchActions),
+      Object.assign(documentActions, userActions),
       dispatch)
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

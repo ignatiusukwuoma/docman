@@ -48,7 +48,6 @@ class NewDocumentPage extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    console.log('Document State', this.state.document);
     const { valid, errors } = validator
       .documentValidator(this.state.document);
     if (valid) {
@@ -72,7 +71,7 @@ class NewDocumentPage extends React.Component {
 
   render() {
     return (
-      <div class="new-document-page">
+      <div className="new-document-page">
         <div className="row">
           <div className="col s12 m4 l3">
             <Sidebar />
