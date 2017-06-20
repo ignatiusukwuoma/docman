@@ -48,7 +48,6 @@ class NewDocumentPage extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    console.log('Document State', this.state.document);
     const { valid, errors } = validator
       .documentValidator(this.state.document);
     if (valid) {

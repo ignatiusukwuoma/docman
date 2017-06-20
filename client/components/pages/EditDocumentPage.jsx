@@ -142,7 +142,6 @@ function getDocumentById(allDocuments, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log('state', state);
   const documentId = ownProps.params.id;
   const documentToEdit = {};
   let currentDocument;

@@ -34,7 +34,6 @@ class LandingPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('NextProps', nextProps);
     if (nextProps.loggedIn) {
       this.context.router.push('/home');
     }
@@ -141,7 +140,6 @@ LandingPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log('State from container', state);
   return {
     loggedIn: state.loggedIn,
     user: state.user,
