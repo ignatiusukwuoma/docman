@@ -6,9 +6,11 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
+import SearchBar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
+import * as searchActions from '../../actions/searchActions';
 
 class HomePage extends React.Component {
   constructor(props, context) {
@@ -36,11 +38,19 @@ class HomePage extends React.Component {
 
   nextPage() {
     if (this.state.documents.length < 9) return;
+    if (this.state.pageData.query) {
+      return this.props.actions.searchDocuments(this.state.pageData.query,
+        this.state.pageData.offset + 9);
+    }
     return this.props.actions.getDocuments(this.state.pageData.offset + 9);
   }
 
   prevPage() {
     if (this.state.pageData.offset < 1) return;
+    if (this.state.pageData.query) {
+      return this.props.actions.searchDocuments(this.state.pageData.query,
+        this.state.pageData.offset - 9);
+    }
     return this.props.actions.getDocuments(this.state.pageData.offset - 9);
   }
 
@@ -68,6 +78,7 @@ class HomePage extends React.Component {
   }
 
   render() {
+    console.log('this.state', this.state);
     return (
       <div className="home-page">
         <div className="row">
@@ -76,6 +87,7 @@ class HomePage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
+              <SearchBar />
               <CSSTransitionGroup
                 transitionName="swim"
                 transitionEnterTimeout={500}
@@ -112,7 +124,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
-      Object.assign(documentActions, userActions),
+      Object.assign(documentActions, userActions, searchActions),
       dispatch)
   };
 }

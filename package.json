@@ -4,7 +4,8 @@
   "description": "Full-stack document management system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch server --exec babel-node -- ./bin/www",
+    "start": "production",
+    "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/test/**/* --timeout 20000",
     "test:server": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.spec.js --timeout 20000",
     "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*.spec.js",

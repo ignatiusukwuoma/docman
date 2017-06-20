@@ -5,6 +5,7 @@ export function documents(state = initialState.documents, action) {
   const newDocument = Object.assign({}, action.document);
   switch (action.type) {
     case actionTypes.GET_DOCUMENTS_SUCCESS:
+    case actionTypes.SEARCH_DOCUMENTS_SUCCESS:
       return action.documents;
 
     case actionTypes.CREATE_DOCUMENT_SUCCESS:

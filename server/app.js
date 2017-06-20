@@ -2,13 +2,14 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
+import dotenv from 'dotenv';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config.dev';
 import Routes from './routes';
 
-require('dotenv').config();
+dotenv.config();
 
 // Setup Express App
 const app = express();

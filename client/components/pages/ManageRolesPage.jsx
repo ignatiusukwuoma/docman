@@ -80,7 +80,7 @@ class ManageRolesPage extends React.Component {
     .catch(error => handleError(error));
   }
 
-  editButtonClick(e, role, title) {
+  editButtonClick(role, title) {
     this.setState({ roleToEdit: role });
     this.setState({ editRole: { title } });
   }
@@ -98,8 +98,8 @@ class ManageRolesPage extends React.Component {
         <TableRowColumn>{role.id}</TableRowColumn>
         <TableRowColumn>{role.title}</TableRowColumn>
         <TableRowColumn>
-          <a href="#roleModal" onClick={e => this
-            .editButtonClick(e, role.id, role.title)}>
+          <a href="#roleModal" onClick={() => this
+            .editButtonClick(role.id, role.title)}>
             <i className="material-icons">edit</i>
           </a>
           {role.id > 3 &&

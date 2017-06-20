@@ -5,6 +5,7 @@ export function users(state = initialState.users, action) {
   const updatedUser = Object.assign({}, action.user);
   switch (action.type) {
     case actionTypes.GET_USERS_SUCCESS:
+    case actionTypes.SEARCH_USERS_SUCCESS:
       return action.users;
 
     case actionTypes.UPDATE_USER_SUCCESS:

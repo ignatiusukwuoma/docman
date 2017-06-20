@@ -10,7 +10,9 @@ import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
+import * as searchActions from '../../actions/searchActions';
 import insertRole from '../../utils/insertRole';
+import SearchBar from '../forms/Searchbar.jsx';
 
 class ManageUsersPage extends React.Component {
   constructor(props, context) {
@@ -38,11 +40,19 @@ class ManageUsersPage extends React.Component {
 
   nextPage() {
     if (this.state.users.length < 9) return;
+    if (this.state.pageData.query) {
+      return this.props.actions.searchUsers(this.state.pageData.query,
+        this.state.pageData.offset + 9);
+    }
     return this.props.actions.getUsers(this.state.pageData.offset + 9);
   }
 
   prevPage() {
     if (this.state.pageData.offset < 1) return;
+    if (this.state.pageData.query) {
+      return this.props.actions.searchUsers(this.state.pageData.query,
+        this.state.pageData.offset - 9);
+    }
     return this.props.actions.getUsers(this.state.pageData.offset - 9);
   }
 
@@ -68,6 +78,7 @@ class ManageUsersPage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
+              <SearchBar />
               <CSSTransitionGroup
                 transitionName="swim"
                 transitionEnterTimeout={500}
@@ -118,7 +129,9 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(userActions, dispatch)
+    actions: bindActionCreators(
+      Object.assign(userActions, searchActions),
+      dispatch)
   };
 }
 

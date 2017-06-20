@@ -50,16 +50,6 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  // author2: {
-  //   id: 21,
-  //   name: 'John Doe',
-  //   username: 'johndoe',
-  //   email: 'johndoe@gmail.com',
-  //   password: 'j0hnd0e',
-  //   roleId: 3,
-  //   createdAt: new Date(),
-  //   updatedAt: new Date()
-  // },
   author3: {
     name: faker.name.findName(),
     username: faker.internet.userName(),
