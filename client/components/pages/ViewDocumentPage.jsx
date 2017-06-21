@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
-import { getDocument, deleteDocument } from '../../actions/documentActions';
+import handleError from '../../utils/errorHandler';
 import Sidebar from '../layouts/Sidebar.jsx';
-
+import { getDocument, deleteDocument } from '../../actions/documentActions';
 
 class ViewDocumentPage extends React.Component {
   constructor(props) {
@@ -18,22 +17,51 @@ class ViewDocumentPage extends React.Component {
     this.props.getDocument(this.props.params.id);
   }
 
-  deleteDocument() {
-    this.props.deleteDocument(this.props.params.id);
-    toastr.success('Document deleted successfully');
+  deleteDocument = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this document!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel this!'
+    })
+    .then((isConfirm) => {
+      if (isConfirm) {
+        this.props.deleteDocument(this.props.params.id)
+        .then(() => {
+          swal('Deleted!', 'This document has been deleted.', 'success');
+          this.context.router.push('/home');
+        });
+      }
+    })
+    .catch((er) =>
+      swal('Cancelled', 'The document is safe :)', 'error'));
   }
 
   render() {
     const { document } = this.props;
     return (
-      <div className="viewDocument">
+      <div className="view-document">
         <div className="row">
           <div className="col s12 m4 l3">
             <Sidebar />
           </div>
           <div className="col s12 m8 l9">
-            <div className="container center-align">
-              <h2>{document.title}</h2>
+            <div className="container">
+              <div>
+              <h4>{document.title}</h4>
+              <div className="document-actions">
+                <Link to={`/document/${document.id}/edit`}
+                  className="btn-floating waves-effect waves-light green">
+                  <i className="material-icons">mode_edit</i>
+                </Link>
+                <a href="#!" onClick={this.deleteDocument}
+                  className="btn-floating waves-effect waves-light red">
+                  <i className="material-icons">delete_forever</i>
+                </a>
+              </div>
               <h6>
                 Posted on {new Date(document.createdAt).toDateString()},
                 by: <span className="blue-text">
@@ -42,17 +70,10 @@ class ViewDocumentPage extends React.Component {
                   </strong>
                 </span>
               </h6>
+              </div>
               <Divider />
-              <p dangerouslySetInnerHTML={{ __html: document.content }}></p>
-              <Link to={`/document/${document.id}/edit`}
-                className=
-                "btn-floating btn-large waves-effect waves-light green">
-                <i className="material-icons">mode_edit</i>
-              </Link>
-              <Link to="/home" onClick={this.deleteDocument}
-                className="btn-floating btn-large waves-effect waves-light red">
-                <i className="material-icons">delete_forever</i>
-              </Link>
+              <p className="document-content"
+              dangerouslySetInnerHTML={{ __html: document.content }}></p>
             </div>
           </div>
         </div>
@@ -67,14 +88,14 @@ ViewDocumentPage.propTypes = {
 };
 
 ViewDocumentPage.contextTypes = {
-  router: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
-  // const documentId = ownProps.document.id;
   return {
     document: state.document
   };
 }
 
-export default connect(mapStateToProps, { getDocument, deleteDocument })(ViewDocumentPage);
+export default connect(mapStateToProps,
+{ getDocument, deleteDocument })(ViewDocumentPage);

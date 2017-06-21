@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import TextInput from '../forms/TextInput.jsx';
 import { searchUsers, searchDocuments } from '../../actions/searchActions';
 
 class Searchbar extends React.Component {
@@ -18,7 +19,7 @@ class Searchbar extends React.Component {
 
   submitSearch(event) {
     event.preventDefault();
-    if (location.pathname === '/users/manage') {
+    if (location.pathname === '/manageusers') {
       this.props.searchUsers(this.state.search);
     } else {
       this.props.searchDocuments(this.state.search);
@@ -28,25 +29,21 @@ class Searchbar extends React.Component {
   render() {
     return (
       <form onSubmit={this.submitSearch} className="searchbar">
-        <div class="input-field">
-          <input
-            name="search"
-            type="text"
-            placeholder="placeholder"
-            id="search"
-            onChange={this.handleChange}
-            value={this.state.search}
-          />
-        </div>
-        <input type="submit" value="Search"/>
+        <TextInput
+          name="search"
+          type="text"
+          floatText={location.pathname === '/manageusers'
+            ? 'Search Users' : 'Search Documents'}
+          handleChange={this.handleChange}
+          value={this.state.search}
+        />
+        <a onClick={this.submitSearch}>
+          <i className="material-icons">search</i>
+        </a>
       </form>
     );
   }
 }
-
-Searchbar.propTypes = {
-  documents: PropTypes.array,
-};
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -54,4 +51,5 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { searchUsers, searchDocuments })(Searchbar);
+export default connect(mapStateToProps,
+{ searchUsers, searchDocuments })(Searchbar);

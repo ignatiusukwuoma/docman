@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
-import { throwError } from '../utils/errorHandler';
+import handleError from '../utils/errorHandler';
 
 export function searchDocuments(query, offset = 0) {
   return (dispatch) => {
@@ -13,10 +13,10 @@ export function searchDocuments(query, offset = 0) {
           documents: res.data.documents,
           pageData: res.data.pageData,
           query,
-          offset,
+          offset
         });
       })
-      .catch(error => throwError(error, dispatch));
+      .catch(error => handleError(error, dispatch));
   };
 }
 
@@ -30,9 +30,9 @@ export function searchUsers(query, offset = 0) {
           users: res.data.users,
           pageData: res.data.pageData,
           query,
-          offset,
+          offset
         });
       })
-      .catch(error => throwError(error, dispatch));
+      .catch(error => handleError(error, dispatch));
   };
 }

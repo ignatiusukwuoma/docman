@@ -5,12 +5,13 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
+import { createDocument } from '../../actions/documentActions';
+import * as validator from '../../utils/validator';
+import handleError from '../../utils/errorHandler';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
-import * as documentActions from '../../actions/documentActions';
-import * as validator from '../../utils/validator';
-import handleError from '../../utils/errorHandler';
+
 
 class NewDocumentPage extends React.Component {
   constructor(props, context) {
@@ -52,7 +53,7 @@ class NewDocumentPage extends React.Component {
       .documentValidator(this.state.document);
     if (valid) {
       this.setState({ saving: true });
-      this.props.actions.createDocument(this.state.document)
+      this.props.createDocument(this.state.document)
       .then(() => this.redirect())
       .catch((error) => {
         this.setState({ saving: false });
@@ -78,16 +79,14 @@ class NewDocumentPage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="create-document container center-align">
-              <h2>Create New Document</h2>
+              <h3>Create New Document</h3>
               <form onSubmit={this.onSubmit}>
                 <div>
                   <TextInput
-                    fullWidth
                     name="title"
                     type="text"
                     errorText={this.state.errors.title}
                     floatText="Title"
-                    hint="Title of the document"
                     handleChange={this.handleChange}
                     value={this.state.document.title}
                   />
@@ -112,8 +111,8 @@ class NewDocumentPage extends React.Component {
                     onChange={this.handleEditorChange}
                   />
                 </div>
-                {this.state.errors.content &&
-                <div className="red-text">
+                {this.state.errors.content
+                && <div className="red-text">
                   {this.state.errors.content}
                 </div>}
                 <FlatButton
@@ -132,24 +131,8 @@ class NewDocumentPage extends React.Component {
   }
 }
 
-NewDocumentPage.propTypes = {
-  actions: PropTypes.object.isRequired,
-};
-
 NewDocumentPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    documents: state.documents,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(documentActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewDocumentPage);
+export default connect(null, { createDocument })(NewDocumentPage);

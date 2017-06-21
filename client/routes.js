@@ -21,20 +21,20 @@ export default
 
     <Route component={UserIsLoggedIn}>
       <Route path="/home" component={HomePage} />
-      <Route path="/users/:id" components={ProfilePage} />
+      <Route path="/user/:id" components={ProfilePage} />
       <Route path="/document/new" component={NewDocumentPage} />
       <Route path="/document/:id" component={ViewDocumentPage} />
-      <Route path="/users/:id/edit" components={EditProfilePage} />
+      <Route path="/user/:id/edit" components={EditProfilePage} />
       <Route path="/document/:id/edit" component={EditDocumentPage} />
-      <Route path="/users/:id/documents" component={UserDocumentsPage} />
+      <Route path="/user/:id/documents" component={UserDocumentsPage} />
     </Route>
 
     <Route component={UserIsAdmin}>
-      <Route path="/users/manage" component={ManageUsersPage} />
+      <Route path="/manageusers" component={ManageUsersPage} />
     </Route>
 
-    <Route component={UserIsAdmin}>
-      <Route path="/roles/manage" component={ManageRolesPage} />
+    <Route component={UserIsSuperAdmin}>
+      <Route path="/manageroles" component={ManageRolesPage} />
     </Route>
 
     <Route path="*" component={LandingPage} />

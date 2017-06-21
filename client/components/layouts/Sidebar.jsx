@@ -1,62 +1,75 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
-import DocumentSidebar from './DocumentSidebar.jsx';
-import ProfileSidebar from './ProfileSidebar.jsx';
 import AdminSidebar from './AdminSidebar.jsx';
-import { deleteUser, logout } from '../../actions/userActions';
+import ProfileSidebar from './ProfileSidebar.jsx';
+import DocumentSidebar from './DocumentSidebar.jsx';
 import handleError from '../../utils/errorHandler';
+import { deleteUser, logout } from '../../actions/userActions';
 
 class Sidebar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       access: props.access,
-      user: props.user
+      user: {}
     };
     this.deleteUser = this.deleteUser.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.user.id !== nextProps.user) {
-      this.setState({ user: nextProps.user });
+    if (this.state.user.id !== nextProps.user.id) {
+      this.setState({ user: Object.assign({}, nextProps.user) });
     }
   }
 
   deleteUser() {
-    this.props.deleteUser(this.state.user.id)
-      .then(() => this.redirect())
-      .catch(error => handleError(error));
+    swal({
+      title: 'Are you sure?',
+      text: 'This user will be permanently deleted!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel this!'
+    })
+    .then((isConfirm) => {
+      if (isConfirm) {
+        this.props.deleteUser(this.state.user.id)
+        .then(() => this.redirect());
+      }
+    })
+    .catch((er) =>
+      swal('Cancelled', 'The user is safe :)', 'error'));
   }
 
   redirect() {
     if (this.state.access.user.roleId === 1) {
-      toastr.warning('Account has been deleted');
+      swal('Deleted!', 'The user has been deleted.', 'success');
       this.context.router.push('/home');
     } else {
       this.props.logout();
-      toastr.warning('Your Account has been deleted');
+      this.context.router.push('/');
+      swal('Deleted!', 'Your Account has been deleted.', 'success');
     }
   }
 
   render() {
-    const regExp = new RegExp(`/users/${this.state.user.id}`);
     return (
-      <div className="sidebar profile">
-        {this.state.user &&
-        location.pathname.match(regExp) &&
-        <ProfileSidebar {...this.state} deleteUser={this.deleteUser}/>}
+      <div className="card sidebar">
+        {this.state.user
+        && location.pathname === `/user/${this.state.user.id}`
+        && <ProfileSidebar {...this.state} deleteUser={this.deleteUser}/>}
         <DocumentSidebar {...this.state} />
-        {this.state.access.user.roleId <= 2 &&
-        <AdminSidebar access={this.state.access}/>}
+        {this.state.access.user.roleId <= 2
+        && <AdminSidebar access={this.state.access}/>}
       </div>
     );
   }
 }
 Sidebar.propTypes = {
   access: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  deleteUser: PropTypes.func.isRequired
+  user: PropTypes.object.isRequired
 };
 
 Sidebar.contextTypes = {

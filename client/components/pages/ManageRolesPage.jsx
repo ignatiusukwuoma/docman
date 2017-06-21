@@ -6,7 +6,8 @@ import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
 import { Card } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import { Table, TableBody, TableHeader, TableHeaderColumn,
+  TableRow, TableRowColumn } from 'material-ui/Table';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as roleActions from '../../actions/roleActions';
@@ -18,7 +19,7 @@ class ManageRolesPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      roles: [],
+      roles: [...props.roles],
       newRole: { title: '' },
       editRole: { title: '' },
       roleToEdit: ''
@@ -34,18 +35,20 @@ class ManageRolesPage extends React.Component {
     this.props.actions.getRoles();
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     $('.modal').modal();
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      roles: nextProps.roles
-    });
+    if (this.state.roles !== nextProps.roles) {
+      this.setState({
+        roles: [...nextProps.roles]
+      });
+    }
   }
 
   handleChange(event) {
-    if (!/[^A-Za-z]/.test(event.target.value)) {
+    if (!(/[^A-Za-z]/).test(event.target.value)) {
       const newRole = this.state.newRole;
       newRole.title = event.target.value.substr(0, 20);
       this.setState({ newRole });
@@ -53,7 +56,7 @@ class ManageRolesPage extends React.Component {
   }
 
   handleEditChange(event) {
-    if (!/[^A-Za-z]/.test(event.target.value)) {
+    if (!(/[^A-Za-z]/).test(event.target.value)) {
       const editRole = this.state.editRole;
       editRole.title = event.target.value.substr(0, 20);
       this.setState({ editRole });
@@ -86,14 +89,28 @@ class ManageRolesPage extends React.Component {
   }
 
   deleteRole(roleId) {
-    this.props.actions.deleteRole(roleId)
-    .then(() => {
-      toastr.warning('You have deleted a role');
-    });
+    swal({
+      title: 'Are you sure?',
+      text: 'This role will be permanently deleted!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel this!'
+    })
+    .then((isConfirm) => {
+      if (isConfirm) {
+        this.props.actions.deleteRole(roleId)
+        .then(() => {
+          swal('Deleted!', 'The role has been deleted.', 'success');
+        });
+      }
+    })
+    .catch((er) =>
+      swal('Cancelled', 'The role is safe :)', 'error'));
   }
 
-  placeRoles = (role) => {
-    return (
+  placeRoles = (role) =>
       <TableRow key={role.id}>
         <TableRowColumn>{role.id}</TableRowColumn>
         <TableRowColumn>{role.title}</TableRowColumn>
@@ -102,14 +119,12 @@ class ManageRolesPage extends React.Component {
             .editButtonClick(role.id, role.title)}>
             <i className="material-icons">edit</i>
           </a>
-          {role.id > 3 &&
-            <a href="#!" onClick={() => { this.deleteRole(role.id); }}>
+          {role.id > 3
+          && <a href="#!" onClick={() => { this.deleteRole(role.id); }}>
               <i className="material-icons">delete_forever</i>
             </a>}
         </TableRowColumn>
-      </TableRow>
-    );
-  }
+      </TableRow>;
 
   render() {
     return (
@@ -120,6 +135,10 @@ class ManageRolesPage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
+              <div className="headers">
+                <h4> Roles </h4>
+                <h4>Hi SuperAdmin</h4>
+              </div>
               <Card className="roles-card">
                 <Table>
                   <TableHeader>
@@ -130,30 +149,33 @@ class ManageRolesPage extends React.Component {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                  {this.state.roles &&
-                  this.state.roles.map(this.placeRoles)}
+                  {this.state.roles
+                  && this.state.roles.map(this.placeRoles)}
                   </TableBody>
                 </Table>
               </Card>
-              <form id="roles-form" onSubmit={this.onSubmit}>
-                <TextInput
-                  name="role"
-                  type="text"
-                  fullWidth={true}
-                  floatText="Role"
-                  hint="Add A New Role"
-                  handleChange={this.handleChange}
-                  value={this.state.newRole.title}
-                />
-                <FlatButton
-                  backgroundColor="#a4c639"
-                  hoverColor="#8AA62F"
-                  label="Add Role"
-                  disabled={this.state.newRole.title.length === 0}
-                  onClick={this.onSubmit}
-                />
-              </form>
-
+              <div className="container" id="new-role-form">
+                <h4 className="center-align"> Add A New Role</h4>
+                <form onSubmit={this.onSubmit}>
+                  <TextInput
+                    name="role"
+                    type="text"
+                    fullWidth={true}
+                    floatText="Role"
+                    handleChange={this.handleChange}
+                    value={this.state.newRole.title}
+                  />
+                  <div className="center-align">
+                    <FlatButton
+                      backgroundColor="#a4c639"
+                      hoverColor="#8AA62F"
+                      label="Add Role"
+                      disabled={this.state.newRole.title.length === 0}
+                      onClick={this.onSubmit}
+                    />
+                  </div>
+                </form>
+              </div>
               <div id="roleModal" className="modal">
                 <div className="modal-content">
                   <h3 className="center">Edit Role</h3>
@@ -163,7 +185,6 @@ class ManageRolesPage extends React.Component {
                       type="text"
                       fullWidth={true}
                       floatText="Edit Role"
-                      hint="Edit Role"
                       handleChange={this.handleEditChange}
                       value={this.state.editRole.title}
                     />
@@ -188,6 +209,8 @@ class ManageRolesPage extends React.Component {
 
 ManageRolesPage.propTypes = {
   actions: PropTypes.object.isRequired,
+  roles: PropTypes.array.isRequired,
+  access: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

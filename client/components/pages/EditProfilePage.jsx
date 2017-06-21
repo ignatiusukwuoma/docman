@@ -22,7 +22,7 @@ class EditProfilePage extends React.Component {
         email: '',
         username: '',
         password: ''
-      },
+      }
     };
   }
 
@@ -43,7 +43,7 @@ class EditProfilePage extends React.Component {
     if (valid) {
       this.props.updateUser(this.props.user.id, this.state.signupDetails)
       .then(() => {
-        this.context.router.push(`/users/${this.props.user.id}`);
+        this.context.router.push(`/user/${this.props.user.id}`);
         toastr.success('Profile updated successfully');
       })
       .catch(error => handleError(error));
@@ -59,9 +59,11 @@ class EditProfilePage extends React.Component {
           <div className="col s12 m4 l3">
             <Sidebar />
           </div>
-          <div className="col s12 m8 l9">
-            <div className="forms">
-              <h6> Update Profile </h6>
+          <div className="col s12 m8 l9 center-align center-all">
+            <div className="headers">
+              <h4> Edit Your Profile </h4>
+            </div>
+            <div className="edit-profile-form">
               <SignupForm
                 onSubmit={this.onSubmit}
                 handleChange={this.handleChange}

@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  background-color: whitesmoke;
 }
 
 .mainLoader {
@@ -14,8 +15,12 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.small {
+  font-size: 12px;
+  margin-top: -15px;
+}
+
 .landing-page {
-  background-color: whitesmoke;
   height: 100%;
   .landing-content {
     .about{
@@ -30,14 +35,77 @@ body {
       }
     }
     .forms {
-      h6 {
+      h5 {
         font-family: $secondary-font;
         font-weight: bold;
         margin-top: 40px;
+        margin-bottom: 10px;
+        font-size: 20px;
       }
     }
   }
-  
+}
+
+.home-page {
+  padding: 10px;
+  .card {
+    .card-action {
+      display: flex;
+      justify-content: space-between;
+      background-color: $primary-color;
+    }
+    .enlarge-card {
+      height: 200px;
+      overflow: hidden;
+      .card-title {
+        font-family: $secondary-font;
+      }
+      p {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.roles-page {
+  padding: 10px;
+  #new-role-form {
+    h4 {
+      font-family: $secondary-font;
+    }
+  }
+}
+
+.users-page {
+  padding: 10px;
+  .users-card {
+    margin-top: 20px;
+  }
+}
+
+.view-document {
+  padding: 10px;
+  h4 {
+    font-family: $secondary-font;
+  }
+  .document-actions {
+    float: right;
+  }
+  .document-content {
+    margin-top: 25px;
+  }
+}
+
+.edit-profile-page {
+  padding: 10px;
+  .center-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .edit-profile-form {
+    width: 400px;
+  }
 }
 
 .navbar-main {
@@ -51,38 +119,47 @@ body {
   }
 }
 
-.sidebar.profile {
+.searchbar {
+  display: flex;
+  margin-top: 10px;
+  i {
+    margin-top: 25px;
+    cursor: pointer;
+  }
+}
+
+.sidebar {
   margin-top: 10px;
   .document-icons {
     float: right;
   }
 }
 
-.home-page {
-  .card {
-    background-color: $primary-color;
-    .card-action {
-      display: flex;
-      justify-content: space-between;
-    }
-    .enlarge-card {
-      height: 200px;
-      .card-title {
-        font-family: $secondary-font;
-      }
-      p {
-        margin-top: 10px;
-      }
-    }
+.profile {
+  .profile-title {
+    color: $primary-color;
   }
 }
 
-.create-document {
-  .select-input {
-    width: 200px;
-  }
-  .tiny-mce {
-    margin-bottom: 50px;
+.headers {
+  display: flex;
+  justify-content: space-between;
+  font-family: $secondary-font;
+  padding: 0 10px;
+}
+
+.new-document-page {
+  padding: 10px;
+  .create-document {
+    h3 {
+      font-family: $secondary-font;
+    }
+    .select-input {
+      width: 200px;
+    }
+    .tiny-mce {
+      margin-bottom: 30px;
+    }
   }
 }
 
@@ -90,11 +167,5 @@ body {
   #paginationText {
     margin-top: 4px;
     font-weight: 500;
-  }
-}
-
-.users-page {
-  .users-card {
-    margin-top: 20px;
   }
 }

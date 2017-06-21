@@ -1,21 +1,18 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
 
-const TextInput = ({
-name, type, hint, errorText, floatText, fullWidth,
-value, handleChange, floatingLabelFixed, floatingLabelStyle }) => (
-  <TextField
-    name={name}
-    type={type}
-    value={value}
-    hintText={hint}
-    fullWidth={fullWidth}
-    errorText={errorText}
-    onChange={handleChange}
-    floatingLabelText={floatText}
-    floatingLabelFixed={floatingLabelFixed}
-    floatingLabelStyle={floatingLabelStyle}
-  />
-);
-
+function TextInput({ name, type, errorText, floatText, value, handleChange }) {
+  return (
+    <div className="input-field">
+      <label htmlFor={name}>{floatText}</label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+      />
+      {errorText && <div className="red-text small">{errorText}</div>}
+    </div>
+  );
+}
 export default TextInput;

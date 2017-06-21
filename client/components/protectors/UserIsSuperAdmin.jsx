@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 class UserIsSuperAdmin extends React.Component {
 
   componentWillMount() {
-    if (this.props.access.user.roleId > 1) {
+    if (!this.props.access.loggedIn) {
       return this.context.router.push('/');
+    }
+    if (this.props.access.user.roleId > 1) {
+      return this.context.router.push('/home');
     }
   }
 

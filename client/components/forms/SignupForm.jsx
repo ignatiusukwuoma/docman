@@ -10,7 +10,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="name"
           type="text"
-          hint="Enter Your Full Name"
           errorText={signupErrors.name}
           floatText="Name"
           handleChange={handleChange}
@@ -21,7 +20,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="email"
           type="email"
-          hint="Enter Your Email"
           errorText={signupErrors.email}
           floatText="Email"
           handleChange={handleChange}
@@ -32,7 +30,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="username"
           type="text"
-          hint="Choose A Username"
           errorText={signupErrors.username}
           floatText="Username"
           handleChange={handleChange}
@@ -43,7 +40,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="password"
           type="password"
-          hint="Choose A Password"
           errorText={signupErrors.password}
           floatText="Password"
           handleChange={handleChange}
@@ -54,7 +50,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="confirmPassword"
           type="password"
-          hint="Enter The Same Password"
           errorText={signupErrors.confirmPassword}
           floatText="Confirm Password"
           handleChange={handleConfirmPassword}

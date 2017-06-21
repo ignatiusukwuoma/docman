@@ -3,14 +3,7 @@ import jwt from 'jsonwebtoken';
 import setAccessToken from '../utils/setAccessToken';
 import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
-import handleError from '../utils/errorHandler';
-
-export function signupSuccess(message) {
-  return {
-    type: actionTypes.SIGNUP_SUCCESS,
-    message
-  };
-}
+import handleError, { throwError } from '../utils/errorHandler';
 
 export function login(token, type) {
   setAccessToken(token);
@@ -36,7 +29,6 @@ export function signup(signupDetails) {
           jwt: token
         });
         localStorage.setItem('docman-pro', tokenStorage);
-        // dispatch(signupSuccess(res.data.message)); TODO - Create Reducer
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
       })
       .catch(error => handleError(error, dispatch));
@@ -56,7 +48,7 @@ export function signin(signinDetails) {
 
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 
@@ -71,13 +63,13 @@ export function logout() {
 export function getUsers(offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
-    return axios.get(`/users?offset=${offset}`)
+    return axios.get(`/users/?offset=${offset}`)
       .then((res) => {
         dispatch({
           type: actionTypes.GET_USERS_SUCCESS,
           users: res.data.users,
           pageData: res.data.pageData,
-          offset,
+          offset
         });
       })
       .catch(error => handleError(error, dispatch));

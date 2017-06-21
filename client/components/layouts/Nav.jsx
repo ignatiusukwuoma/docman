@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
@@ -14,7 +14,7 @@ class Nav extends React.Component {
   checkUser() {
     if (this.props.access.loggedIn) {
       return (
-        <div id="nav-mobile" className="right hide-on-med-and-down">
+        <div id="nav-mobile" className="right">
           <Link to="" onClick={this.logout}> Logout </Link>
         </div>
       );
@@ -36,6 +36,10 @@ class Nav extends React.Component {
     );
   }
 }
+
+Nav.propTypes = {
+  access: PropTypes.object
+};
 
 function mapStateToProps(state, ownProps) {
   return {
