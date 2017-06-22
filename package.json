@@ -4,9 +4,9 @@
   "description": "Full-stack document management system",
   "main": "index.js",
   "scripts": {
-    "start": "production",
+    "start": "node server/app.js",
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
-    "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/test/**/* --timeout 20000",
+    "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/tests/**/* --timeout 20000",
     "test:server": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.spec.js --timeout 20000",
     "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*.spec.js",
     "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
@@ -42,6 +42,7 @@
   },
   "homepage": "https://github.com/andela-iukwuoma/docman#readme",
   "dependencies": {
+    "animate.css": "^3.5.2",
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "6.8.0",
@@ -50,6 +51,7 @@
     "babel-preset-es2015": "^6.24.1",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "compression": "^1.6.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "istanbul": "^0.4.5",
@@ -67,7 +69,6 @@
     "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^1.0.0",
     "react-tinymce": "^0.5.1",
-    "react-transition-group": "^1.1.3",
     "redux": "^3.5.2",
     "redux-thunk": "^2.0.1",
     "sequelize": "^3.30.4",
@@ -77,6 +78,7 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^6.2.4",
     "babel-preset-react": "^6.24.1",

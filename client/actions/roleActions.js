@@ -10,7 +10,7 @@ export function getRoles() {
       .then((res) => {
         dispatch({
           type: actionTypes.GET_ROLES_SUCCESS,
-          roles: res.data,
+          roles: res.data
         });
       })
       .catch(error => handleError(error, dispatch));

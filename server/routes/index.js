@@ -12,7 +12,7 @@ const isAdminOrSuperadmin = authMiddlewares.isAdminOrSuperadmin;
 
 const Routes = (app) => {
   app.get('/v1', (req, res) => res.status(200).send({
-    message: 'Welcome to DocMan-Pro API',
+    message: 'Welcome to Docman Pro API'
   }));
 
   app.use('/roles', validateToken, isSuperadmin);
@@ -53,9 +53,9 @@ const Routes = (app) => {
     .put(documentControllers.update)
     .delete(documentControllers.destroy);
 
-  app.use('/search', validateToken, isAdminOrSuperadmin);
+  app.use('/search', validateToken);
   app.route('/search/users/')
-    .get(searchControllers.searchUsers);
+    .get(isAdminOrSuperadmin, searchControllers.searchUsers);
 
   app.route('/search/documents')
     .get(searchControllers.searchDocuments);

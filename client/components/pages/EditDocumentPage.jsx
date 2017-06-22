@@ -69,23 +69,21 @@ class EditDocumentPage extends React.Component {
 
   render() {
     return (
-      <div class="edit-document-page">
+      <div className="new-document-page">
         <div className="row">
           <div className="col s12 m4 l3">
             <Sidebar />
           </div>
           <div className="col s12 m8 l9">
             <div className="create-document container center-align">
-              <h2>Edit Document</h2>
+              <h3>Edit Document</h3>
               <form onSubmit={this.onSubmit}>
                 <div>
                   <TextInput
-                    fullWidth
                     name="title"
                     type="text"
                     errorText=""
                     floatText="Title"
-                    hint="Title of the document"
                     handleChange={this.handleChange}
                     value={this.state.document.title}
                   />
@@ -135,9 +133,11 @@ EditDocumentPage.contextTypes = {
 };
 
 function getDocumentById(allDocuments, id) {
-  const documentToUpdate = allDocuments.filter(eachDocument => eachDocument.id === Number(id));
-  // debugger;
-  if (documentToUpdate) return documentToUpdate[0];
+  const documentToUpdate = allDocuments
+    .filter(eachDocument => eachDocument.id === Number(id));
+  if (documentToUpdate) {
+    return documentToUpdate[0];
+  }
   return null;
 }
 
@@ -153,7 +153,7 @@ function mapStateToProps(state, ownProps) {
     documentToEdit.content = currentDocument.content;
   }
   return {
-    document: documentToEdit,
+    document: documentToEdit
   };
 }
 

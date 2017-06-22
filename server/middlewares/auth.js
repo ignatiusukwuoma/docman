@@ -32,7 +32,7 @@ export default {
         .catch(error => res.status(403)
           .json({
             message: 'There was an error processing your request',
-            error,
+            error
           }));
     });
   },

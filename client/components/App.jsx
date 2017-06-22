@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Nav from '../components/layouts/Nav.jsx';
 import loader from '../img/loader.gif';
+import Nav from '../components/layouts/Nav.jsx';
+import Footer from '../components/layouts/Footer.jsx';
 
 class App extends React.Component {
   render() {
@@ -10,13 +11,15 @@ class App extends React.Component {
         <Nav />
         {this.props.children}
         { this.props.loading && <img className="mainLoader" src={loader} />}
+        <Footer />
       </div>
     );
   }
 }
 
 App.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

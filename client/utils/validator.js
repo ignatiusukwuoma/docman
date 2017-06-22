@@ -13,11 +13,12 @@ export function validateFields(inputFields = [], requiredFields = []) {
   return { errors, valid };
 }
 
-export function signupValidator({ name = '', email = '', username = '', password = '' }, confirmPassword) {
+export function signupValidator({
+  name = '', email = '', username = '', password = '' }, confirmPassword) {
   const validate = validateFields(
     [username, password, name, email],
     ['username', 'password', 'name', 'email']);
-  if (/\s/.test(username) || /\W/.test(username)) {
+  if (/\s/.test(username) || (/\W/).test(username)) {
     validate.errors.username = 'Please enter a valid username';
     validate.valid = false;
   }
@@ -39,7 +40,7 @@ export function signinValidator({ username = '', password = '' }) {
   const validate = validateFields(
     [username, password],
     ['username', 'password']);
-  if (/\s/.test(username) || /\W/.test(username)) {
+  if (/\s/.test(username) || (/\W/).test(username)) {
     validate.errors.username = 'Please enter a valid username';
     validate.valid = false;
   }
@@ -50,8 +51,9 @@ export function documentValidator({ title = '', access = '', content = '' }) {
   const validate = validateFields(
     [title, access, content],
     ['title', 'access', 'content']);
-  if (access === 'null') {
+  if (access === 'select') {
     validate.errors.access = 'Please select an access level';
+    validate.valid = false;
   }
   return validate;
 }

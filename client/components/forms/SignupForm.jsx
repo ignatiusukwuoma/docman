@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
 
 
-function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPassword, confirmPassword, signupErrors }) {
+function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
+  handleConfirmPassword, confirmPassword, signupErrors }) {
   return (
     <form onSubmit={onSubmit} id="signup-form">
       <div>
         <TextInput
           name="name"
           type="text"
-          hint="Enter Your Full Name"
           errorText={signupErrors.name}
           floatText="Name"
           handleChange={handleChange}
@@ -21,7 +21,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="email"
           type="email"
-          hint="Enter Your Email"
           errorText={signupErrors.email}
           floatText="Email"
           handleChange={handleChange}
@@ -32,7 +31,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="username"
           type="text"
-          hint="Choose A Username"
           errorText={signupErrors.username}
           floatText="Username"
           handleChange={handleChange}
@@ -43,7 +41,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="password"
           type="password"
-          hint="Choose A Password"
           errorText={signupErrors.password}
           floatText="Password"
           handleChange={handleChange}
@@ -54,7 +51,6 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
         <TextInput
           name="confirmPassword"
           type="password"
-          hint="Enter The Same Password"
           errorText={signupErrors.confirmPassword}
           floatText="Confirm Password"
           handleChange={handleConfirmPassword}
@@ -64,12 +60,22 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
       <FlatButton
         backgroundColor="#a4c639"
         hoverColor="#8AA62F"
-        label={location.pathname === '/' ?
-        'Create an Account' : 'Update Account'}
+        label={pathname === '/'
+        ? 'Create an Account' : 'Update Account'}
         onClick={onSubmit}
       />
     </form>
   );
 }
+
+SignupForm.propTypes = {
+  pathname: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  signupDetails: PropTypes.object.isRequired,
+  handleConfirmPassword: PropTypes.func.isRequired,
+  confirmPassword: PropTypes.string.isRequired,
+  signupErrors: PropTypes.object.isRequired
+};
 
 export default SignupForm;

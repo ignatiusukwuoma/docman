@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SignupForm from '../../../components/forms/SignupForm.jsx';
 
-function setup() {
+function setup(pathname) {
   const props = {
     signupDetails: {
       name: '',
@@ -13,7 +13,10 @@ function setup() {
     },
     onSubmit: () => {},
     handleChange: () => {},
-    signupErrors: {}
+    signupErrors: {},
+    handleConfirmPassword: () => {},
+    confirmPassword: '',
+    pathname
   };
 
   return shallow(<SignupForm {...props} />);
@@ -30,10 +33,15 @@ describe('SignupForm', () => {
     expect(wrapper.find('TextInput').length).toEqual(5);
   });
 
-  it('renders the create an account button', () => {
-    const wrapper = setup();
+  it('renders the Create an Account button on LandingPage', () => {
+    const wrapper = setup('/');
     expect(wrapper.find('FlatButton').length).toEqual(1);
-    // expect(wrapper.find('FlatButton').prop('label')).toBe('Create an Account');
+    expect(wrapper.find('FlatButton').prop('label')).toBe('Create an Account');
+  });
+
+  it('renders the Update Account button on EditProfilePage', () => {
+    const wrapper = setup('/user/5/edit');
+    expect(wrapper.find('FlatButton').prop('label')).toBe('Update Account');
   });
 
   it('renders a text input for name', () => {

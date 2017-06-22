@@ -17,15 +17,15 @@ export default (sequelize, DataTypes) => {
       defaultValue: 'public',
       validate: { notEmpty: { msg: 'Access field cannot be empty' },
         isIn: { args: [['public', 'private', 'role']],
-          msg: 'Choose either public, private or role' } }
-    },
+          msg: 'Select either Public, Private or Role' } }
+    }
   }, {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
         Document.belongsTo(models.User, {
           foreignKey: 'userId',
-          onDelete: 'CASCADE',
+          onDelete: 'CASCADE'
         });
       }
     }

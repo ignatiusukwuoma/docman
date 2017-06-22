@@ -29,7 +29,7 @@ class LandingPage extends React.Component {
       signinDetails: {
         username: '',
         password: ''
-      },
+      }
     };
   }
 
@@ -74,7 +74,7 @@ class LandingPage extends React.Component {
   onSigninSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validator
-    .signinValidator(this.state.signinDetails);
+      .signinValidator(this.state.signinDetails);
     if (valid) {
       this.props.actions.signin(this.state.signinDetails)
       .then(() => {
@@ -104,15 +104,16 @@ class LandingPage extends React.Component {
             </div>
             <div className="col s12 m5 l4">
               <div className="forms">
-                <h6> Login to your account </h6>
+                <h5> Login to your account </h5>
                 <SigninForm
                   onSigninSubmit={this.onSigninSubmit}
                   signinDetails={this.state.signinDetails}
                   signinErrors={this.state.signinErrors}
                   handleSigninChange={this.handleSigninChange}
                 />
-                <h6> Create a new account </h6>
+                <h5> Create a new account </h5>
                 <SignupForm
+                  pathname={this.props.pathname}
                   onSubmit={this.onSubmit}
                   handleChange={this.handleChange}
                   signupErrors={this.state.signupErrors}
@@ -130,9 +131,10 @@ class LandingPage extends React.Component {
 }
 
 LandingPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
   loggedIn: PropTypes.bool,
   user: PropTypes.object,
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 LandingPage.contextTypes = {
@@ -140,9 +142,11 @@ LandingPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  const pathname = ownProps.location.pathname;
   return {
+    pathname,
     loggedIn: state.loggedIn,
-    user: state.user,
+    user: state.user
   };
 }
 

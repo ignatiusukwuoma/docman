@@ -1,7 +1,7 @@
 import { teal500 } from 'material-ui/styles/colors';
 
 const styles = {
-  signinForm: {
+  titleColor: {
     color: teal500
   }
 };

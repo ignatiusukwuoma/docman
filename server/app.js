@@ -7,12 +7,13 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config.dev';
-import Routes from './routes';
+import routes from './routes';
 
 dotenv.config();
 
 // Setup Express App
 const app = express();
+app.use(require('compression')());
 app.use(express.static('client'));
 const compiler = webpack(webpackConfig);
 app.use(webpackMiddleware(compiler, {
@@ -30,7 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Require our routes into the application
-Routes(app);
+routes(app);
 
 // Setup default route that sends back a welcome message
 app.get('*', (req, res) => {

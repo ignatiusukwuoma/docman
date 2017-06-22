@@ -4,8 +4,8 @@ import generalUtils from '../utils/generalUtils';
 export default {
   searchUsers(req, res) {
     const query = `%${req.query.q}%`;
-    const limit = (req.query.limit > 0) ? req.query.limit : 9;
-    const offset = (req.query.offset > 0) ? req.query.offset : 0;
+    const limit = req.query.limit > 0 ? req.query.limit : 9;
+    const offset = req.query.offset > 0 ? req.query.offset : 0;
     return models.User
       .findAndCount({
         limit,
@@ -17,7 +17,7 @@ export default {
           { email: { $iLike: query } }
           ] },
         attributes: ['id', 'username', 'name', 'email', 'roleId'],
-        order: [['id']],
+        order: [['id']]
       })
       .then(userDatabase => res.status(200).json({
         users: userDatabase.rows,
@@ -28,8 +28,8 @@ export default {
 
   searchDocuments(req, res) {
     const query = `%${req.query.q}%`;
-    const limit = (req.query.limit > 0) ? req.query.limit : 9;
-    const offset = (req.query.offset > 0) ? req.query.offset : 0;
+    const limit = req.query.limit > 0 ? req.query.limit : 9;
+    const offset = req.query.offset > 0 ? req.query.offset : 0;
     return models.Document
       .findAndCountAll({
         limit,

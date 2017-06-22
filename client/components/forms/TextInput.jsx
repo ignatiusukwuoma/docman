@@ -1,21 +1,26 @@
-import React from 'react';
-import TextField from 'material-ui/TextField';
+import React, { PropTypes } from 'react';
 
-const TextInput = ({
-name, type, hint, errorText, floatText, fullWidth,
-value, handleChange, floatingLabelFixed, floatingLabelStyle }) => (
-  <TextField
-    name={name}
-    type={type}
-    value={value}
-    hintText={hint}
-    fullWidth={fullWidth}
-    errorText={errorText}
-    onChange={handleChange}
-    floatingLabelText={floatText}
-    floatingLabelFixed={floatingLabelFixed}
-    floatingLabelStyle={floatingLabelStyle}
-  />
-);
-
+function TextInput({ name, type, errorText, floatText, value, handleChange }) {
+  return (
+    <div className="input-field">
+      <label htmlFor={name}>{floatText}</label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+      />
+      {errorText && <div className="red-text small">{errorText}</div>}
+    </div>
+  );
+}
+TextInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
+  errorText: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  floatText: PropTypes.string
+};
 export default TextInput;

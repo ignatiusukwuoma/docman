@@ -2,24 +2,25 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import { CSSTransitionGroup } from 'react-transition-group';
 import Divider from 'material-ui/Divider';
 import { Card } from 'material-ui/Card';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {
+  Table, TableBody, TableHeader, TableHeaderColumn,
+  TableRow, TableRowColumn } from 'material-ui/Table';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
+import Searchbar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as searchActions from '../../actions/searchActions';
 import insertRole from '../../utils/insertRole';
-import SearchBar from '../forms/Searchbar.jsx';
 
 class ManageUsersPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      users: [],
-      pageData: {},
+      users: [...props.users],
+      pageData: Object.assign({}, props.pageData),
       usersLoaded: false
     };
     this.nextPage = this.nextPage.bind(this);
@@ -31,15 +32,19 @@ class ManageUsersPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      users: nextProps.users,
-      pageData: nextProps.pageData,
-      usersLoaded: true
-    });
+    if (this.props.pageData !== nextProps.pageData) {
+      this.setState({
+        users: [...nextProps.users],
+        pageData: Object.assign({}, nextProps.pageData),
+        usersLoaded: true
+      });
+    }
   }
 
   nextPage() {
-    if (this.state.users.length < 9) return;
+    if (this.state.users.length < 9) {
+      return;
+    }
     if (this.state.pageData.query) {
       return this.props.actions.searchUsers(this.state.pageData.query,
         this.state.pageData.offset + 9);
@@ -48,7 +53,9 @@ class ManageUsersPage extends React.Component {
   }
 
   prevPage() {
-    if (this.state.pageData.offset < 1) return;
+    if (this.state.pageData.offset < 1) {
+      return;
+    }
     if (this.state.pageData.query) {
       return this.props.actions.searchUsers(this.state.pageData.query,
         this.state.pageData.offset - 9);
@@ -56,18 +63,15 @@ class ManageUsersPage extends React.Component {
     return this.props.actions.getUsers(this.state.pageData.offset - 9);
   }
 
-  placeUsers = (user) => {
-    return (
-      <TableRow key={user.id}>
-        <TableRowColumn>{user.id}</TableRowColumn>
-        <TableRowColumn>{user.name}</TableRowColumn>
-        <TableRowColumn>{user.username}</TableRowColumn>
-        <TableRowColumn>{insertRole(user.roleId)}</TableRowColumn>
-        <TableRowColumn><Link to={`/users/${user.id}`}>
-          Visit Profile</Link></TableRowColumn>
-      </TableRow>
-    );
-  }
+  placeUsers = (user) =>
+    <TableRow key={user.id}>
+      <TableRowColumn>{user.id}</TableRowColumn>
+      <TableRowColumn>{user.name}</TableRowColumn>
+      <TableRowColumn>{user.username}</TableRowColumn>
+      <TableRowColumn>{insertRole(user.roleId)}</TableRowColumn>
+      <TableRowColumn><Link to={`/user/${user.id}`}>
+        Visit Profile</Link></TableRowColumn>
+    </TableRow>;
 
   render() {
     return (
@@ -78,32 +82,30 @@ class ManageUsersPage extends React.Component {
           </div>
           <div className="col s12 m8 l9">
             <div className="row">
-              <SearchBar />
-              <CSSTransitionGroup
-                transitionName="swim"
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}>
-                <Card className="users-card">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHeaderColumn>ID</TableHeaderColumn>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
-                        <TableHeaderColumn>Username</TableHeaderColumn>
-                        <TableHeaderColumn>Role</TableHeaderColumn>
-                        <TableHeaderColumn>Profile</TableHeaderColumn>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                    {this.state.users &&
-                    this.state.users.map(this.placeUsers)}
-                    </TableBody>
-                  </Table>
-                </Card>
-              </CSSTransitionGroup>
+              <div className="headers">
+                <h3> Users </h3>
+                <Searchbar />
+              </div>
+              <Card className="users-card">
+                <Table className="animated zoomIn">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHeaderColumn>ID</TableHeaderColumn>
+                      <TableHeaderColumn>Name</TableHeaderColumn>
+                      <TableHeaderColumn>Username</TableHeaderColumn>
+                      <TableHeaderColumn>Role</TableHeaderColumn>
+                      <TableHeaderColumn>Profile</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                  {this.state.users
+                  && this.state.users.map(this.placeUsers)}
+                  </TableBody>
+                </Table>
+              </Card>
             </div>
-            {this.state.usersLoaded &&
-            <Pagination
+            {this.state.usersLoaded
+            && <Pagination
               documents={this.state.users}
               nextPage={this.nextPage}
               prevPage={this.prevPage}
@@ -117,6 +119,9 @@ class ManageUsersPage extends React.Component {
 
 ManageUsersPage.propTypes = {
   actions: PropTypes.object.isRequired,
+  users: PropTypes.array.isRequired,
+  pageData: PropTypes.object.isRequired,
+  access: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

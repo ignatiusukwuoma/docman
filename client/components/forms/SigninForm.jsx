@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
-import signinStyles from '../layouts/materialStyle';
 
-function SigninForm({ onSigninSubmit, handleSigninChange, signinDetails, signinErrors }) {
+function SigninForm({
+  onSigninSubmit, handleSigninChange, signinDetails, signinErrors }) {
   return (
     <form onSubmit={onSigninSubmit} id="signin-form">
       <div>
@@ -12,21 +12,16 @@ function SigninForm({ onSigninSubmit, handleSigninChange, signinDetails, signinE
           type="text"
           errorText={signinErrors.username}
           floatText="Username"
-          hint="Enter Your Username"
-          floatingLabelStyle={signinStyles.signinForm}
           handleChange={handleSigninChange}
           value={signinDetails.username}
         />
       </div>
       <div>
         <TextInput
-          id="password"
           name="password"
           type="password"
           errorText={signinErrors.password}
           floatText="Password"
-          hint="Enter Your Password"
-          floatingLabelStyle={signinStyles.signinForm}
           handleChange={handleSigninChange}
           value={signinDetails.password}
         />
@@ -40,5 +35,12 @@ function SigninForm({ onSigninSubmit, handleSigninChange, signinDetails, signinE
     </form>
   );
 }
+
+SigninForm.propTypes = {
+  onSigninSubmit: PropTypes.func.isRequired,
+  handleSigninChange: PropTypes.func.isRequired,
+  signinDetails: PropTypes.object.isRequired,
+  signinErrors: PropTypes.object.isRequired
+};
 
 export default SigninForm;
