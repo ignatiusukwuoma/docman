@@ -19,7 +19,7 @@ function SelectInput({ id, name, value, error, handleChange }) {
 }
 
 SelectInput.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,

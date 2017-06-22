@@ -44,6 +44,9 @@ class Searchbar extends React.Component {
     );
   }
 }
+Searchbar.propTypes = {
+  documents: PropTypes.array
+};
 
 function mapStateToProps(state, ownProps) {
   return {

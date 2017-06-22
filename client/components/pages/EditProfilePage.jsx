@@ -65,6 +65,7 @@ class EditProfilePage extends React.Component {
             </div>
             <div className="edit-profile-form">
               <SignupForm
+                pathname={this.props.pathname}
                 onSubmit={this.onSubmit}
                 handleChange={this.handleChange}
                 signupErrors={this.state.signupErrors}
@@ -82,6 +83,7 @@ class EditProfilePage extends React.Component {
 
 EditProfilePage.propTypes = {
   user: PropTypes.object,
+  pathname: PropTypes.string.isRequired
 };
 
 EditProfilePage.contextTypes = {
@@ -89,8 +91,10 @@ EditProfilePage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  const pathname = ownProps.location.pathname;
   return {
-    user: state.user,
+    pathname,
+    user: state.user
   };
 }
 

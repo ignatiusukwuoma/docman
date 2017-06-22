@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
 
 
-function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPassword, confirmPassword, signupErrors }) {
+function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
+  handleConfirmPassword, confirmPassword, signupErrors }) {
   return (
     <form onSubmit={onSubmit} id="signup-form">
       <div>
@@ -59,12 +60,22 @@ function SignupForm({ onSubmit, handleChange, signupDetails, handleConfirmPasswo
       <FlatButton
         backgroundColor="#a4c639"
         hoverColor="#8AA62F"
-        label={location.pathname === '/' ?
-        'Create an Account' : 'Update Account'}
+        label={pathname === '/'
+        ? 'Create an Account' : 'Update Account'}
         onClick={onSubmit}
       />
     </form>
   );
 }
+
+SignupForm.propTypes = {
+  pathname: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  signupDetails: PropTypes.object.isRequired,
+  handleConfirmPassword: PropTypes.func.isRequired,
+  confirmPassword: PropTypes.string.isRequired,
+  signupErrors: PropTypes.object.isRequired
+};
 
 export default SignupForm;

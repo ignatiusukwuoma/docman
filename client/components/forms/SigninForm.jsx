@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
 
@@ -35,5 +35,12 @@ function SigninForm({
     </form>
   );
 }
+
+SigninForm.propTypes = {
+  onSigninSubmit: PropTypes.func.isRequired,
+  handleSigninChange: PropTypes.func.isRequired,
+  signinDetails: PropTypes.object.isRequired,
+  signinErrors: PropTypes.object.isRequired
+};
 
 export default SigninForm;

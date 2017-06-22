@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 function TextInput({ name, type, errorText, floatText, value, handleChange }) {
   return (
@@ -15,4 +15,12 @@ function TextInput({ name, type, errorText, floatText, value, handleChange }) {
     </div>
   );
 }
+TextInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
+  errorText: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  floatText: PropTypes.string
+};
 export default TextInput;

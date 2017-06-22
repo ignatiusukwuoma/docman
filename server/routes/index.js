@@ -55,7 +55,7 @@ const Routes = (app) => {
 
   app.use('/search', validateToken);
   app.route('/search/users/')
-    .get(searchControllers.searchUsers);
+    .get(isAdminOrSuperadmin, searchControllers.searchUsers);
 
   app.route('/search/documents')
     .get(searchControllers.searchDocuments);

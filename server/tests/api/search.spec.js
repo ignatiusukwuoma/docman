@@ -77,15 +77,16 @@ describe('Search', () => {
         });
     });
 
-    it('should deny access if user is not an admin', (done) => {
+    it('should return documents even if user is not an admin', (done) => {
       chai.request(server)
         .get('/search/documents/?q=andela')
         .set({ 'x-access-token': authorToken })
         .end((err, res) => {
-          expect(res).to.have.status(401);
-          expect(res.body).to.be.an('object');
-          expect(res.body.message).to
-            .equal('Access denied: Admin credentials required');
+          expect(res).to.have.status(200);
+          expect(res.body.documents).to.be.an('array');
+          expect(res.body.documents[0].title).to.equal('My Life in Andela');
+          expect(res.body.pageData).to.be.an('object')
+            .that.have.keys('count', 'pageSize', 'pageNumber', 'totalPages');
           done();
         });
     });

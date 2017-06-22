@@ -113,6 +113,7 @@ class LandingPage extends React.Component {
                 />
                 <h5> Create a new account </h5>
                 <SignupForm
+                  pathname={this.props.pathname}
                   onSubmit={this.onSubmit}
                   handleChange={this.handleChange}
                   signupErrors={this.state.signupErrors}
@@ -130,6 +131,7 @@ class LandingPage extends React.Component {
 }
 
 LandingPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
   loggedIn: PropTypes.bool,
   user: PropTypes.object,
   actions: PropTypes.object.isRequired
@@ -140,7 +142,9 @@ LandingPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  const pathname = ownProps.location.pathname;
   return {
+    pathname,
     loggedIn: state.loggedIn,
     user: state.user
   };
