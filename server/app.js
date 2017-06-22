@@ -22,7 +22,7 @@ app.use(express.static('lib/client'));
 //   noInfo: true
 // }));
 // app.use(webpackHotMiddleware(compiler));
-const port = 5000;
+const port = process.env.PORT || 5000;
 // Log requests to the console
 app.use(logger('dev'));
 
