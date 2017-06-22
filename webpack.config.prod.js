@@ -11,21 +11,33 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 export default {
   devtool: 'source-map',
-  entry: path.join(__dirname, '/client/index'),
+  target: 'web',
+  entry: path.join(__dirname, 'client/index'),
   output: {
-    path: path.join(__dirname, 'client/dist'),
+    path: path.join(__dirname, '/lib/client'),
     filename: 'bundle.js',
     publicPath: '/'
   },
   devServer: {
-    contentBase: 'client/dist'
+    contentBase: path.resolve(__dirname, './lib/client')
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'client/index.html'
+    }),
+    new CleanWebpackPlugin(['lib/client']),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.DefinePlugin(GLOBALS),
+    new ExtractTextPlugin('style.css'),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
+  ],
   module: {
     loaders: [
       {
         test: /\.(js|jsx)$/,
         include: path.join(__dirname, 'client'),
-        loaders: ['react-hot-loader', 'babel-loader']
+        loaders: ['babel-loader']
       },
       {
         test: /\.scss$/,
@@ -41,17 +53,6 @@ export default {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'client/index.html'
-    }),
-    new CleanWebpackPlugin(['dist']),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.DefinePlugin(GLOBALS),
-    new ExtractTextPlugin('style.css'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
-  ],
   resolve: {
     extensions: ['.js', '.jsx']
   },

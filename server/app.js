@@ -3,26 +3,26 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
 import dotenv from 'dotenv';
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../webpack.config.dev';
+// import webpack from 'webpack';
+// import webpackMiddleware from 'webpack-dev-middleware';
+// import webpackHotMiddleware from 'webpack-hot-middleware';
+// import webpackConfig from '../webpack.config.dev';
 import routes from './routes';
 
 dotenv.config();
 
 // Setup Express App
 const app = express();
-app.use(require('compression')());
-app.use(express.static('client'));
-const compiler = webpack(webpackConfig);
-app.use(webpackMiddleware(compiler, {
-  hot: true,
-  publicPath: webpackConfig.output.publicPath,
-  noInfo: true
-}));
-app.use(webpackHotMiddleware(compiler));
-
+// app.use(require('compression')());
+app.use(express.static('lib/client'));
+// const compiler = webpack(webpackConfig);
+// app.use(webpackMiddleware(compiler, {
+//   hot: true,
+//   publicPath: webpackConfig.output.publicPath,
+//   noInfo: true
+// }));
+// app.use(webpackHotMiddleware(compiler));
+const port = 5000;
 // Log requests to the console
 app.use(logger('dev'));
 
@@ -35,7 +35,11 @@ routes(app);
 
 // Setup default route that sends back a welcome message
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'));
+  res.sendFile(path.join(__dirname, '../lib/client/index.html'));
+});
+
+app.listen(port, () => {
+  console.log('express app started on port', `${port}`);
 });
 
 export default app;

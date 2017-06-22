@@ -4,12 +4,14 @@
   "description": "Full-stack document management system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch server --exec babel-node -- ./bin/www",
+    "start": "babel-node ./bin/www",
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/tests/**/* --timeout 20000",
     "test:server": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.spec.js --timeout 20000",
     "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*.spec.js",
     "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
+    "build": "babel-node tools/build.js",
+    "postbuild": "babel-node ./server/app.js",
     "db:migrate:test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate"
   },
   "nyc": {
@@ -52,6 +54,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "colors": "^1.1.2",
     "compression": "^1.6.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",

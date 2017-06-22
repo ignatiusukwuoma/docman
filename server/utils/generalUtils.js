@@ -8,7 +8,7 @@ export default {
       count,
       pageSize,
       pageNumber,
-      totalPages,
+      totalPages
     };
   },
 

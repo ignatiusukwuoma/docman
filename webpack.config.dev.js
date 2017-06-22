@@ -23,7 +23,7 @@ export default {
   output: {
     path: path.join(__dirname, 'client/dist'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: '/'
   },
   // devServer: {
   //   contentBase: path.resolve(__dirname, 'client')
@@ -40,7 +40,7 @@ export default {
         // use: extractPlugin.extract({
         //   use: ['css-loader', 'sass-loader']
         // })
-        loaders: ['style-loader', 'css-loader', 'sass-loader'],
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       // {
       //   test: /\.html$/,
@@ -48,7 +48,7 @@ export default {
       // },
       {
         test: /\.(jpg|png|svg|gif)$/,
-        loader: 'url-loader',
+        loader: 'url-loader'
         // use: [
         //   {
         //     loader: 'file-loader',
@@ -59,8 +59,8 @@ export default {
         //     }
         //   }
         // ]
-      },
-    ],
+      }
+    ]
   },
   plugins: [
     // extractPlugin,
@@ -71,14 +71,14 @@ export default {
     // new CleanWebpackPlugin(['dist']),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   node: {
     fs: 'empty',
     net: 'empty',
     dns: 'empty'
-  },
+  }
 };
