@@ -4,14 +4,14 @@
   "description": "Full-stack document management system",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./bin/www",
+    "start": "babel-node ./server/app.js",
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/tests/**/* --timeout 20000",
     "test:server": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.spec.js --timeout 20000",
     "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*.spec.js",
     "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
     "build": "babel-node tools/build.js",
-    "postbuild": "babel-node ./server/app.js",
+    "postinstall": "babel-node tools/build.js",
     "db:migrate:test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate"
   },
   "nyc": {
@@ -99,9 +99,7 @@
     "clean-webpack-plugin": "^0.1.16",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.4",
-    "node-sass": "^4.5.3"
-  },
-  "devDependencies": {
+    "node-sass": "^4.5.3",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
