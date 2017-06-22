@@ -87,7 +87,7 @@ class ManageUsersPage extends React.Component {
                 <Searchbar />
               </div>
               <Card className="users-card">
-                <Table>
+                <Table className="animated zoomIn">
                   <TableHeader>
                     <TableRow>
                       <TableHeaderColumn>ID</TableHeaderColumn>

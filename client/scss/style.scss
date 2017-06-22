@@ -21,7 +21,7 @@ body {
 }
 
 .landing-page {
-  height: 100%;
+  min-height: 100vh;
   .landing-content {
     .about{
       margin-top: 100px;
@@ -48,6 +48,7 @@ body {
 
 .home-page {
   padding: 10px;
+  min-height: 100vh;
   .card {
     .card-action {
       display: flex;
@@ -69,6 +70,7 @@ body {
 
 .roles-page {
   padding: 10px;
+  min-height: 100vh;
   #new-role-form {
     h4 {
       font-family: $secondary-font;
@@ -78,6 +80,7 @@ body {
 
 .users-page {
   padding: 10px;
+  min-height: 100vh;
   .users-card {
     margin-top: 20px;
   }
@@ -85,6 +88,7 @@ body {
 
 .view-document {
   padding: 10px;
+  min-height: 100vh;
   h4 {
     font-family: $secondary-font;
   }
@@ -98,6 +102,7 @@ body {
 
 .edit-profile-page {
   padding: 10px;
+  min-height: 100vh;
   .center-all {
     display: flex;
     flex-direction: column;
@@ -105,6 +110,22 @@ body {
   }
   .edit-profile-form {
     width: 400px;
+  }
+}
+
+.new-document-page {
+  padding: 10px;
+  min-height: 100vh;
+  .create-document {
+    h3 {
+      font-family: $secondary-font;
+    }
+    .select-input {
+      width: 200px;
+    }
+    .tiny-mce {
+      margin-bottom: 30px;
+    }
   }
 }
 
@@ -148,24 +169,14 @@ body {
   padding: 0 10px;
 }
 
-.new-document-page {
-  padding: 10px;
-  .create-document {
-    h3 {
-      font-family: $secondary-font;
-    }
-    .select-input {
-      width: 200px;
-    }
-    .tiny-mce {
-      margin-bottom: 30px;
-    }
-  }
-}
-
 .pagination {
   #paginationText {
     margin-top: 4px;
     font-weight: 500;
   }
+}
+
+.page-footer {
+  padding-top: 0;
+  background-color: $primary-color;
 }

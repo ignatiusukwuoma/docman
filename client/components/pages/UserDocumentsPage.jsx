@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { CSSTransitionGroup } from 'react-transition-group';
 import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
@@ -55,7 +54,7 @@ class UserDocumentsPage extends React.Component {
   }
 
   placeDocuments = (document) =>
-    <div className="col m6 l4" key={document.id}>
+    <div className="col m6 l4 animated zoomIn" key={document.id}>
       <div className="card">
         <div className="card-content enlarge-card">
           <span className="card-title">
@@ -87,13 +86,8 @@ class UserDocumentsPage extends React.Component {
                 <h3> My Documents </h3>
                 <Searchbar />
               </div>
-              <CSSTransitionGroup
-                transitionName="swim"
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}>
-                  {this.state.documents
-                  && this.state.documents.map(this.placeDocuments)}
-              </CSSTransitionGroup>
+                {this.state.documents
+                && this.state.documents.map(this.placeDocuments)}
             </div>
             {this.state.documentsLoaded
             && <Pagination

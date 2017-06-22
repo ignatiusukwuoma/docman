@@ -26,7 +26,7 @@ function Pagination({ documents, nextPage, prevPage, pageData }) {
     );
   }
   return (
-    <div><p className="center-align">No documents here</p></div>
+    <div><p className="center-align">No documents found</p></div>
   );
 }
 

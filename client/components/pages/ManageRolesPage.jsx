@@ -111,7 +111,7 @@ class ManageRolesPage extends React.Component {
   }
 
   placeRoles = (role) =>
-      <TableRow key={role.id}>
+      <TableRow key={role.id} className="animated zoomIn">
         <TableRowColumn>{role.id}</TableRowColumn>
         <TableRowColumn>{role.title}</TableRowColumn>
         <TableRowColumn>
