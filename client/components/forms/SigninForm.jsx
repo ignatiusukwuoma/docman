@@ -8,6 +8,7 @@ function SigninForm({
     <form onSubmit={onSigninSubmit} id="signin-form">
       <div>
         <TextInput
+          id="signin-username"
           name="username"
           type="text"
           errorText={signinErrors.username}
@@ -18,6 +19,7 @@ function SigninForm({
       </div>
       <div>
         <TextInput
+          id="signin-password"
           name="password"
           type="password"
           errorText={signinErrors.password}

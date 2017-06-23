@@ -9,6 +9,7 @@ function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
     <form onSubmit={onSubmit} id="signup-form">
       <div>
         <TextInput
+          id="signup-name"
           name="name"
           type="text"
           errorText={signupErrors.name}
@@ -19,6 +20,7 @@ function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
       </div>
       <div>
         <TextInput
+          id="signup-email"
           name="email"
           type="email"
           errorText={signupErrors.email}
@@ -29,6 +31,7 @@ function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
       </div>
       <div>
         <TextInput
+          id="signup-username"
           name="username"
           type="text"
           errorText={signupErrors.username}
@@ -39,6 +42,7 @@ function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
       </div>
       <div>
         <TextInput
+          id="signup-password"
           name="password"
           type="password"
           errorText={signupErrors.password}
@@ -49,6 +53,7 @@ function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
       </div>
       <div>
         <TextInput
+          id="signup-confirm-password"
           name="confirmPassword"
           type="password"
           errorText={signupErrors.confirmPassword}

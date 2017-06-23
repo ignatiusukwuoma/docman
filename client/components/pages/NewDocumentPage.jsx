@@ -83,6 +83,7 @@ class NewDocumentPage extends React.Component {
               <form onSubmit={this.onSubmit}>
                 <div>
                   <TextInput
+                    id="document-title"
                     name="title"
                     type="text"
                     errorText={this.state.errors.title}

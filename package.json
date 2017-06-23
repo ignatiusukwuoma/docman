@@ -4,17 +4,16 @@
   "description": "Full-stack document management system",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./server/app.js",
+    "start": "babel-node ./server/index.js",
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/tests/**/* --timeout 20000",
     "test:server": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.spec.js --timeout 20000",
     "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*.spec.js",
     "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
     "build": "babel-node tools/build.js",
-    "postinstall": "babel-node tools/build.js && npm run db:migrate",
+    "postinstall": "npm run build && npm run db:migrate",
     "db:migrate:test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "db:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all"
-    
   },
   "nyc": {
     "require": [
@@ -117,5 +116,6 @@
     "redux-immutable-state-invariant": "^2.0.0",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
-  }
+  },
+  "devDependencies": {}
 }

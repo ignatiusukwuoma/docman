@@ -63,7 +63,8 @@ class ManageRolesPage extends React.Component {
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     this.props.actions.createRole(this.state.newRole)
     .then(() => {
       toastr.success('Role added successfully');
@@ -74,7 +75,8 @@ class ManageRolesPage extends React.Component {
     .catch(error => handleError(error));
   }
 
-  onEditSubmit() {
+  onEditSubmit(event) {
+    event.preventDefault();
     this.props.actions.updateRole(this.state.roleToEdit, this.state.editRole)
     .then(() => {
       $('#roleModal').modal('close');
@@ -158,6 +160,7 @@ class ManageRolesPage extends React.Component {
                 <h4 className="center-align"> Add A New Role</h4>
                 <form onSubmit={this.onSubmit}>
                   <TextInput
+                    id="new-role"
                     name="role"
                     type="text"
                     fullWidth={true}
@@ -181,6 +184,7 @@ class ManageRolesPage extends React.Component {
                   <h3 className="center">Edit Role</h3>
                   <form onSubmit={this.onEditSubmit}>
                     <TextInput
+                      id="update-role"
                       name="edit-role"
                       type="text"
                       fullWidth={true}

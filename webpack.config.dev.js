@@ -1,19 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
 
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-// const extractPlugin = new ExtractTextPlugin({
-//   filename: 'main.css'
-// });
-
-// require('dotenv').config();
-// const envsDefinePlugin = new webpack.DefinePlugin({
-  // 'process.env.NEWS_API_KEY': JSON.stringify(process.env.NEWS_API_KEY),
-// });
-
 export default {
   devtool: 'inline-source-map',
   entry: [
@@ -21,13 +8,10 @@ export default {
     path.join(__dirname, '/client/index')
   ],
   output: {
-    path: path.join(__dirname, 'client/dist'),
+    path: path.join(__dirname, 'lib/client'),
     filename: 'bundle.js',
     publicPath: '/'
   },
-  // devServer: {
-  //   contentBase: path.resolve(__dirname, 'client')
-  // },
   module: {
     loaders: [
       {
@@ -37,38 +21,15 @@ export default {
       },
       {
         test: /\.scss$/,
-        // use: extractPlugin.extract({
-        //   use: ['css-loader', 'sass-loader']
-        // })
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
-      // {
-      //   test: /\.html$/,
-      //   use: ['html-loader']
-      // },
       {
         test: /\.(jpg|png|svg|gif)$/,
         loader: 'url-loader'
-        // use: [
-        //   {
-        //     loader: 'file-loader',
-        //     options: {
-        //       name: '[name].[ext]',
-        //       outputPath: 'img/',
-        //       publicPath: 'img/'
-        //     }
-        //   }
-        // ]
       }
     ]
   },
   plugins: [
-    // extractPlugin,
-    // envsDefinePlugin,
-    // new HtmlWebpackPlugin({
-    //   template: 'client/index.html'
-    // }),
-    // new CleanWebpackPlugin(['dist']),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin()

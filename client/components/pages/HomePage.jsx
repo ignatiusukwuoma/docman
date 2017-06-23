@@ -69,7 +69,7 @@ class HomePage extends React.Component {
           </span>
           <Divider />
           <p dangerouslySetInnerHTML=
-            {{ __html: document.content.substr(0, 220) }}>
+            {{ __html: `${document.content.substr(0, 200)}...` }}>
           </p>
         </div>
         <div className="card-action">

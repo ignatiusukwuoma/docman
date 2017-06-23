@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 
-function TextInput({ name, type, errorText, floatText, value, handleChange }) {
+function TextInput({ id, name, type, errorText,
+  floatText, value, handleChange }) {
   return (
     <div className="input-field">
-      <label htmlFor={name}>{floatText}</label>
+      <label htmlFor={id}>{floatText}</label>
       <input
-        id={name}
+        id={id}
         name={name}
         type={type}
         value={value}
@@ -16,6 +17,7 @@ function TextInput({ name, type, errorText, floatText, value, handleChange }) {
   );
 }
 TextInput.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,

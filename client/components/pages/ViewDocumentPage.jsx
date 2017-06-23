@@ -41,7 +41,7 @@ class ViewDocumentPage extends React.Component {
   }
 
   render() {
-    const { document } = this.props;
+    const { document, access } = this.props;
     return (
       <div className="view-document">
         <div className="row">
@@ -52,7 +52,8 @@ class ViewDocumentPage extends React.Component {
             <div className="container">
               <div>
               <h4>{document.title}</h4>
-              <div className="document-actions">
+              {(access.user.roleId <= 2 || access.user.id === document.userId)
+              && <div className="document-actions">
                 <Link to={`/document/${document.id}/edit`}
                   className="btn-floating waves-effect waves-light green">
                   <i className="material-icons">mode_edit</i>
@@ -61,7 +62,7 @@ class ViewDocumentPage extends React.Component {
                   className="btn-floating waves-effect waves-light red">
                   <i className="material-icons">delete_forever</i>
                 </a>
-              </div>
+              </div>}
               <h6>
                 Posted on {new Date(document.createdAt).toDateString()},
                 by: <span className="blue-text">
@@ -84,7 +85,8 @@ class ViewDocumentPage extends React.Component {
 
 ViewDocumentPage.propTypes = {
   document: PropTypes.object.isRequired,
-  getDocument: PropTypes.func.isRequired
+  getDocument: PropTypes.func.isRequired,
+  access: PropTypes.object.isRequired
 };
 
 ViewDocumentPage.contextTypes = {
@@ -93,7 +95,8 @@ ViewDocumentPage.contextTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    document: state.document
+    document: state.document,
+    access: state.userAccess
   };
 }
 

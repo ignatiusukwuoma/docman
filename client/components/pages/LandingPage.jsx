@@ -58,7 +58,7 @@ class LandingPage extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validator
-    .signupValidator(this.state.signupDetails, this.state.confirmPassword);
+      .signupValidator(this.state.signupDetails, this.state.confirmPassword);
     if (valid) {
       this.props.actions.signup(this.state.signupDetails)
       .then(() => {

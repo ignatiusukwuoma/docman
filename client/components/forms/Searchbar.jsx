@@ -30,6 +30,7 @@ class Searchbar extends React.Component {
     return (
       <form onSubmit={this.submitSearch} className="searchbar">
         <TextInput
+          id="search-bar"
           name="search"
           type="text"
           floatText={location.pathname === '/manageusers'
