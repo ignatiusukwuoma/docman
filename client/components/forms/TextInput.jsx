@@ -23,7 +23,7 @@ function TextInput({ id, name, type, errorText,
   );
 }
 TextInput.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,

@@ -61,7 +61,7 @@ class Sidebar extends React.Component {
   redirect() {
     if (this.state.access.user.roleId === 1) {
       swal('Deleted!', 'The user has been deleted.', 'success');
-      this.context.router.push('/home');
+      this.context.router.push('/manageusers');
     } else {
       this.props.logout();
       this.context.router.push('/');

@@ -16,7 +16,8 @@ function setup(pathname) {
     signupErrors: {},
     handleConfirmPassword: () => {},
     confirmPassword: '',
-    pathname
+    pathname,
+    access: { user: { roleId: '' } }
   };
 
   return shallow(<SignupForm {...props} />);

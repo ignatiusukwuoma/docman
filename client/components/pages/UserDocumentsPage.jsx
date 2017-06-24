@@ -10,6 +10,11 @@ import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
 
+/**
+ * The logged in user's documents
+ * @class UserDocumentsPage
+ * @extends {React.Component}
+ */
 class UserDocumentsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -23,10 +28,19 @@ class UserDocumentsPage extends React.Component {
     this.prevPage = this.prevPage.bind(this);
   }
 
+  /**
+   * Calls actions for the user's documents before component mounts
+   * @memberOf UserDocumentsPage
+   */
   componentWillMount() {
     this.props.actions.getUserDocuments(this.props.params.id);
   }
 
+  /**
+   * Updates this.state with props
+   * @param {object} nextProps
+   * @memberOf UserDocumentsPage
+   */
   componentWillReceiveProps(nextProps) {
     if (this.state.pageData !== nextProps.pageData) {
       this.setState({
@@ -37,6 +51,11 @@ class UserDocumentsPage extends React.Component {
     }
   }
 
+  /**
+   * Calls the next set of user's documents
+   * @returns {function} action
+   * @memberOf UserDocumentsPage
+   */
   nextPage() {
     if (this.state.documents.length < 9) {
       return;
@@ -45,6 +64,11 @@ class UserDocumentsPage extends React.Component {
     this.state.pageData.offset + 9);
   }
 
+  /**
+   * Calls the previous set of user's documents
+   * @returns {function} action
+   * @memberOf UserDocumentsPage
+   */
   prevPage() {
     if (this.state.pageData.offset < 1) {
       return;
@@ -53,6 +77,10 @@ class UserDocumentsPage extends React.Component {
     this.state.pageData.offset - 9);
   }
 
+  /**
+   * Place documents on component
+   * @memberOf UserDocumentsPage
+   */
   placeDocuments = (document) =>
     <div className="col m6 l4 animated zoomIn" key={document.id}>
       <div className="card">
@@ -73,6 +101,11 @@ class UserDocumentsPage extends React.Component {
       </div>
     </div>;
 
+  /**
+   * Renders the page to display user's documents
+   * @returns {object} jsx
+   * @memberOf UserDocumentsPage
+   */
   render() {
     return (
       <div className="home-page">
@@ -109,6 +142,12 @@ UserDocumentsPage.propTypes = {
   access: PropTypes.object.isRequired
 };
 
+/**
+ * Make state available as props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} props
+ */
 function mapStateToProps(state, ownProps) {
   return {
     documents: state.documents,
@@ -117,6 +156,11 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
+/**
+ * Make actions available as props
+ * @param {function} dispatch
+ * @returns {function} actions
+ */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(

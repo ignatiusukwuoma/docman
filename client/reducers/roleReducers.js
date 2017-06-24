@@ -1,7 +1,13 @@
 import * as actionTypes from '../actions/actionTypes';
 import initialState from '../store/initialState';
 
-export function roles(state = initialState.roles, action) {
+/**
+ * Reducers for roles
+ * @param {array} [state=initialState.roles]
+ * @param {object} action
+ * @returns {array} roles state
+ */
+export default function roles(state = initialState.roles, action) {
   const newRole = Object.assign({}, action.role);
   switch (action.type) {
     case actionTypes.GET_ROLES_SUCCESS:

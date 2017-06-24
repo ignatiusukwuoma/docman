@@ -7,16 +7,29 @@ import handleError from '../../utils/errorHandler';
 import Sidebar from '../layouts/Sidebar.jsx';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 
+/**
+ * Page for an individual document
+ * @class ViewDocumentPage
+ * @extends {React.Component}
+ */
 class ViewDocumentPage extends React.Component {
   constructor(props) {
     super(props);
     this.deleteDocument = this.deleteDocument.bind(this);
   }
 
+  /**
+   * Calls actions to get the document by id
+   * @memberOf ViewDocumentPage
+   */
   componentWillMount() {
     this.props.getDocument(this.props.params.id);
   }
 
+  /**
+   * Deletes document after a sweetalert confirmation
+   * @memberOf ViewDocumentPage
+   */
   deleteDocument = () => {
     swal({
       title: 'Are you sure?',
@@ -40,6 +53,11 @@ class ViewDocumentPage extends React.Component {
       swal('Cancelled', 'The document is safe :)', 'error'));
   }
 
+  /**
+   * Renders the page to display the entire content of a document
+   * @returns {object} jsx
+   * @memberOf ViewDocumentPage
+   */
   render() {
     const { document, access } = this.props;
     return (
@@ -93,6 +111,12 @@ ViewDocumentPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+/**
+ * Make state available as props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} props
+ */
 function mapStateToProps(state, ownProps) {
   return {
     document: state.document,

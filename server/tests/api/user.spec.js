@@ -3,8 +3,8 @@ import chaiHttp from 'chai-http';
 import server from '../../app';
 import userData from '../testData/userData';
 
-const { superadmin, admin, admin1, admin3, author, author3,
-  noEmail, invalidEmail, noUsername, editor } = userData;
+const { superadmin, admin, author, editor, author1, author2, author3,
+  noEmail, invalidEmail, noUsername } = userData;
 const expect = chai.expect;
 chai.use(chaiHttp);
 
@@ -99,7 +99,7 @@ describe('Users', () => {
     it('should fail if username already exists', (done) => {
       chai.request(server)
       .post('/users')
-      .send(admin3)
+      .send(author1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('errors');
@@ -111,7 +111,7 @@ describe('Users', () => {
     it('should fail if email already exists', (done) => {
       chai.request(server)
       .post('/users')
-      .send(admin1)
+      .send(author2)
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');

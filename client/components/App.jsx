@@ -4,6 +4,11 @@ import loader from '../img/loader.gif';
 import Nav from '../components/layouts/Nav.jsx';
 import Footer from '../components/layouts/Footer.jsx';
 
+/**
+ * Top level component
+ * @class App
+ * @extends {React.Component}
+ */
 class App extends React.Component {
   render() {
     return (
@@ -22,6 +27,12 @@ App.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
+/**
+ * Checks if an ajax call is ongoing to generate locading boolean
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} loading boolean
+ */
 function mapStateToProps(state, ownProps) {
   return {
     loading: state.ajaxCallsInProgress > 0

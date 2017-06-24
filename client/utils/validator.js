@@ -1,5 +1,11 @@
 import validator from 'validator';
 
+/**
+ * Confirm that all required fields are filled
+ * @param {array} [inputFields=[]]
+ * @param {array} [requiredFields=[]]
+ * @returns {object} errors and valid
+ */
 export function validateFields(inputFields = [], requiredFields = []) {
   const errors = {};
   let valid = true;
@@ -13,6 +19,13 @@ export function validateFields(inputFields = [], requiredFields = []) {
   return { errors, valid };
 }
 
+/**
+ * Validates the signup form
+ * @param {string} {
+ *   name = '', email = '', username = '', password = '' }
+ * @param {string} confirmPassword
+ * @returns {object} validate
+ */
 export function signupValidator({
   name = '', email = '', username = '', password = '' }, confirmPassword) {
   const validate = validateFields(
@@ -36,6 +49,11 @@ export function signupValidator({
   return validate;
 }
 
+/**
+ * Validates the signin form
+ * @param {string} { username = '', password = '' }
+ * @returns {object} validate
+ */
 export function signinValidator({ username = '', password = '' }) {
   const validate = validateFields(
     [username, password],
@@ -47,6 +65,11 @@ export function signinValidator({ username = '', password = '' }) {
   return validate;
 }
 
+/**
+ * Validates the document form
+ * @param {string} { title = '', access = '', content = '' }
+ * @returns {object} validate
+ */
 export function documentValidator({ title = '', access = '', content = '' }) {
   const validate = validateFields(
     [title, access, content],
