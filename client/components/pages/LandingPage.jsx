@@ -8,6 +8,11 @@ import handleError from '../../utils/errorHandler';
 import * as validator from '../../utils/validator';
 import * as userActions from '../../actions/userActions';
 
+/**
+ * The Landing Page
+ * @class LandingPage
+ * @extends {React.Component}
+ */
 class LandingPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -33,28 +38,53 @@ class LandingPage extends React.Component {
     };
   }
 
+  /**
+   * Updates state from props
+   * @param {any} nextProps
+   * @memberOf LandingPage
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.loggedIn) {
       this.context.router.push('/home');
     }
   }
 
+  /**
+   * Sets the signup form values in state
+   * @param {object} event
+   * @memberOf LandingPage
+   */
   handleChange(event) {
     const signupDetails = this.state.signupDetails;
     signupDetails[event.target.name] = event.target.value.substr(0, 30);
     this.setState({ signupDetails });
   }
 
+  /**
+   * Sets confirm password field in state
+   * @param {object} event
+   * @memberOf LandingPage
+   */
   handleConfirmPassword(event) {
     this.setState({ confirmPassword: event.target.value.substr(0, 30) });
   }
 
+  /**
+   * Sets the signin form values to state
+   * @param {object} event
+   * @memberOf LandingPage
+   */
   handleSigninChange(event) {
     const signinDetails = this.state.signinDetails;
     signinDetails[event.target.name] = event.target.value.substr(0, 30);
     this.setState({ signinDetails });
   }
 
+  /**
+   * Submits the signup form
+   * @param {object} event
+   * @memberOf LandingPage
+   */
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validator
@@ -71,6 +101,11 @@ class LandingPage extends React.Component {
     }
   }
 
+  /**
+   * Submits the signin form
+   * @param {object} event
+   * @memberOf LandingPage
+   */
   onSigninSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validator
@@ -87,7 +122,11 @@ class LandingPage extends React.Component {
     }
   }
 
-
+  /**
+   * Renders the landing page
+   * @returns {object} jsx
+   * @memberOf LandingPage
+   */
   render() {
     return (
       <div className="landing-page">
@@ -141,6 +180,12 @@ LandingPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+/**
+ * Makes state available as props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} props
+ */
 function mapStateToProps(state, ownProps) {
   const pathname = ownProps.location.pathname;
   return {
@@ -150,6 +195,11 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
+/**
+ * Makes action creators available as props
+ * @param {function} dispatch
+ * @returns {function} actioncreators
+ */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(userActions, dispatch)

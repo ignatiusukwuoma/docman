@@ -5,12 +5,22 @@ import toastr from 'toastr';
 import { logout } from '../../actions/userActions';
 import handleError from '../../utils/errorHandler';
 
+/**
+ * The Navigation component
+ * @class Nav
+ * @extends {React.Component}
+ */
 class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
   }
 
+  /**
+   * Checks if user is signed in and displays Logout button
+   * @returns {object} jsx
+   * @memberOf Nav
+   */
   checkUser() {
     if (this.props.access.loggedIn) {
       return (
@@ -21,10 +31,19 @@ class Nav extends React.Component {
     }
   }
 
+  /**
+   * Logs the user out
+   * @memberOf Nav
+   */
   logout() {
     this.props.logout();
   }
 
+  /**
+   * Renders the navigation bar
+   * @returns {object} jsx
+   * @memberOf Nav
+   */
   render() {
     return (
       <nav className="navbar-main">
@@ -41,10 +60,5 @@ Nav.propTypes = {
   access: PropTypes.object
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    access: state.userAccess
-  };
-}
-
-export default connect(mapStateToProps, { logout })(Nav);
+export default connect(state =>
+({ access: state.userAccess }), { logout })(Nav);

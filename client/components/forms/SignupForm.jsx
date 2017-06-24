@@ -1,10 +1,16 @@
 import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
+import SelectInput from '../forms/SelectInput.jsx';
 
-
-function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
-  handleConfirmPassword, confirmPassword, signupErrors }) {
+/**
+ * Renders the sign up form or edit profile form
+ * @param {any} { pathname, onSubmit, handleChange, signupDetails,
+ *   handleConfirmPassword, confirmPassword, signupErrors }
+ * @returns {object} jsx object to display form
+ */
+function SignupForm({ access, pathname, onSubmit, handleChange,
+  signupDetails, handleConfirmPassword, confirmPassword, signupErrors }) {
   return (
     <form onSubmit={onSubmit} id="signup-form">
       <div>
@@ -62,6 +68,17 @@ function SignupForm({ pathname, onSubmit, handleChange, signupDetails,
           value={confirmPassword}
         />
       </div>
+      { pathname !== '/' && access.user.roleId === 1
+      && <div>
+        <SelectInput
+          id="select-role"
+          name="roleId"
+          handleChange={handleChange}
+          value={signupDetails.roleId}
+          pathname={pathname}
+          access={access}
+        />
+      </div>}
       <FlatButton
         backgroundColor="#a4c639"
         hoverColor="#8AA62F"

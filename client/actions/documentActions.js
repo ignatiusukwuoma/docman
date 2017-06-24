@@ -3,6 +3,13 @@ import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import handleError from '../utils/errorHandler';
 
+/**
+ * Action creator dispatched when documents are retrieved from database
+ * @param {array} documents
+ * @param {object} pageData
+ * @param {number} offset
+ * @returns {object} action
+ */
 export function getDocumentSuccess(documents, pageData, offset) {
   return {
     type: actionTypes.GET_DOCUMENTS_SUCCESS,
@@ -12,6 +19,12 @@ export function getDocumentSuccess(documents, pageData, offset) {
   };
 }
 
+
+/**
+ * Thunk to get Documents
+ * @param {number} [offset=0]
+ * @returns {function} getDocumentSuccess
+ */
 export function getDocuments(offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -24,6 +37,13 @@ export function getDocuments(offset = 0) {
   };
 }
 
+
+/**
+ * Thunk to get a user's documents
+ * @param {number} userId
+ * @param {number} [offset=0]
+ * @returns {function} getDocumentSuccess
+ */
 export function getUserDocuments(userId, offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -36,6 +56,12 @@ export function getUserDocuments(userId, offset = 0) {
   };
 }
 
+
+/**
+ * Thunk to create document
+ * @param {object} document
+ * @returns {object} action
+ */
 export function createDocument(document) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -51,6 +77,12 @@ export function createDocument(document) {
   };
 }
 
+
+/**
+ * Thunk to get full details of a document
+ * @param {number} documentId
+ * @returns {object} action
+ */
 export function getDocument(documentId) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -65,6 +97,12 @@ export function getDocument(documentId) {
   };
 }
 
+
+/**
+ * Thunk to update a dosument
+ * @param {object} document
+ * @returns {object} action
+ */
 export function updateDocument(document) {
   const documentId = document.id;
   return (dispatch) => {
@@ -81,14 +119,18 @@ export function updateDocument(document) {
   };
 }
 
+
+/**
+ * Thunk to delete a document
+ * @param {number} documentId
+ * @return {object} action
+ */
 export function deleteDocument(documentId) {
-  return (dispatch) => {
-    return axios.delete(`/documents/${documentId}`)
-      .then(() => {
-        dispatch({
-          type: actionTypes.DELETE_DOCUMENT_SUCCESS
-        });
-      })
-      .catch(error => handleError(error, dispatch));
-  };
+  return (dispatch) => axios.delete(`/documents/${documentId}`)
+    .then(() => {
+      dispatch({
+        type: actionTypes.DELETE_DOCUMENT_SUCCESS
+      });
+    })
+    .catch(error => handleError(error, dispatch));
 }

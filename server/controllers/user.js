@@ -6,6 +6,11 @@ const User = models.User;
 
 export default {
   create(req, res) {
+    if (req.body.roleId <= 2) {
+      return res.status(400).json({
+        message: 'You cannot create an Admin'
+      });
+    }
     return User
       .create(req.body)
       .then((user) => {
@@ -13,16 +18,16 @@ export default {
         const token = userUtils.generateJwtToken(userPayload);
         return res.status(201).json({
           message: 'User is successfully created',
-          user,
-          token,
+          user: userPayload,
+          token
         });
       })
       .catch(error => res.status(400).send(error));
   },
 
   list(req, res) {
-    const limit = (req.query.limit > 0) ? req.query.limit : 9;
-    const offset = (req.query.offset > 0) ? req.query.offset : 0;
+    const limit = req.query.limit > 0 ? req.query.limit : 9;
+    const offset = req.query.offset > 0 ? req.query.offset : 0;
     return User
       .findAndCountAll({
         limit,
@@ -43,7 +48,7 @@ export default {
       .then((user) => {
         if (!user) {
           return res.status(404).json({
-            message: 'User not found',
+            message: 'User not found'
           });
         }
         return res.status(200).send(generalUtils.userPayload(user));
@@ -116,7 +121,7 @@ export default {
       .catch(error => res.status(400)
         .json({
           message: 'There was an error logging into the account',
-          error,
+          error
         }));
   },
 

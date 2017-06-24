@@ -8,7 +8,7 @@ const secret = process.env.JWT_SECRET;
 export default {
   generateJwtToken(user) {
     const token = jwt.sign({
-      data: user,
+      data: user
     }, secret, { expiresIn: '48h' });
     return token;
   },
@@ -41,9 +41,9 @@ export default {
       response = res.status(200)
         .json({
           message: 'Login successful',
-          token,
+          token
         });
       return response;
     }
-  },
+  }
 };

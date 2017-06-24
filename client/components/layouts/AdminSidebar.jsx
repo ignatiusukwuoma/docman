@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+/**
+ * Renders the sidebar to manage users and roles
+ * @param {object} { access }
+ * @returns {object} jsx
+ */
 function AdminSidebar({ access }) {
   const usersPage = location.pathname === '/manageusers' ? ' active' : '';
   const rolesPage = location.pathname === '/manageroles' ? ' active' : '';

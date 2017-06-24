@@ -11,6 +11,11 @@ import * as userActions from '../../actions/userActions';
 import * as searchActions from '../../actions/searchActions';
 import * as documentActions from '../../actions/documentActions';
 
+/**
+ * The Home Page
+ * @class HomePage
+ * @extends {React.Component}
+ */
 class HomePage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -23,10 +28,19 @@ class HomePage extends React.Component {
     this.prevPage = this.prevPage.bind(this);
   }
 
+  /**
+   * Calls function before component mounts
+   * @memberOf HomePage
+   */
   componentWillMount() {
     this.props.actions.getDocuments();
   }
 
+  /**
+   * Updates the state with relevant props
+   * @param {any} nextProps
+   * @memberOf HomePage
+   */
   componentWillReceiveProps(nextProps) {
     if (this.state.pageData !== nextProps.pageData) {
       this.setState({
@@ -37,6 +51,11 @@ class HomePage extends React.Component {
     }
   }
 
+  /**
+   * Next page function for pagination component
+   * @returns {function} call to load next set of documents
+   * @memberOf HomePage
+   */
   nextPage() {
     if (this.state.documents.length < 9) {
       return;
@@ -48,6 +67,11 @@ class HomePage extends React.Component {
     return this.props.actions.getDocuments(this.state.pageData.offset + 9);
   }
 
+  /**
+   * Previous page function for pagination component
+   * @returns {function} call to load previous documents
+   * @memberOf HomePage
+   */
   prevPage() {
     if (this.state.pageData.offset < 1) {
       return;
@@ -59,6 +83,10 @@ class HomePage extends React.Component {
     return this.props.actions.getDocuments(this.state.pageData.offset - 9);
   }
 
+  /**
+   * Place the documents on the component
+   * @memberOf HomePage
+   */
   placeDocuments = (document) =>
     <div className="col m6 l4 animated zoomIn" key={document.id}>
       <div className="card">
@@ -73,12 +101,19 @@ class HomePage extends React.Component {
           </p>
         </div>
         <div className="card-action">
+          <a href="#!">
+            POSTED BY {document.User ? document.User.username : ''}
+          </a>
           <Link to={`/document/${document.id}`}>READ</Link>
-          <a href="#!">{document.access}</a>
         </div>
       </div>
     </div>;
 
+  /**
+   * Renders the home page
+   * @returns {object} jsx
+   * @memberOf HomePage
+   */
   render() {
     return (
       <div className="home-page">
@@ -115,6 +150,12 @@ HomePage.propTypes = {
   access: PropTypes.object.isRequired
 };
 
+/**
+ * Makes state available as props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} props
+ */
 function mapStateToProps(state, ownProps) {
   return {
     documents: state.documents,
@@ -123,6 +164,11 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
+/**
+ * Makes action creators available as props
+ * @param {function} dispatch
+ * @returns {function} actioncreators
+ */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(

@@ -1,5 +1,11 @@
 import React, { PropTypes } from 'react';
 
+/**
+ * Renders an input field of type text
+ * @param {any} { id, name, type, errorText,
+ *   floatText, value, handleChange }
+ * @returns {object} jsx
+ */
 function TextInput({ id, name, type, errorText,
   floatText, value, handleChange }) {
   return (

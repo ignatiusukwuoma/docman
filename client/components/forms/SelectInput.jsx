@@ -1,6 +1,28 @@
 import React, { PropTypes } from 'react';
 
-function SelectInput({ id, name, value, error, handleChange }) {
+/**
+ * Displays a select input field
+ * @param {any} { id, name, value, error, handleChange }
+ * @returns {object} jsx select input
+ */
+function SelectInput({ access, pathname, id, name,
+  value, error, handleChange }) {
+  if (access && access.user.roleId === 1 && pathname !== '/') {
+    return (
+      <div>
+      <select
+        id={id}
+        name={name}
+        onChange={handleChange}
+        value={value}>
+        <option value={1}>SuperAdmin</option>
+        <option value={2}>Admin</option>
+        <option value={3}>Author</option>
+      </select>
+      {error && <div className="red-text small">{error}</div>}
+    </div>
+    );
+  }
   return (
     <div>
       <select

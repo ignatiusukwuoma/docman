@@ -3,6 +3,10 @@ import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import handleError, { throwError } from '../utils/errorHandler';
 
+/**
+ * Thunk to get existing roles
+ * @returns {object} dispatched action
+ */
 export function getRoles() {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -17,6 +21,11 @@ export function getRoles() {
   };
 }
 
+/**
+ * Thunk to create a new role
+ * @param {object} role
+ * @returns {object} dispatched action
+ */
 export function createRole(role) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -32,6 +41,12 @@ export function createRole(role) {
   };
 }
 
+/**
+ * Thunk to update a role
+ * @param {number} roleId
+ * @param {object} newRoleDetails
+ * @returns {object} action to dispatch
+ */
 export function updateRole(roleId, newRoleDetails) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -47,6 +62,11 @@ export function updateRole(roleId, newRoleDetails) {
 }
 
 
+/**
+ * Thunk to delete role
+ * @param {number} roleId
+ * @returns {object} action to dispatch
+ */
 export function deleteRole(roleId) {
   return (dispatch) => {
     dispatch(beginAjaxCall());

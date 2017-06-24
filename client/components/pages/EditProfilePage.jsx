@@ -8,6 +8,11 @@ import { signupValidator } from '../../utils/validator';
 import { updateUser } from '../../actions/userActions';
 import Sidebar from '../layouts/Sidebar.jsx';
 
+/**
+ * Controls the edit profile page
+ * @class EditProfilePage
+ * @extends {React.Component}
+ */
 class EditProfilePage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -18,24 +23,44 @@ class EditProfilePage extends React.Component {
       confirmPassword: '',
       signupErrors: {},
       signupDetails: {
-        name: '',
-        email: '',
-        username: '',
+        name: `${props.user.name}`,
+        email: `${props.user.email}`,
+        username: `${props.user.username}`,
+        roleId: `${props.user.roleId}`,
         password: ''
       }
     };
   }
+  componentDidMount() {
+    $('select').material_select();
+    $('#select-role').on('change', this.handleChange);
+  }
 
+  /**
+   * Sets the form value to state
+   * @param {object} event
+   * @memberOf EditProfilePage
+   */
   handleChange(event) {
     const signupDetails = this.state.signupDetails;
     signupDetails[event.target.name] = event.target.value.substr(0, 30);
     this.setState({ signupDetails });
   }
 
+  /**
+   * Sets the confirm password to state
+   * @param {object} event
+   * @memberOf EditProfilePage
+   */
   handleConfirmPassword(event) {
     this.setState({ confirmPassword: event.target.value.substr(0, 30) });
   }
 
+  /**
+   * Submits the form to edit profile
+   * @param {object} event
+   * @memberOf EditProfilePage
+   */
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = signupValidator(this
@@ -52,7 +77,13 @@ class EditProfilePage extends React.Component {
     }
   }
 
+  /**
+   * Renders the edit profile page
+   * @returns {object} jsx
+   * @memberOf EditProfilePage
+   */
   render() {
+    console.log('Signupdetails', this.state.signupDetails);
     return (
       <div className="edit-profile-page">
         <div className="row">
@@ -65,6 +96,7 @@ class EditProfilePage extends React.Component {
             </div>
             <div className="edit-profile-form">
               <SignupForm
+                access={this.props.access}
                 pathname={this.props.pathname}
                 onSubmit={this.onSubmit}
                 handleChange={this.handleChange}
@@ -83,6 +115,7 @@ class EditProfilePage extends React.Component {
 
 EditProfilePage.propTypes = {
   user: PropTypes.object,
+  access: PropTypes.object.isRequired,
   pathname: PropTypes.string.isRequired
 };
 
@@ -90,11 +123,18 @@ EditProfilePage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+/**
+ * Make the state available in props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} pathname and user
+ */
 function mapStateToProps(state, ownProps) {
   const pathname = ownProps.location.pathname;
   return {
     pathname,
-    user: state.user
+    user: state.user,
+    access: state.userAccess
   };
 }
 

@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+/**
+ * Renders the sidebar to manage documents
+ * @param {object} access
+ * @returns {object} jxs
+ */
 function DocumentSidebar({ access }) {
   const homePage = location.pathname === '/home' ? ' active' : '';
   const newDocumentPage = location.pathname === '/document/new'

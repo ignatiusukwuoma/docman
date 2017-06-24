@@ -7,6 +7,11 @@ import { orangeA700, redA700, white,
 import insertRole from '../../utils/insertRole';
 import avatar from '../../img/avatar.png';
 
+/**
+ * Renders the profile information sidebar
+ * @param {any} { user, access, deleteUser }
+ * @returns {object} jsx
+ */
 function ProfileSidebar({ user, access, deleteUser }) {
   return (
     <Card>

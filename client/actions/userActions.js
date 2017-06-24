@@ -5,6 +5,12 @@ import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import handleError, { throwError } from '../utils/errorHandler';
 
+/**
+ * Action creator called after user logs in or registers
+ * @param {number} token
+ * @param {string} type
+ * @returns {object} action to dispatch
+ */
 export function login(token, type) {
   setAccessToken(token);
   const decoded = jwt.decode(token);
@@ -19,6 +25,11 @@ export function login(token, type) {
   };
 }
 
+/**
+ * Thunk that creates a new user
+ * @param {object} signupDetails
+ * @returns {function} login
+ */
 export function signup(signupDetails) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -35,6 +46,11 @@ export function signup(signupDetails) {
   };
 }
 
+/**
+ * Thunk that logs in a user
+ * @param {object} signinDetails
+ * @returns {function} login
+ */
 export function signin(signinDetails) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -45,13 +61,16 @@ export function signin(signinDetails) {
           jwt: token
         });
         localStorage.setItem('docman-pro', tokenStorage);
-
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
       })
       .catch(error => throwError(error, dispatch));
   };
 }
 
+/**
+ * THunk that logs out a user
+ * @returns {object} action to dispatch
+ */
 export function logout() {
   return (dispatch) => {
     localStorage.removeItem('docman-pro');
@@ -60,6 +79,11 @@ export function logout() {
   };
 }
 
+/**
+ * Thunk that retrieves all users
+ * @param {number} [offset=0]
+ * @returns {object} action to dispatch
+ */
 export function getUsers(offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -76,6 +100,11 @@ export function getUsers(offset = 0) {
   };
 }
 
+/**
+ * Thunk that gets a user's details
+ * @param {number} userId
+ * @returns {object} action to dispatch
+ */
 export function getUser(userId) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -90,6 +119,12 @@ export function getUser(userId) {
   };
 }
 
+/**
+ * Thunk that updates a user
+ * @param {number} userId
+ * @param {object} newProfileDetails
+ * @returns {object} action to dispatch
+ */
 export function updateUser(userId, newProfileDetails) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -104,6 +139,11 @@ export function updateUser(userId, newProfileDetails) {
   };
 }
 
+/**
+ * Thunk to delete a user
+ * @param {number} userId
+ * @returns {object} action to dispatch
+ */
 export function deleteUser(userId) {
   return (dispatch) => {
     dispatch(beginAjaxCall());

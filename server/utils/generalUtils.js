@@ -1,6 +1,6 @@
 export default {
   formatPage(count, limit, offset) {
-    const pageSize = (count - offset) >= limit ? limit : (count - offset);
+    const pageSize = (count - offset) >= limit ? limit : count - offset;
     const pageNumber = Math.floor(offset / limit) + 1;
     const totalPages = Math.ceil(count / limit);
 
