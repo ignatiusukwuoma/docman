@@ -5,6 +5,12 @@ import generalUtils from '../utils/generalUtils';
 const User = models.User;
 
 export default {
+  /**
+   * Create a new user
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   create(req, res) {
     if (req.body.roleId <= 2) {
       return res.status(400).json({
@@ -25,6 +31,12 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+   * Get all users
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   list(req, res) {
     const limit = req.query.limit > 0 ? req.query.limit : 9;
     const offset = req.query.offset > 0 ? req.query.offset : 0;
@@ -42,6 +54,12 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+   * Gets a user
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   retrieve(req, res) {
     return User
       .findById(req.params.userId)
@@ -56,6 +74,12 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+   * Updates a user
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   update(req, res) {
     const userId = parseInt(req.params.userId, 10);
     if (req.body.roleId <= 2 && req.decoded.data.roleId !== 1) {
@@ -84,6 +108,12 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+   * Deletes a user
+   * @param {object} req
+   * @param {object} res
+   * @returns nothing
+   */
   destroy(req, res) {
     const userId = parseInt(req.params.userId, 10);
     if (req.decoded.data.roleId !== 1 && req.decoded.data.id !== userId) {
@@ -107,6 +137,12 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+   * Signs in a user
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   login(req, res) {
     return User
       .findOne({
@@ -125,6 +161,12 @@ export default {
         }));
   },
 
+  /**
+   * Logs a user out
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   logout(req, res) {
     res.status(200)
       .json({

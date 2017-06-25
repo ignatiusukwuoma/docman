@@ -152,7 +152,7 @@ class ManageRolesPage extends React.Component {
       }
     })
     .catch((er) =>
-      swal('Cancelled', 'The role is safe :)', 'error'));
+      swal('Cancelled', 'The role is not deleted :)', 'error'));
   }
 
   /**
@@ -195,14 +195,21 @@ class ManageRolesPage extends React.Component {
               </div>
               <Card className="roles-card">
                 <Table>
-                  <TableHeader>
+                  <TableHeader
+                    displaySelectAll={false}
+                    adjustForCheckbox={false}
+                    enableSelectAll={false}
+                  >
                     <TableRow>
                       <TableHeaderColumn>ID</TableHeaderColumn>
                       <TableHeaderColumn>Title</TableHeaderColumn>
                       <TableHeaderColumn>Actions</TableHeaderColumn>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody
+                    displayRowCheckbox={false}
+                    stripedRows={true}
+                  >
                   {this.state.roles
                   && this.state.roles.map(this.placeRoles)}
                   </TableBody>

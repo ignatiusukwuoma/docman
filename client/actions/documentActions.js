@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
-import handleError from '../utils/errorHandler';
+import handleError, { throwError } from '../utils/errorHandler';
 
 /**
  * Action creator dispatched when documents are retrieved from database
@@ -73,7 +73,7 @@ export function createDocument(document) {
           document: res.data.document
         });
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 
@@ -115,7 +115,7 @@ export function updateDocument(document) {
           document: res.data.updatedDocument
         });
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 

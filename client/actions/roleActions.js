@@ -77,6 +77,6 @@ export function deleteRole(roleId) {
           roleId
         });
       })
-      .catch(error => handleError(error));
+      .catch(error => throwError(error));
   };
 }

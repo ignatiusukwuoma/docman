@@ -40,9 +40,9 @@ module.exports = {
         references: {
           model: 'Roles',
           key: 'id',
-          as: 'roleId',
-        },
-      },
+          as: 'roleId'
+        }
+      }
     }),
   down: queryInterface => queryInterface.dropTable('Users')
 };

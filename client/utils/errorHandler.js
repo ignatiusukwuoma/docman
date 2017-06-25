@@ -11,6 +11,7 @@ export default function handleError(error, dispatch) {
   if (dispatch) {
     dispatch(ajaxCallError());
   }
+  console.log('Error', error.response);
   if (error.response) {
     return toastr.error(error.response.data.message);
   }
@@ -18,7 +19,7 @@ export default function handleError(error, dispatch) {
 }
 
 /**
- * Throws error and ends ajax call
+ * Ends ajax call and throws error to be handled in frontend
  * @param {object} error
  * @param {function} dispatch
  */

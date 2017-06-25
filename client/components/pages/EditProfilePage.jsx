@@ -83,7 +83,6 @@ class EditProfilePage extends React.Component {
    * @memberOf EditProfilePage
    */
   render() {
-    console.log('Signupdetails', this.state.signupDetails);
     return (
       <div className="edit-profile-page">
         <div className="row">

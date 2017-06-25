@@ -121,7 +121,11 @@ class ManageUsersPage extends React.Component {
               </div>
               <Card className="users-card">
                 <Table className="animated zoomIn">
-                  <TableHeader>
+                  <TableHeader
+                    displaySelectAll={false}
+                    adjustForCheckbox={false}
+                    enableSelectAll={false}
+                  >
                     <TableRow>
                       <TableHeaderColumn>ID</TableHeaderColumn>
                       <TableHeaderColumn>Name</TableHeaderColumn>
@@ -130,7 +134,10 @@ class ManageUsersPage extends React.Component {
                       <TableHeaderColumn>Profile</TableHeaderColumn>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody
+                    displayRowCheckbox={false}
+                    stripedRows={true}
+                  >
                   {this.state.users
                   && this.state.users.map(this.placeUsers)}
                   </TableBody>

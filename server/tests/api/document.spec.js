@@ -9,12 +9,24 @@ import documentData from '../testData/documentData';
 const { admin, author, editor, advertizer1, advertizer2 } = userData;
 const { role5 } = roleData;
 const { publicDocument, publicDocument2, privateDocument } = documentData;
-let authorToken, adminToken, advertizer1Token;
+let authorToken;
+let adminToken;
+let advertizer1Token;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Documents', () => {
+  before((done) => {
+    models.User.destroy({
+      where: { id: { $notIn: [1, 2, 3, 4] } }
+    })
+    .then(() => models.Role.destroy({
+      where: { id: { $notIn: [1, 2, 3, 4] } }
+    }))
+    .then(() => done());
+  });
+
   before((done) => {
     models.Role.create(role5)
     .then((role) => {
@@ -60,7 +72,7 @@ describe('Documents', () => {
     it("should return a user's document(s) given the user's id", (done) => {
       chai.request(server)
         .get('/users/3/documents')
-        .set({ 'x-access-token': authorToken })
+        .set('x-access-token', authorToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object')

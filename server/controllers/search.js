@@ -2,6 +2,12 @@ import models from '../models';
 import generalUtils from '../utils/generalUtils';
 
 export default {
+  /**
+   * Search users
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   searchUsers(req, res) {
     const query = `%${req.query.q}%`;
     const limit = req.query.limit > 0 ? req.query.limit : 9;
@@ -26,6 +32,12 @@ export default {
       .catch(error => res.status(400).send(error));
   },
 
+  /**
+   * Search Documents
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
+   */
   searchDocuments(req, res) {
     const query = `%${req.query.q}%`;
     const limit = req.query.limit > 0 ? req.query.limit : 9;
@@ -49,5 +61,4 @@ export default {
       }))
       .catch(error => res.status(400).send(error));
   }
-
 };

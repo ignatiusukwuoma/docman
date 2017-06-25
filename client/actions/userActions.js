@@ -42,7 +42,7 @@ export function signup(signupDetails) {
         localStorage.setItem('docman-pro', tokenStorage);
         dispatch(login(token, actionTypes.LOGIN_SUCCESS));
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 
@@ -135,7 +135,7 @@ export function updateUser(userId, newProfileDetails) {
           user: res.data
         });
       })
-      .catch(error => handleError(error, dispatch));
+      .catch(error => throwError(error, dispatch));
   };
 }
 

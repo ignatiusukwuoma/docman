@@ -7,5 +7,5 @@ export default {
   role,
   user,
   document,
-  search,
+  search
 };

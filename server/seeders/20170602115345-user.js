@@ -9,7 +9,7 @@ module.exports = {
     password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
     roleId: '1',
     createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   }, {
     username: 'admin',
     name: 'Administrator',
@@ -17,7 +17,7 @@ module.exports = {
     password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
     roleId: '2',
     createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   }, {
     username: 'author',
     name: 'Author',
@@ -25,7 +25,7 @@ module.exports = {
     password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
     roleId: '3',
     createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   }, {
     username: 'editor',
     name: 'Editor',
@@ -33,7 +33,7 @@ module.exports = {
     password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
     roleId: '4',
     createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   }], {}),
 
   down: queryInterface =>

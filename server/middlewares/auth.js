@@ -6,6 +6,13 @@ const User = models.User;
 const secret = process.env.JWT_SECRET;
 
 export default {
+  /**
+   * Verify token to know if it is valid
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next function
+   */
   validateToken(req, res, next) {
     const token = req.body.token || req.headers['x-access-token'];
     if (!token) {
@@ -37,6 +44,13 @@ export default {
     });
   },
 
+  /**
+   * Confirms if user is superadmin
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next function
+   */
   isSuperadmin(req, res, next) {
     if (req.decoded.data.roleId !== 1) {
       return res.status(401).json({
@@ -46,6 +60,13 @@ export default {
     return next();
   },
 
+  /**
+   * Confirms if user is admin or superadmin
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next function
+   */
   isAdminOrSuperadmin(req, res, next) {
     if (req.decoded.data.roleId > 2) {
       return res.status(401).json({

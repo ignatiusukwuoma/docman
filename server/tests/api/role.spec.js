@@ -7,7 +7,9 @@ import roleData from '../testData/roleData';
 const { superadmin, admin, author } = userData;
 const { role5, role6, role7, role8 } = roleData;
 
-let authorToken, adminToken, superadminToken;
+let authorToken;
+let adminToken;
+let superadminToken;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
