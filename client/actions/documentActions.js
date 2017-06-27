@@ -30,8 +30,11 @@ export function getDocuments(offset = 0) {
     dispatch(beginAjaxCall());
     return axios.get(`/documents?offset=${offset}`)
       .then((res) => {
-        dispatch(getDocumentSuccess(res.data.documents,
-          res.data.pageData, offset));
+        dispatch(getDocumentSuccess(
+          res.data.documents,
+          res.data.pageData,
+          offset
+          ));
       })
       .catch(error => handleError(error, dispatch));
   };
@@ -49,8 +52,11 @@ export function getUserDocuments(userId, offset = 0) {
     dispatch(beginAjaxCall());
     return axios.get(`/users/${userId}/documents?offset=${offset}`)
       .then((res) => {
-        dispatch(getDocumentSuccess(res.data.documents,
-          res.data.pageData, offset));
+        dispatch(getDocumentSuccess(
+          res.data.documents,
+          res.data.pageData,
+          offset
+          ));
       })
       .catch(error => handleError(error, dispatch));
   };

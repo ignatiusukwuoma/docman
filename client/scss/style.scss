@@ -95,6 +95,9 @@ body {
   .document-actions {
     float: right;
   }
+  #document-rights {
+    text-transform: capitalize;
+  }
   .document-content {
     margin-top: 25px;
   }
@@ -109,7 +112,7 @@ body {
     align-items: center;
   }
   .edit-profile-form {
-    width: 400px;
+    width: 250px;
   }
 }
 
@@ -154,9 +157,12 @@ body {
 
 .sidebar {
   margin-top: 10px;
-  .document-icons {
-    float: right;
-  }
+}
+.admin-sidebar {
+  margin-top: -15px;
+}
+.document-icons {
+  float: right;
 }
 
 .profile {

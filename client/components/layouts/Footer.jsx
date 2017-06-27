@@ -10,10 +10,7 @@ function Footer() {
     <footer className="page-footer">
       <div className="footer-copyright">
         <div className="container">
-        Copyright © 2017 Ignatius Ukwuoma
-        <Link className="grey-text text-lighten-4 right" to="/home">
-          All Documents
-        </Link>
+          Copyright © 2017 Ignatius Ukwuoma
         </div>
       </div>
     </footer>

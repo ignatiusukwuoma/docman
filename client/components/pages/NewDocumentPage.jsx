@@ -99,7 +99,6 @@ class NewDocumentPage extends React.Component {
   /**
    * Renders the create new document form
    * @returns {object} jsx
-   * 
    * @memberOf NewDocumentPage
    */
   render() {

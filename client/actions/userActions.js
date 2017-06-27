@@ -25,6 +25,15 @@ export function login(token, type) {
   };
 }
 
+function saveToken(responseData, type, dispatch) {
+  const token = responseData.token;
+  const tokenStorage = JSON.stringify({
+    jwt: token
+  });
+  localStorage.setItem('docman-pro', tokenStorage);
+  dispatch(login(token, type));
+}
+
 /**
  * Thunk that creates a new user
  * @param {object} signupDetails
@@ -35,12 +44,7 @@ export function signup(signupDetails) {
     dispatch(beginAjaxCall());
     return axios.post('/users', signupDetails)
       .then((res) => {
-        const token = res.data.token;
-        const tokenStorage = JSON.stringify({
-          jwt: token
-        });
-        localStorage.setItem('docman-pro', tokenStorage);
-        dispatch(login(token, actionTypes.LOGIN_SUCCESS));
+        dispatch(saveToken(res.data, actionTypes.LOGIN_SUCCESS, dispatch));
       })
       .catch(error => throwError(error, dispatch));
   };
@@ -56,12 +60,7 @@ export function signin(signinDetails) {
     dispatch(beginAjaxCall());
     return axios.post('/users/login', signinDetails)
       .then((res) => {
-        const token = res.data.token;
-        const tokenStorage = JSON.stringify({
-          jwt: token
-        });
-        localStorage.setItem('docman-pro', tokenStorage);
-        dispatch(login(token, actionTypes.LOGIN_SUCCESS));
+        saveToken(res.data, actionTypes.LOGIN_SUCCESS, dispatch);
       })
       .catch(error => throwError(error, dispatch));
   };

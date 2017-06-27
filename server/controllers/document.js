@@ -52,10 +52,12 @@ export default {
         let omitted = 0;
         const visibleDocuments = roleId <= 2 ? documentDatabase.rows
         : documentDatabase.rows.filter((document) => {
-          if (document.access === 'role'
-            && document.User.roleId !== roleId) {
-            omitted += 1;
-            return false;
+          if (document.access === 'role') {
+            if (document.User.roleId !== roleId) {
+              omitted += 1;
+              return false;
+            }
+            return true;
           }
           return true;
         });

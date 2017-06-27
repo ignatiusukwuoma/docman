@@ -82,12 +82,11 @@ class ViewDocumentPage extends React.Component {
                 </a>
               </div>}
               <h6>
-                Posted on {new Date(document.createdAt).toDateString()},
-                by: <span className="blue-text">
-                  <strong>
-                    {document.User ? document.User.username : ''}
-                  </strong>
+                <span id="document-rights">
+                  {document.access} document by
+                  {document.User ? ` ${document.User.username}. ` : ''}
                 </span>
+                Posted on {new Date(document.createdAt).toDateString()}.
               </h6>
               </div>
               <Divider />

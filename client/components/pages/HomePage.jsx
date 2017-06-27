@@ -61,8 +61,10 @@ class HomePage extends React.Component {
       return;
     }
     if (this.state.pageData.query) {
-      return this.props.actions.searchDocuments(this.state.pageData.query,
-        this.state.pageData.offset + 9);
+      return this.props.actions.searchDocuments(
+        this.state.pageData.query,
+        this.state.pageData.offset + 9
+      );
     }
     return this.props.actions.getDocuments(this.state.pageData.offset + 9);
   }
@@ -77,8 +79,10 @@ class HomePage extends React.Component {
       return;
     }
     if (this.state.pageData.query) {
-      return this.props.actions.searchDocuments(this.state.pageData.query,
-        this.state.pageData.offset - 9);
+      return this.props.actions.searchDocuments(
+        this.state.pageData.query,
+        this.state.pageData.offset - 9
+      );
     }
     return this.props.actions.getDocuments(this.state.pageData.offset - 9);
   }
@@ -102,7 +106,7 @@ class HomePage extends React.Component {
         </div>
         <div className="card-action">
           <a href="#!">
-            POSTED BY {document.User ? document.User.username : ''}
+            BY {document.User ? document.User.username : ''}
           </a>
           <Link to={`/document/${document.id}`}>READ</Link>
         </div>
@@ -115,6 +119,7 @@ class HomePage extends React.Component {
    * @memberOf HomePage
    */
   render() {
+    const { documents, documentsLoaded, pageData } = this.state;
     return (
       <div className="home-page">
         <div className="row">
@@ -127,15 +132,15 @@ class HomePage extends React.Component {
                 <h3> All Documents </h3>
                 <Searchbar />
               </div>
-                {this.state.documents
-                && this.state.documents.map(this.placeDocuments)}
+                {documents
+                && documents.map(this.placeDocuments)}
             </div>
-            {this.state.documentsLoaded
+            {documentsLoaded
             && <Pagination
-              documents={this.state.documents}
+              documents={documents}
               nextPage={this.nextPage}
               prevPage={this.prevPage}
-              pageData={this.state.pageData} />}
+              pageData={pageData} />}
           </div>
         </div>
       </div>

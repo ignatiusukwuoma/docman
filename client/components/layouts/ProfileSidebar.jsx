@@ -16,8 +16,13 @@ function ProfileSidebar({ user, access, deleteUser }) {
   return (
     <Card>
       <CardMedia
-        overlay={<CardTitle title={user.username}
-        subtitle={user.email} />}>
+        overlay={
+          <CardTitle
+            title={user.username}
+            subtitle={user.email}
+          />
+        }
+      >
         <img src={avatar} />
       </CardMedia>
       <CardTitle
@@ -32,11 +37,13 @@ function ProfileSidebar({ user, access, deleteUser }) {
             backgroundColor={greenA700} />
         </Link>
         <a href="#!" onClick={deleteUser}>
-          <RaisedButton label="DELETE" labelColor={white}
-            backgroundColor={redA700} />
+          <RaisedButton
+            label="DELETE"
+            labelColor={white}
+            backgroundColor={redA700}
+          />
         </a>
-      </CardActions>
-      }
+      </CardActions>}
     </Card>
   );
 }

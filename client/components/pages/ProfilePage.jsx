@@ -98,8 +98,8 @@ class ProfilePage extends React.Component {
           </p>
         </div>
         <div className="card-action">
-          <Link to={`/document/${document.id}`}>READ</Link>
           <a href="#!">{document.access}</a>
+          <Link to={`/document/${document.id}`}>READ</Link>
         </div>
       </div>
     </div>;

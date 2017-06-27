@@ -10,10 +10,18 @@ import handleError from '../../utils/errorHandler';
  * @class Nav
  * @extends {React.Component}
  */
-class Nav extends React.Component {
+export class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
+  }
+
+   /**
+   * Logs the user out
+   * @memberOf Nav
+   */
+  logout() {
+    this.props.logout();
   }
 
   /**
@@ -25,18 +33,10 @@ class Nav extends React.Component {
     if (this.props.access.loggedIn) {
       return (
         <div id="nav-mobile" className="right">
-          <Link to="" onClick={this.logout}> Logout </Link>
+          <Link to="" onClick={this.logout}>Logout</Link>
         </div>
       );
     }
-  }
-
-  /**
-   * Logs the user out
-   * @memberOf Nav
-   */
-  logout() {
-    this.props.logout();
   }
 
   /**
@@ -48,7 +48,7 @@ class Nav extends React.Component {
     return (
       <nav className="navbar-main">
         <div className="nav-wrapper">
-          <Link to="/home" className="brand-logo">Docman Pro</Link>
+          <a href="/home" className="brand-logo">Docman Pro</a>
           {this.checkUser()}
         </div>
       </nav>

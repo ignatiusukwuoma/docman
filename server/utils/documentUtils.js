@@ -14,6 +14,7 @@ export default {
       query.where = {
         $or: [
           { access: 'public' },
+          { access: 'role' },
           { userId }
         ]
       };

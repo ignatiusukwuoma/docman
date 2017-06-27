@@ -25,7 +25,7 @@ class Sidebar extends React.Component {
   /**
    * Checks if new user prop have been received and
    * stores it to state
-   * @param {any} nextProps
+   * @param {object} nextProps
    * @memberOf Sidebar
    */
   componentWillReceiveProps(nextProps) {
@@ -58,6 +58,10 @@ class Sidebar extends React.Component {
       swal('Cancelled', 'The user is safe :)', 'error'));
   }
 
+  /**
+   * Delete confirmation and redirect after delete is completed
+   * @memberOf Sidebar
+   */
   redirect() {
     if (this.state.access.user.roleId === 1) {
       swal('Deleted!', 'The user has been deleted.', 'success');
@@ -79,10 +83,10 @@ class Sidebar extends React.Component {
       <div className="card sidebar">
         {this.state.user
         && location.pathname === `/user/${this.state.user.id}`
-        && <ProfileSidebar {...this.state} deleteUser={this.deleteUser}/>}
+        && <ProfileSidebar {...this.state} deleteUser={this.deleteUser} />}
         <DocumentSidebar {...this.state} />
         {this.state.access.user.roleId <= 2
-        && <AdminSidebar access={this.state.access}/>}
+        && <AdminSidebar access={this.state.access} />}
       </div>
     );
   }

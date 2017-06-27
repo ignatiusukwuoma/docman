@@ -35,7 +35,6 @@ class ManageRolesPage extends React.Component {
     this.onEditSubmit = this.onEditSubmit.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
   /**
    * Calls action before component mounts
    * @memberOf ManageRolesPage
@@ -71,7 +70,8 @@ class ManageRolesPage extends React.Component {
    * @memberOf ManageRolesPage
    */
   handleChange(event) {
-    if (!(/[^A-Za-z]/).test(event.target.value)) {
+    const rejectedCharacters = /[^a-z]/;
+    if (!rejectedCharacters.test(event.target.value)) {
       const newRole = this.state.newRole;
       newRole.title = event.target.value.substr(0, 20);
       this.setState({ newRole });
@@ -84,7 +84,8 @@ class ManageRolesPage extends React.Component {
    * @memberOf ManageRolesPage
    */
   handleEditChange(event) {
-    if (!(/[^A-Za-z]/).test(event.target.value)) {
+    const rejectedCharacters = /[^a-z]/;
+    if (!rejectedCharacters.test(event.target.value)) {
       const editRole = this.state.editRole;
       editRole.title = event.target.value.substr(0, 20);
       this.setState({ editRole });

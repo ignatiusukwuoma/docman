@@ -58,7 +58,6 @@ class EditDocumentPage extends React.Component {
   handleChange(event) {
     const document = this.state.document;
     document[event.target.name] = event.target.value.substr(0, 60);
-    // debugger;
     this.setState({ document });
   }
 
@@ -70,7 +69,6 @@ class EditDocumentPage extends React.Component {
   handleEditorChange(event) {
     const document = this.state.document;
     document.content = event.target.getContent();
-    // debugger;
     this.setState({ document });
   }
 
@@ -102,7 +100,7 @@ class EditDocumentPage extends React.Component {
   redirect() {
     this.setState({ saving: false });
     toastr.success('Document updated successfully');
-    this.context.router.push('/home');
+    this.context.router.push(`/document/${this.state.document.id}`);
   }
 
   /**
@@ -111,6 +109,8 @@ class EditDocumentPage extends React.Component {
    * @memberOf EditDocumentPage
    */
   render() {
+    const { title, access, content } = this.state.document;
+    const { errors, saving } = this.state;
     return (
       <div className="new-document-page">
         <div className="row">
@@ -126,24 +126,24 @@ class EditDocumentPage extends React.Component {
                     id="document-title"
                     name="title"
                     type="text"
-                    errorText={this.state.errors.title}
+                    errorText={errors.title}
                     floatText="Title"
                     handleChange={this.handleChange}
-                    value={this.state.document.title}
+                    value={title}
                   />
                 </div>
                 <div className="select-input">
                   <SelectInput
                     id="select-box"
                     name="access"
-                    error={this.state.errors.access}
+                    error={errors.access}
                     handleChange={this.handleChange}
-                    value={this.state.document.access}
+                    value={access}
                   />
                 </div>
                 <div className="tiny-mce">
                   <TinyMCE
-                    content={this.state.document.content}
+                    content={content}
                     config={{
                       plugins: 'link image code',
                       toolbar: 'undo redo | bold italic |\
@@ -152,15 +152,15 @@ class EditDocumentPage extends React.Component {
                     onChange={this.handleEditorChange}
                   />
                 </div>
-                {this.state.errors.content
+                {errors.content
                 && <div className="red-text">
-                  {this.state.errors.content}
+                  {errors.content}
                 </div>}
                 <FlatButton
                   backgroundColor="#a4c639"
                   hoverColor="#8AA62F"
-                  disable={this.props.saving}
-                  label={this.props.saving ? 'Updating' : 'Update Document'}
+                  disable={saving}
+                  label={saving ? 'Updating' : 'Update Document'}
                   onClick={this.onSubmit}
                 />
               </form>

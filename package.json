@@ -27,7 +27,8 @@
     "sourceMap": false,
     "instrument": false,
     "exclude": [
-      "server/tests"
+      "server/tests",
+      "client/tests"
     ]
   },
   "repository": {
@@ -74,6 +75,7 @@
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
     "expect": "^1.20.2",
+    "expect-enzyme": "^1.0.0",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.2",
     "faker": "^4.1.0",

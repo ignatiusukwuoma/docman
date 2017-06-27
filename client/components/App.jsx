@@ -15,7 +15,7 @@ class App extends React.Component {
       <div>
         <Nav />
         {this.props.children}
-        { this.props.loading && <img className="mainLoader" src={loader} />}
+        {this.props.loading && <img className="mainLoader" src={loader} />}
         <Footer />
       </div>
     );

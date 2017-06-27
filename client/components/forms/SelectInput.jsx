@@ -41,11 +41,13 @@ function SelectInput({ access, pathname, id, name,
 }
 
 SelectInput.propTypes = {
+  pathname: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
-  error: PropTypes.string
+  error: PropTypes.string,
+  access: PropTypes.object
 };
 
 export default SelectInput;
