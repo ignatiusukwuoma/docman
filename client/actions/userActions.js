@@ -25,6 +25,12 @@ export function login(token, type) {
   };
 }
 
+/**
+ * This function saves token to localStorage and dispatches login
+ * @param {object} responseData
+ * @param {string} type
+ * @param {function} dispatch
+ */
 function saveToken(responseData, type, dispatch) {
   const token = responseData.token;
   const tokenStorage = JSON.stringify({
@@ -67,7 +73,7 @@ export function signin(signinDetails) {
 }
 
 /**
- * THunk that logs out a user
+ * Thunk that logs out a user
  * @returns {object} action to dispatch
  */
 export function logout() {
