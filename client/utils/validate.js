@@ -26,7 +26,7 @@ export function validateFields(inputFields = [], requiredFields = []) {
  * @param {string} confirmPassword
  * @returns {object} validate
  */
-export function signupValidator({
+export function signup({
   name = '', email = '', username = '', password = '' }, confirmPassword) {
   const validate = validateFields(
     [username, password, name, email],
@@ -54,7 +54,7 @@ export function signupValidator({
  * @param {string} { username = '', password = '' }
  * @returns {object} validate
  */
-export function signinValidator({ username = '', password = '' }) {
+export function signin({ username = '', password = '' }) {
   const validate = validateFields(
     [username, password],
     ['username', 'password']);

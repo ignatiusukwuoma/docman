@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import SignupForm from '../forms/SignupForm.jsx';
 import handleError from '../../utils/errorHandler';
-import { signupValidator } from '../../utils/validator';
+import { signup } from '../../utils/validate';
 import { updateUser } from '../../actions/userActions';
 import Sidebar from '../layouts/Sidebar.jsx';
 

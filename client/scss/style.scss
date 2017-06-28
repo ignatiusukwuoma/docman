@@ -20,6 +20,10 @@ body {
   margin-top: -15px;
 }
 
+.btn-create {
+  margin-top: 20px;
+}
+
 .landing-page {
   min-height: 100vh;
   .landing-content {
@@ -35,11 +39,13 @@ body {
       }
     }
     .forms {
+      .login-tabs {
+        margin-top: 20px;
+      }
       h5 {
         font-family: $secondary-font;
+        margin: 20px 0 40px 0;
         font-weight: bold;
-        margin-top: 40px;
-        margin-bottom: 10px;
         font-size: 20px;
       }
     }
@@ -94,6 +100,9 @@ body {
   }
   .document-actions {
     float: right;
+    .btn-delete {
+      margin-left: 5px;
+    }
   }
   #document-rights {
     text-transform: capitalize;
@@ -127,7 +136,7 @@ body {
       width: 200px;
     }
     .tiny-mce {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
   }
 }

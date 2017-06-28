@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 /**
  * Parent component to confirm that user is logged in
- * @class UserIsLoggedIn
+ * @class isLoggedIn
  * @extends {React.Component}
  */
-class UserIsLoggedIn extends React.Component {
+class isLoggedIn extends React.Component {
 
   /**
    * Checks if user is logged in
    * @returns {function} push pathname to router
-   * @memberOf UserIsLoggedIn
+   * @memberOf isLoggedIn
    */
   componentWillMount() {
     if (!this.props.access.loggedIn) {
@@ -22,7 +22,7 @@ class UserIsLoggedIn extends React.Component {
   /**
    * Renders the children components
    * @returns {object} children components
-   * @memberOf UserIsLoggedIn
+   * @memberOf isLoggedIn
    */
   render() {
     if (this.props.access.loggedIn) {
@@ -32,13 +32,13 @@ class UserIsLoggedIn extends React.Component {
   }
 }
 
-UserIsLoggedIn.propTypes = {
+isLoggedIn.propTypes = {
   access: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired
 };
 
-UserIsLoggedIn.contextTypes = {
+isLoggedIn.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default connect(state => ({ access: state.userAccess }))(UserIsLoggedIn);
+export default connect(state => ({ access: state.userAccess }))(isLoggedIn);

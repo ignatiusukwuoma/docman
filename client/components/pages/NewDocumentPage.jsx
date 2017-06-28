@@ -6,7 +6,7 @@ import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
 import { createDocument } from '../../actions/documentActions';
-import { documentValidator } from '../../utils/validator';
+import { documentValidator } from '../../utils/validate';
 import handleError from '../../utils/errorHandler';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
@@ -144,16 +144,18 @@ class NewDocumentPage extends React.Component {
                   />
                 </div>
                 {this.state.errors.content
-                && <div className="red-text">
+                && <div className="red-text small">
                   {this.state.errors.content}
                 </div>}
-                <FlatButton
-                  backgroundColor="#a4c639"
-                  hoverColor="#8AA62F"
-                  disable={this.state.saving}
-                  label={this.state.saving ? 'Creating' : 'Create New Document'}
-                  onClick={this.onSubmit}
-                />
+                <div className="btn-create">
+                  <FlatButton
+                    backgroundColor="#a4c639"
+                    hoverColor="#8AA62F"
+                    disable={this.state.saving}
+                    label={this.state.saving ? 'Creating' : 'Create New Document'}
+                    onClick={this.onSubmit}
+                  />
+                </div>
               </form>
             </div>
           </div>

@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 /**
  * Parent component to confirm that user is superadmin
- * @class UserIsSuperAdmin
+ * @class isSuperAdmin
  * @extends {React.Component}
  */
-class UserIsSuperAdmin extends React.Component {
+class isSuperAdmin extends React.Component {
 
   /**
    * Confirms that user is logged in and is superadmin
    * @returns {function} push pathname to router
-   * @memberOf UserIsSuperAdmin
+   * @memberOf isSuperAdmin
    */
   componentWillMount() {
     if (!this.props.access.loggedIn) {
@@ -25,7 +25,7 @@ class UserIsSuperAdmin extends React.Component {
   /**
    * Renders the children components if user is superadmin
    * @returns {object} children components
-   * @memberOf UserIsSuperAdmin
+   * @memberOf isSuperAdmin
    */
   render() {
     if (this.props.access.user.roleId === 1) {
@@ -35,14 +35,14 @@ class UserIsSuperAdmin extends React.Component {
   }
 }
 
-UserIsSuperAdmin.propTypes = {
+isSuperAdmin.propTypes = {
   access: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired
 };
 
-UserIsSuperAdmin.contextTypes = {
+isSuperAdmin.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
 export default connect(state =>
-({ access: state.userAccess }))(UserIsSuperAdmin);
+({ access: state.userAccess }))(isSuperAdmin);

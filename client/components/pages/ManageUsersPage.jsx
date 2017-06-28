@@ -91,8 +91,9 @@ class ManageUsersPage extends React.Component {
    * Place retrieved users on the component
    * @memberOf ManageUsersPage
    */
-  placeUsers = (user) =>
+  placeUsers = (user, index) =>
     <TableRow key={user.id}>
+      <TableRowColumn>{index + 1}</TableRowColumn>
       <TableRowColumn>{user.id}</TableRowColumn>
       <TableRowColumn>{user.name}</TableRowColumn>
       <TableRowColumn>{user.username}</TableRowColumn>
@@ -127,11 +128,12 @@ class ManageUsersPage extends React.Component {
                     enableSelectAll={false}
                   >
                     <TableRow>
-                      <TableHeaderColumn>ID</TableHeaderColumn>
+                      <TableHeaderColumn>S/N</TableHeaderColumn>
+                      <TableHeaderColumn>UserID</TableHeaderColumn>
                       <TableHeaderColumn>Name</TableHeaderColumn>
                       <TableHeaderColumn>Username</TableHeaderColumn>
                       <TableHeaderColumn>Role</TableHeaderColumn>
-                      <TableHeaderColumn>Profile</TableHeaderColumn>
+                      <TableHeaderColumn></TableHeaderColumn>
                     </TableRow>
                   </TableHeader>
                   <TableBody

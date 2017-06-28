@@ -10,7 +10,7 @@ function TextInput({ id, name, type, errorText,
   floatText, value, handleChange }) {
   return (
     <div className="input-field">
-      <label htmlFor={id}>{floatText}</label>
+      <label htmlFor={id} className="active">{floatText}</label>
       <input
         id={id}
         name={name}

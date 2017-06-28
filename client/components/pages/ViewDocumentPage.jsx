@@ -73,11 +73,15 @@ class ViewDocumentPage extends React.Component {
               {(access.user.roleId <= 2 || access.user.id === document.userId)
               && <div className="document-actions">
                 <Link to={`/document/${document.id}/edit`}
-                  className="btn-floating waves-effect waves-light green">
+                  className="btn-floating waves-effect waves-light green"
+                  title="Edit document"
+                >
                   <i className="material-icons">mode_edit</i>
                 </Link>
                 <a href="#!" onClick={this.deleteDocument}
-                  className="btn-floating waves-effect waves-light red">
+                  className="btn-floating waves-effect waves-light red
+                  btn-delete" title="Delete document"
+                >
                   <i className="material-icons">delete_forever</i>
                 </a>
               </div>}

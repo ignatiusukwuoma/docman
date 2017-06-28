@@ -2,10 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import SignupForm from '../forms/SignupForm.jsx';
-import SigninForm from '../forms/SigninForm.jsx';
+import LoginTabs from '../elements/LoginTabs.jsx';
 import handleError from '../../utils/errorHandler';
-import * as validator from '../../utils/validator';
+import * as validate from '../../utils/validate';
 import * as userActions from '../../actions/userActions';
 
 /**
@@ -87,8 +86,8 @@ class LandingPage extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { valid, errors } = validator
-      .signupValidator(this.state.signupDetails, this.state.confirmPassword);
+    const { valid, errors } = validate
+      .signup(this.state.signupDetails, this.state.confirmPassword);
     if (valid) {
       this.props.actions.signup(this.state.signupDetails)
       .then(() => {
@@ -108,8 +107,8 @@ class LandingPage extends React.Component {
    */
   onSigninSubmit(event) {
     event.preventDefault();
-    const { valid, errors } = validator
-      .signinValidator(this.state.signinDetails);
+    const { valid, errors } = validate
+      .signin(this.state.signinDetails);
     if (valid) {
       this.props.actions.signin(this.state.signinDetails)
       .then(() => {
@@ -143,15 +142,11 @@ class LandingPage extends React.Component {
             </div>
             <div className="col s12 m5 l4">
               <div className="forms">
-                <h5> Login to your account </h5>
-                <SigninForm
+                <LoginTabs
                   onSigninSubmit={this.onSigninSubmit}
                   signinDetails={this.state.signinDetails}
                   signinErrors={this.state.signinErrors}
                   handleSigninChange={this.handleSigninChange}
-                />
-                <h5> Create a new account </h5>
-                <SignupForm
                   pathname={this.props.pathname}
                   onSubmit={this.onSubmit}
                   handleChange={this.handleChange}

@@ -2,6 +2,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Router, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { getDocuments } from './actions/documentActions';
@@ -11,6 +12,7 @@ import { login } from './actions/userActions';
 import routes from './routes';
 import './scss/style.scss';
 
+injectTapEventPlugin();
 const store = configureStore();
 if (localStorage.getItem('docman-pro')) {
   const tokenStorage = JSON.parse(localStorage.getItem('docman-pro'));

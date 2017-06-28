@@ -50,7 +50,7 @@ export function signup(signupDetails) {
     dispatch(beginAjaxCall());
     return axios.post('/users', signupDetails)
       .then((res) => {
-        dispatch(saveToken(res.data, actionTypes.LOGIN_SUCCESS, dispatch));
+        saveToken(res.data, actionTypes.LOGIN_SUCCESS, dispatch);
       })
       .catch(error => throwError(error, dispatch));
   };
