@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import SignupForm from '../forms/SignupForm.jsx';
 import SigninForm from '../forms/SigninForm.jsx';
+
+injectTapEventPlugin();
 
 function LoginTabs({ onSigninSubmit, signinDetails, signinErrors,
   handleSigninChange, pathname, onSubmit, handleChange, signupErrors,

@@ -1,6 +1,6 @@
 import React from 'react';
 import expect from 'expect';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Nav } from '../../../components/layouts/Nav.jsx';
 
 function setup(signedIn = false) {
@@ -29,7 +29,5 @@ describe('Nav', () => {
     const wrapper = setup(true);
     const logoutButton = wrapper.find('a').last();
     expect(logoutButton.text()).toBe('Logout');
-    logoutButton.simulate('click');
-
   });
 });
