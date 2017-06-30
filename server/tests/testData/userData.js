@@ -33,7 +33,7 @@ export default {
   author1: {
     id: 6,
     name: faker.name.findName(),
-    username: 'author',
+    username: 'wonderwoman',
     email: faker.internet.email(),
     password: faker.internet.password(),
     roleId: 3,
@@ -69,19 +69,19 @@ export default {
     updatedAt: new Date()
   },
   superadmin: {
-    username: 'superadmin',
+    username: 'superman',
     password: 'password'
   },
   admin: {
-    username: 'admin',
+    username: 'batman',
     password: 'password'
   },
   author: {
-    username: 'author',
+    username: 'wonderwoman',
     password: 'password'
   },
   editor: {
-    username: 'editor',
+    username: 'spiderman',
     password: 'password'
   },
   noEmail: {

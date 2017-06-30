@@ -54,7 +54,7 @@ export function updateRole(roleId, newRoleDetails) {
       .then((res) => {
         dispatch({
           type: actionTypes.UPDATE_ROLE_SUCCESS,
-          role: res.data.updatedRole
+          role: res.data.role
         });
       })
       .catch(error => throwError(error, dispatch));

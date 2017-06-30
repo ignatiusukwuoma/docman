@@ -5,7 +5,7 @@ import { Nav } from '../../../components/layouts/Nav.jsx';
 
 function setup(signedIn = false) {
   const props = {
-    access: { loggedIn: signedIn },
+    access: { loggedIn: signedIn, user: {} },
     logout: () => {}
   };
   return mount(<Nav {...props} />);

@@ -33,16 +33,21 @@ function ProfileSidebar({ user, access, deleteUser }) {
       {(access.user.roleId === 1 || access.user.id === user.id)
        && <CardActions>
         <Link to={`/user/${user.id}/edit`}>
-          <RaisedButton label="EDIT PROFILE" labelColor={white}
-            backgroundColor={greenA700} />
-        </Link>
-        <a href="#!" onClick={deleteUser}>
           <RaisedButton
-            label="DELETE"
+            label={access.user.roleId === 1 && user.id !== 1
+            ? 'UPGRADE USER' : 'EDIT PROFILE'}
+            labelColor={white}
+            backgroundColor={greenA700}
+          />
+        </Link>
+        {access.user.id === user.id
+        && <a href="#!" onClick={deleteUser}>
+          <RaisedButton
+            label="DELETE ACCOUNT"
             labelColor={white}
             backgroundColor={redA700}
           />
-        </a>
+        </a>}
       </CardActions>}
     </Card>
   );

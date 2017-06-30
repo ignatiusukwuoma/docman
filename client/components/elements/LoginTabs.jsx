@@ -37,4 +37,18 @@ function LoginTabs({ onSigninSubmit, signinDetails, signinErrors,
   );
 }
 
+LoginTabs.propTypes = {
+  onSigninSubmit: PropTypes.func.isRequired,
+  handleSigninChange: PropTypes.func.isRequired,
+  signinDetails: PropTypes.object.isRequired,
+  signinErrors: PropTypes.object.isRequired,
+  pathname: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  signupDetails: PropTypes.object.isRequired,
+  signupErrors: PropTypes.object.isRequired,
+  handleConfirmPassword: PropTypes.func,
+  confirmPassword: PropTypes.string
+};
+
 export default LoginTabs;

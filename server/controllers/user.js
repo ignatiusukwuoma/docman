@@ -24,11 +24,10 @@ export default {
         const token = userUtils.generateJwtToken(userPayload);
         return res.status(201).json({
           message: 'User is successfully created',
-          user: userPayload,
           token
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -51,7 +50,7 @@ export default {
         users: userDatabase.rows,
         pageData: generalUtils.formatPage(userDatabase.count, limit, offset)
       }))
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -71,7 +70,7 @@ export default {
         }
         return res.status(200).send(generalUtils.userPayload(user));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -103,9 +102,9 @@ export default {
         return user
           .update(req.body, { field: Object.keys(req.body) })
           .then(() => res.status(200).send(generalUtils.userPayload(user)))
-          .catch(error => res.status(403).send(error));
+          .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -132,9 +131,9 @@ export default {
         return user
           .destroy()
           .then(() => res.status(204).send())
-          .catch(error => res.status(400).send(error));
+          .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -154,11 +153,7 @@ export default {
         const loginUser = userUtils.loginUser(user, req, res);
         return loginUser;
       })
-      .catch(error => res.status(400)
-        .json({
-          message: 'There was an error logging into the account',
-          error
-        }));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**

@@ -30,7 +30,7 @@ describe('SignupForm', () => {
   });
 
   it('renders 5 text inputs', () => {
-    const wrapper = setup();
+    const wrapper = setup('/');
     expect(wrapper.find('TextInput').length).toEqual(5);
   });
 
@@ -61,7 +61,7 @@ describe('SignupForm', () => {
   });
 
   it('renders a text input for the password', () => {
-    const wrapper = setup();
+    const wrapper = setup('/');
     expect(wrapper.find('TextInput').at(3).prop('name')).toBe('password');
   });
 });

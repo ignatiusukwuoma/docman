@@ -21,16 +21,13 @@ The app has three major levels of authorization;
     
 
 - An admin has all the privileges of an author and can also:
-    - view private documents created by all users
-    - edit and delete documents created by all users
-    - view details of all users.
+    - view details of all users and their documents.
     - search for users.
 
 - A superadmin has all the privileges of an admin and can also:
-    - edit and delete all users.
     - update a user's role e.g upgrade another user to admin.
     - create roles.
-    - edit and delete existing roles
+    - edit existing roles
     - Delete created roles apart from admins and author roles.
 
 ## Technologies
@@ -53,47 +50,40 @@ Ensure that project dependencies are installed before running tests.
 2. Add a test database url (DATABASE_TEST_URL) to the `.env` file.
 3. Run `npm test`
 
-## API Summary
-View full API documentation [here](https://andela-iukwuoma.github.io/slate)
+## API Documentation
+View API documentation [here](https://andela-iukwuoma.github.io/slate)
 
-## API Summary
-### Users
-EndPoint                      |   Functionality
-------------------------------|------------------------
-POST /users/login         |   Logs in a user
-POST /users/logout        |   Logs out a user
-POST /users/              |   Creates a new user
-GET /users/               |   Gets all users (available only to Admins)
-GET /users/:id           |   Retrieves a particular user by the id specified
-PUT /users/:id           |   Updates a user's details by the id specified (available only to the user and SuperAdmin)
-DELETE /users/:id        |   Deletes a user by the id specified (available only to the user and SuperAdmin)
-GET /users/:id/documents   | Gets all documents for a particular user by the id specified
-GET /users/?limit={integer}&offset={integer} | Get users by limit and/or offset for pagination
-### Documents
-EndPoint                      |   Functionality
-------------------------------|------------------------
-POST /documents/          |   Creates a new document.
-GET /documents/           |   Gets all documents.
-GET /documents/:id       |   Find document by id.
-PUT /documents/:id       |   Updates a document's details. (available only to the author and Admins)
-DELETE /documents/:id    |   Delete document. (available only to the author and Admins)
-GET /documents/?limit={integer}&offset={integer} | Get documents by limit and/or offset for pagination
-### Roles (available only to the SuperAdmin)
-EndPoint                      |   Functionality
-------------------------------|------------------------
-GET /roles/               |   Get all Roles.
-POST /roles/               |   Create a Role.
-PUT /roles/:id               |   Edit a Role by the id specified.
-DELETE /roles/:id               |   Delete a Role by the id specified.
-### Search
-EndPoint                      |   Functionality
-------------------------------|------------------------
-GET /search/documents/?q=query | Get all documents with title containing the search query
-GET /search/users/?q=query | Get all users whose name, username or email matches the search query (available only to Admins)
+## Contributing
 
-### Contributing
+If you are interested in contributing to DocmanPro, that's really great! Explore the GitHub issuee, if you find something you want to work on, let us know right there in the comments. If you are interested in a specific aspect of the project but aren’t sure where to begin, feel free to ask. Start small and open up a dialogue with us. This will help to get your contributions accepted easily.
 
-Contributions are most welcome. Simply fork the repository, work on the feature and raise a PR.
+If you find a bug and would just like to let us know about it, please create an issue.
 
-### Licence
+## Limitations
+
+Some limitations of this project include:
+- Users cannot upload a profile picture
+- Users cannot share documents with specific people
+
+## FAQ
+
+- **What if I want to use another port?**
+
+That's easy. In the root of the project. create a file named `.env` and add the following line to it:
+
+```bash
+PORT=<your_desired_port>
+```
+
+where <your\_desired\_port> is the port you want to use. So, if you want to use port `9000`, you will write:
+
+```bash
+PORT=9000
+```
+
+- **How can I support this project?**
+
+Thank you for your interest in supporting DocmanPro. One way to support us is by Contributing to the project. View details for contributing above.
+
+## Licence
 MIT

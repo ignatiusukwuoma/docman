@@ -7,7 +7,7 @@ import React, { PropTypes } from 'react';
  * @returns {object} jsx
  */
 function TextInput({ id, name, type, errorText,
-  floatText, value, handleChange }) {
+  floatText, value, handleChange, disabled }) {
   return (
     <div className="input-field">
       <label htmlFor={id} className="active">{floatText}</label>
@@ -16,6 +16,7 @@ function TextInput({ id, name, type, errorText,
         name={name}
         type={type}
         value={value}
+        disabled={disabled}
         onChange={handleChange}
       />
       {errorText && <div className="red-text small">{errorText}</div>}
@@ -26,6 +27,7 @@ TextInput.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
+  disabled:PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   errorText: PropTypes.string,
   type: PropTypes.string.isRequired,

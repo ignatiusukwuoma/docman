@@ -138,7 +138,7 @@
 
     "no-use-before-define"       : [2, "nofunc"],
 
-    "handle-callback-err"   : [2, "^(e|err|error)$"],
+    "handle-callback-err"   : [0],
     "no-mixed-requires"     : [2, true],
     "no-new-require"        : [2],
     "no-path-concat"        : [2],

@@ -39,7 +39,10 @@ export default {
    * @returns {object} response
    */
   searchDocuments(req, res) {
-    const query = `%${req.query.q}%`;
+    const queries = req.query.q.split(' ');
+    const query = `%${queries[0]}%`;
+    const query1 = queries[1] ? `%${queries[1]}%` : '';
+    const query2 = queries[2] ? `%${queries[2]}%` : '';
     const limit = req.query.limit > 0 ? req.query.limit : 9;
     const offset = req.query.offset > 0 ? req.query.offset : 0;
     return models.Document
@@ -47,7 +50,11 @@ export default {
         limit,
         offset,
         where: { title: {
-          $iLike: query
+          $or: [
+          { $iLike: query },
+          { $iLike: query1 },
+          { $iLike: query2 }
+          ]
         } },
         include: [{
           model: models.User,

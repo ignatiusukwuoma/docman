@@ -19,16 +19,6 @@ export default
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage} />
 
-    <Route component={isLoggedIn}>
-      <Route path="/home" component={HomePage} />
-      <Route path="/user/:id" components={ProfilePage} />
-      <Route path="/document/new" component={NewDocumentPage} />
-      <Route path="/document/:id" component={ViewDocumentPage} />
-      <Route path="/user/:id/edit" components={EditProfilePage} />
-      <Route path="/document/:id/edit" component={EditDocumentPage} />
-      <Route path="/user/:id/documents" component={UserDocumentsPage} />
-    </Route>
-
     <Route component={isAdmin}>
       <Route path="/manageusers" component={ManageUsersPage} />
     </Route>
@@ -37,5 +27,14 @@ export default
       <Route path="/manageroles" component={ManageRolesPage} />
     </Route>
 
-    <Route path="*" component={LandingPage} />
+    <Route component={isLoggedIn}>
+      <Route path="/home" component={HomePage} />
+      <Route path="/user/:id" components={ProfilePage} />
+      <Route path="/document/new" component={NewDocumentPage} />
+      <Route path="/document/:id" component={ViewDocumentPage} />
+      <Route path="/user/:id/edit" components={EditProfilePage} />
+      <Route path="/document/:id/edit" component={EditDocumentPage} />
+      <Route path="/user/:id/documents" component={UserDocumentsPage} />
+      <Route path="*" component={HomePage} />
+    </Route>
   </Route>;

@@ -6,7 +6,7 @@ import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
 import { createDocument } from '../../actions/documentActions';
-import { documentValidator } from '../../utils/validate';
+import * as validate from '../../utils/validate';
 import handleError from '../../utils/errorHandler';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
@@ -72,7 +72,7 @@ class NewDocumentPage extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { valid, errors } = documentValidator(this.state.document);
+    const { valid, errors } = validate.document(this.state.document);
     if (valid) {
       this.setState({ saving: true });
       this.props.createDocument(this.state.document)
@@ -102,6 +102,7 @@ class NewDocumentPage extends React.Component {
    * @memberOf NewDocumentPage
    */
   render() {
+    const { errors, document, saving } = this.state;
     return (
       <div className="new-document-page">
         <div className="row">
@@ -117,24 +118,24 @@ class NewDocumentPage extends React.Component {
                     id="document-title"
                     name="title"
                     type="text"
-                    errorText={this.state.errors.title}
+                    errorText={errors.title}
                     floatText="Title"
                     handleChange={this.handleChange}
-                    value={this.state.document.title}
+                    value={document.title}
                   />
                 </div>
                 <div className="select-input">
                   <SelectInput
                     id="select-box"
                     name="access"
-                    error={this.state.errors.access}
+                    error={errors.access}
                     handleChange={this.handleChange}
-                    value={this.state.document.access}
+                    value={document.access}
                   />
                 </div>
                 <div className="tiny-mce">
                   <TinyMCE
-                    content={this.state.document.content}
+                    content={document.content}
                     config={{
                       plugins: 'link image code',
                       toolbar: 'undo redo | bold italic |\
@@ -143,16 +144,17 @@ class NewDocumentPage extends React.Component {
                     onChange={this.handleEditorChange}
                   />
                 </div>
-                {this.state.errors.content
+                {errors.content
                 && <div className="red-text small">
-                  {this.state.errors.content}
+                  {errors.content}
                 </div>}
                 <div className="btn-create">
                   <FlatButton
                     backgroundColor="#a4c639"
                     hoverColor="#8AA62F"
-                    disable={this.state.saving}
-                    label={this.state.saving ? 'Creating' : 'Create New Document'}
+                    disable={saving}
+                    label={saving
+                    ? 'Creating' : 'Create New Document'}
                     onClick={this.onSubmit}
                   />
                 </div>

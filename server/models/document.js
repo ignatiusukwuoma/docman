@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
       defaultValue: 'public',
       validate: { notEmpty: { msg: 'Access field cannot be empty' },
         isIn: { args: [['public', 'private', 'role']],
-          msg: 'Select either Public, Private or Role' } }
+          msg: 'Select an option' } }
     }
   }, {
     classMethods: {

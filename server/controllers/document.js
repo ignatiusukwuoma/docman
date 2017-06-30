@@ -23,7 +23,7 @@ export default {
         message: 'New document was successfully created',
         document
       }))
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -68,7 +68,7 @@ export default {
         };
         res.status(200).send(response);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -115,12 +115,9 @@ export default {
                 .formatPage(documents.count, limit, offset)
             });
           })
-          .catch(error => res.status(400).json({
-            message: 'There was an error retrieving the documents',
-            error
-          }));
+          .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -145,17 +142,17 @@ export default {
         }
         const userId = req.decoded.data.id;
         const roleId = req.decoded.data.roleId;
-        if (document.access !== 'public' && roleId > 2
+        if (document.access !== 'public'
           && document.userId !== userId
-          && !(document.access === 'role'
-            && document.User.roleId === roleId)) {
+          && !(document.access === 'role' && document.User.roleId === roleId)
+          && !(document.access === 'role' && roleId < 2)) {
           return res.status(401).json({
             message: 'You are not permitted to access this document'
           });
         }
         return res.status(200).send(document);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -167,28 +164,27 @@ export default {
   update(req, res) {
     return Document
       .findById(req.params.documentId)
-      .then((document) => {
-        if (!document) {
+      .then((documentToUpdate) => {
+        if (!documentToUpdate) {
           return res.status(404).json({
             message: 'Document not found'
           });
         }
         const userId = req.decoded.data.id;
-        const roleId = req.decoded.data.roleId;
-        if (roleId > 2 && document.userId !== userId) {
+        if (documentToUpdate.userId !== userId) {
           return res.status(401).json({
             message: 'You are not permitted to access this document'
           });
         }
-        return document
+        return documentToUpdate
           .update(req.body, { fields: Object.keys(req.body) })
-          .then(updatedDocument => res.status(200).json({
-            message: 'Document has been updated',
-            updatedDocument
+          .then(document => res.status(200).json({
+            message: 'Document is successfully updated',
+            document
           }))
-          .catch(error => res.status(403).send(error));
+          .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -208,16 +204,18 @@ export default {
         }
         const userId = req.decoded.data.id;
         const roleId = req.decoded.data.roleId;
-        if (roleId > 2 && document.userId !== userId) {
+        if (document.userId !== userId) {
           return res.status(401).json({
             message: 'You are not permitted to delete this document'
           });
         }
         return document
           .destroy()
-          .then(() => res.status(204).send())
-          .catch(error => res.status(403).send(error));
+          .then(() => res.status(200).send({
+            message: 'Deleted successfully'
+          }))
+          .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   }
 };

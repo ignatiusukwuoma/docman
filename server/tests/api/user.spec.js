@@ -32,7 +32,7 @@ describe('Users', () => {
     it('should fail when password is incorrect', (done) => {
       chai.request(server)
         .post('/users/login')
-        .send({ username: 'editor', password: 'passwor' })
+        .send({ username: 'spiderman', password: 'passwor' })
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
@@ -63,7 +63,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('errors');
+          expect(res.body.message).to.equal('email cannot be null');
           done();
         });
     });
@@ -75,9 +75,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res).to.be.a('object');
-          expect(res.body).to.have.property('errors');
-          expect(res.body.errors[0].message)
-            .to.equal('username cannot be null');
+          expect(res.body.message).to.equal('username cannot be null');
           done();
         });
     });
@@ -89,7 +87,6 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.have.property('token');
-          expect(res.body.user.roleId).to.equal(3);
           expect(res.body.message)
             .to.equal('User is successfully created');
           done();
@@ -102,8 +99,7 @@ describe('Users', () => {
       .send(author1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body).to.have.property('errors');
-        expect(res.body.errors[0].message).to.equal('Username already exist');
+        expect(res.body.message).to.equal('Username already exist');
         done();
       });
     });
@@ -126,7 +122,7 @@ describe('Users', () => {
       .send(invalidEmail)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.errors[0].message).to.equal('Use a valid email');
+        expect(res.body.message).to.equal('Use a valid email');
         done();
       });
     });
@@ -151,12 +147,6 @@ describe('Users', () => {
         done();
       });
   });
-
-  // after((done) => {
-  //   User.destroy({ where: { id: { $and: [1, 2, 3, 4, 5] } } });
-  //   done();
-  // });
-
 
   // GET /users
   describe('GET /users', () => {
@@ -246,8 +236,8 @@ describe('Users', () => {
             expect(res.body.id).to.equal(4);
             expect(res.body).to.eql({
               id: 4,
-              username: 'editor',
-              name: 'Editor',
+              username: 'spiderman',
+              name: 'Spiderman',
               email: 'editor@gmail.com',
               roleId: 4
             });
@@ -299,14 +289,14 @@ describe('Users', () => {
         chai.request(server)
           .put('/users/3')
           .set({ 'x-access-token': authorToken })
-          .send({ name: 'Updated Author' })
+          .send({ name: 'Superwoman' })
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.eql({
               id: 3,
-              username: 'author',
-              name: 'Updated Author',
+              username: 'wonderwoman',
+              name: 'Superwoman',
               email: 'author@gmail.com',
               roleId: 3
             });
@@ -314,18 +304,18 @@ describe('Users', () => {
           });
       });
 
-      it("should allow Superadmin to update a user's details", (done) => {
+      it('should allow Superadmin to upgrade a user', (done) => {
         chai.request(server)
           .put('/users/4')
           .set({ 'x-access-token': superadminToken })
-          .send({ name: 'New Admin', roleId: 2 })
+          .send({ roleId: 2 })
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.eql({
               id: 4,
-              username: 'editor',
-              name: 'New Admin',
+              username: 'spiderman',
+              name: 'Spiderman',
               email: 'editor@gmail.com',
               roleId: 2
             });
@@ -339,7 +329,7 @@ describe('Users', () => {
           .set({ 'x-access-token': authorToken })
           .send({ username: editor.username })
           .end((err, res) => {
-            expect(res.status).to.equal(403);
+            expect(res.status).to.equal(400);
             expect(res.body).to.be.an('object');
             expect(res.body.message).to.eql('Username already exist');
             done();

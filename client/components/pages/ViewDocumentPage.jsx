@@ -70,7 +70,7 @@ class ViewDocumentPage extends React.Component {
             <div className="container">
               <div>
               <h4>{document.title}</h4>
-              {(access.user.roleId <= 2 || access.user.id === document.userId)
+              {(access.user.id === document.userId)
               && <div className="document-actions">
                 <Link to={`/document/${document.id}/edit`}
                   className="btn-floating waves-effect waves-light green"

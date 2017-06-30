@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
-import { document } from '../../utils/validate';
+import * as validate from '../../utils/validate';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
@@ -79,7 +79,7 @@ class EditDocumentPage extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { valid, errors } = documentValidator(this.state.document);
+    const { valid, errors } = validate.document(this.state.document);
     if (valid) {
       this.setState({ saving: true });
       this.props.actions.updateDocument(this.state.document)

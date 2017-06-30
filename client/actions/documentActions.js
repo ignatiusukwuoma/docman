@@ -118,7 +118,7 @@ export function updateDocument(document) {
         dispatch({
           type: actionTypes.UPDATE_DOCUMENT_SUCCESS,
           message: res.data.message,
-          document: res.data.updatedDocument
+          document: res.data.document
         });
       })
       .catch(error => throwError(error, dispatch));

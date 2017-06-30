@@ -1,64 +1,60 @@
 import controllers from '../controllers';
 import authMiddlewares from '../middlewares/auth';
 
-const userControllers = controllers.user;
-const roleControllers = controllers.role;
-const documentControllers = controllers.document;
-const searchControllers = controllers.search;
-
 const validateToken = authMiddlewares.validateToken;
-const isSuperadmin = authMiddlewares.isSuperadmin;
-const isAdminOrSuperadmin = authMiddlewares.isAdminOrSuperadmin;
+const isSuperAdmin = authMiddlewares.isSuperAdmin;
+const isAdmin = authMiddlewares.isAdmin;
 
 const Routes = (app) => {
   app.get('/v1', (req, res) => res.status(200).send({
     message: 'Welcome to Docman Pro API'
   }));
 
-  app.use('/roles', validateToken, isSuperadmin);
+  app.use('/roles', validateToken, isSuperAdmin);
   app.route('/roles')
-    .get(roleControllers.list)
-    .post(roleControllers.create);
+    .get(controllers.role.list)
+    .post(controllers.role.create);
 
   app.route('/roles/:roleId')
-    .put(roleControllers.update)
-    .delete(roleControllers.destroy);
+    .put(controllers.role.update)
+    .delete(controllers.role.destroy);
 
   app.route('/users')
-    .get(validateToken, isAdminOrSuperadmin, userControllers.list)
-    .post(userControllers.create);
+    .get(validateToken, isAdmin, controllers.user.list)
+    .post(controllers.user.create);
 
   app.route('/users/login')
-    .post(userControllers.login);
+    .post(controllers.user.login);
 
   app.route('/users/logout')
-    .post(userControllers.logout);
+    .post(controllers.user.logout);
 
   app.use('/users/:userId', validateToken);
   app.route('/users/:userId')
-    .get(userControllers.retrieve)
-    .put(userControllers.update)
-    .delete(userControllers.destroy);
+    .get(controllers.user.retrieve)
+    .put(controllers.user.update)
+    .delete(controllers.user.destroy);
 
   app.route('/users/:userId/documents')
-    .get(documentControllers.listUserDocuments);
+    .get(controllers.document.listUserDocuments);
 
   app.use('/documents', validateToken);
   app.route('/documents')
-    .get(documentControllers.list)
-    .post(documentControllers.create);
+    .get(controllers.document.list)
+    .post(controllers.document.create);
 
   app.route('/documents/:documentId')
-    .get(documentControllers.retrieve)
-    .put(documentControllers.update)
-    .delete(documentControllers.destroy);
+    .get(controllers.document.retrieve)
+    .put(controllers.document.update)
+    .delete(controllers.document.destroy);
 
   app.use('/search', validateToken);
   app.route('/search/users/')
-    .get(isAdminOrSuperadmin, searchControllers.searchUsers);
+    .get(isAdmin, controllers.search.searchUsers);
 
   app.route('/search/documents')
-    .get(searchControllers.searchDocuments);
+    .get(controllers.search.searchDocuments);
+
 };
 
 export default Routes;

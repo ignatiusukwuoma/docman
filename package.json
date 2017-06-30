@@ -8,7 +8,7 @@
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
     "test": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.js client/tests/testSetup.js client/tests/**/* --timeout 20000",
     "test:server": "npm run setup:test && NODE_ENV=test nyc mocha server/tests/**/*.spec.js --timeout 20000",
-    "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*.spec.js",
+    "test:client": "NODE_ENV=test nyc mocha client/tests/testSetup.js client/tests/**/*",
     "setup:test": "npm run db:migrate:test && NODE_ENV=test sequelize db:seed:all",
     "build": "babel-node tools/build.js",
     "postinstall": "npm run build && npm run db:migrate",

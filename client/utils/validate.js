@@ -21,7 +21,7 @@ export function validateFields(inputFields = [], requiredFields = []) {
 
 /**
  * Validates the signup form
- * @param {string} {
+ * @param {object} {
  *   name = '', email = '', username = '', password = '' }
  * @param {string} confirmPassword
  * @returns {object} validate
@@ -50,8 +50,32 @@ export function signup({
 }
 
 /**
+ * Validates the edit profile form
+ * @param {object} {
+ *   name = '', email = '', username = '' }
+ * @returns {object} validate
+ */
+export function editprofile({
+  name = '', email = '', username = '' }) {
+  const validate = validateFields(
+    [username, name, email],
+    ['username', 'name', 'email']);
+  if (/\s/.test(username) || (/\W/).test(username)) {
+    validate.errors.username = 'Please enter a valid username';
+    validate.valid = false;
+  }
+
+  if (!validator.isEmail(email)) {
+    validate.errors.email = 'Please enter a valid email';
+    validate.valid = false;
+  }
+
+  return validate;
+}
+
+/**
  * Validates the signin form
- * @param {string} { username = '', password = '' }
+ * @param {object} { username = '', password = '' }
  * @returns {object} validate
  */
 export function signin({ username = '', password = '' }) {
@@ -70,7 +94,7 @@ export function signin({ username = '', password = '' }) {
  * @param {string} { title = '', access = '', content = '' }
  * @returns {object} validate
  */
-export function documentValidator({ title = '', access = '', content = '' }) {
+export function document({ title = '', access = '', content = '' }) {
   const validate = validateFields(
     [title, access, content],
     ['title', 'access', 'content']);

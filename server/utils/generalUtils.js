@@ -32,5 +32,18 @@ export default {
       email: user.email,
       roleId: user.roleId
     };
+  },
+
+/**
+ * Handle sequelize errors
+ * @param {object} error error object
+ * @param {function} res server response function
+ * @returns {object} retrieved error message
+ */
+  handleError(error, res) {
+    return error.errors
+      ? res.status(400).send({ message: error.errors[0].message })
+      : res.status(400).send({ message: error.message });
   }
+
 };

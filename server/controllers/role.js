@@ -1,4 +1,5 @@
 import models from '../models';
+import generalUtils from '../utils/generalUtils';
 
 const Role = models.Role;
 
@@ -16,7 +17,7 @@ export default {
         message: 'New role successfully created',
         role
       }))
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -31,7 +32,7 @@ export default {
         order: [['id']]
       })
       .then(roles => res.status(200).send(roles))
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -43,20 +44,23 @@ export default {
   update(req, res) {
     return Role
       .findById(req.params.roleId)
-      .then((role) => {
-        if (!role) {
+      .then((roleToUpdate) => {
+        if (!roleToUpdate) {
           return res.status(404).send({
             message: 'Role not found'
           });
         }
-        return role
+        return roleToUpdate
           .update(req.body)
-            .then((updatedRole) => {
-              res.status(200).send({ updatedRole });
+            .then((role) => {
+              res.status(200).send({
+                message: 'Role is successfully updated',
+                role
+              });
             })
-            .catch(error => res.status(400).send(error));
+            .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   },
 
   /**
@@ -81,9 +85,11 @@ export default {
         }
         return role
           .destroy()
-          .then(() => res.status(204).send())
-          .catch(error => res.status(400).send(error));
+          .then(() => res.status(200).send({
+            message: 'Deleted successfully'
+          }))
+          .catch(error => generalUtils.handleError(error, res));
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => generalUtils.handleError(error, res));
   }
 };

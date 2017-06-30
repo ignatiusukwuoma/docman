@@ -15,7 +15,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { args: true, msg: 'Please input your full name' },
+        notEmpty: { args: true, msg: 'Please input your full name' }
       }
     },
     email: {
@@ -24,7 +24,7 @@ export default (sequelize, DataTypes) => {
       unique: { args: true, msg: 'Email already exist' },
       validate: {
         isEmail: { args: true, msg: 'Use a valid email' },
-        notEmpty: { args: true, msg: 'Email cannot be empty' },
+        notEmpty: { args: true, msg: 'Email cannot be empty' }
       }
     },
     roleId: {
@@ -35,7 +35,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true
+        notEmpty: { args: true, msg: 'Password is invalid' }
       }
     }
   }, {
@@ -65,7 +65,7 @@ export default (sequelize, DataTypes) => {
         user.hashPassword();
       },
       beforeUpdate(user) {
-        if (user.password) {
+        if (user._changed.password) {
           user.hashPassword();
         }
       }

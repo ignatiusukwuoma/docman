@@ -9,7 +9,7 @@ import SelectInput from '../forms/SelectInput.jsx';
  *   handleConfirmPassword, confirmPassword, signupErrors }
  * @returns {object} jsx object to display form
  */
-function SignupForm({ access, pathname, onSubmit, handleChange,
+function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
   signupDetails, handleConfirmPassword, confirmPassword, signupErrors }) {
   return (
     <form onSubmit={onSubmit} id="signup-form">
@@ -18,6 +18,7 @@ function SignupForm({ access, pathname, onSubmit, handleChange,
           id="signup-name"
           name="name"
           type="text"
+          disabled={disabled}
           errorText={signupErrors.name}
           floatText="Name"
           handleChange={handleChange}
@@ -29,6 +30,7 @@ function SignupForm({ access, pathname, onSubmit, handleChange,
           id="signup-email"
           name="email"
           type="email"
+          disabled={disabled}
           errorText={signupErrors.email}
           floatText="Email"
           handleChange={handleChange}
@@ -40,35 +42,39 @@ function SignupForm({ access, pathname, onSubmit, handleChange,
           id="signup-username"
           name="username"
           type="text"
+          disabled={disabled}
           errorText={signupErrors.username}
           floatText="Username"
           handleChange={handleChange}
           value={signupDetails.username}
         />
       </div>
-      <div>
-        <TextInput
-          id="signup-password"
-          name="password"
-          type="password"
-          errorText={signupErrors.password}
-          floatText="Password"
-          handleChange={handleChange}
-          value={signupDetails.password}
-        />
-      </div>
-      <div>
-        <TextInput
-          id="signup-confirm-password"
-          name="confirmPassword"
-          type="password"
-          errorText={signupErrors.confirmPassword}
-          floatText="Confirm Password"
-          handleChange={handleConfirmPassword}
-          value={confirmPassword}
-        />
-      </div>
-      { pathname !== '/' && access.user.roleId === 1
+      { pathname === '/'
+      && <div>
+        <div>
+          <TextInput
+            id="signup-password"
+            name="password"
+            type="password"
+            errorText={signupErrors.password}
+            floatText="Password"
+            handleChange={handleChange}
+            value={signupDetails.password}
+          />
+        </div>
+        <div>
+          <TextInput
+            id="signup-confirm-password"
+            name="confirmPassword"
+            type="password"
+            errorText={signupErrors.confirmPassword}
+            floatText="Confirm Password"
+            handleChange={handleConfirmPassword}
+            value={confirmPassword}
+          />
+        </div>
+      </div>}
+      { access && pathname !== '/' && access.user.roleId === 1
       && <div>
         <SelectInput
           id="select-role"
@@ -91,13 +97,14 @@ function SignupForm({ access, pathname, onSubmit, handleChange,
 }
 
 SignupForm.propTypes = {
+  disabled: PropTypes.bool,
   pathname: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   signupDetails: PropTypes.object.isRequired,
-  handleConfirmPassword: PropTypes.func.isRequired,
-  confirmPassword: PropTypes.string.isRequired,
-  signupErrors: PropTypes.object.isRequired
+  signupErrors: PropTypes.object.isRequired,
+  handleConfirmPassword: PropTypes.func,
+  confirmPassword: PropTypes.string
 };
 
 export default SignupForm;

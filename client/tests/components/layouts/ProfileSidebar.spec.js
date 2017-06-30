@@ -28,10 +28,9 @@ describe('ProfileSidebar', () => {
     expect(wrapper.find('CardTitle').length).toBe(1);
   });
 
-  it('renders a CardAction with buttons is user is Admin', () => {
+  it('renders a CardAction with buttons if user is Admin', () => {
     const wrapper = setup(1);
     expect(wrapper.find('CardActions').length).toBe(1);
     expect(wrapper.find('Link').length).toBe(1);
-    expect(wrapper.find('a').length).toBe(1);
   });
 });

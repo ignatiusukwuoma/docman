@@ -45,13 +45,13 @@ export default {
   },
 
   /**
-   * Confirms if user is superadmin
+   * Confirms if user is SuperAdmin
    * @param {object} req
    * @param {object} res
    * @param {function} next
    * @returns {function} next function
    */
-  isSuperadmin(req, res, next) {
+  isSuperAdmin(req, res, next) {
     if (req.decoded.data.roleId !== 1) {
       return res.status(401).json({
         message: 'Access denied: SuperAdmin credentials required'
@@ -67,7 +67,7 @@ export default {
    * @param {function} next
    * @returns {function} next function
    */
-  isAdminOrSuperadmin(req, res, next) {
+  isAdmin(req, res, next) {
     if (req.decoded.data.roleId > 2) {
       return res.status(401).json({
         message: 'Access denied: Admin credentials required'
