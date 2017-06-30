@@ -3,6 +3,12 @@ import * as actionTypes from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import handleError from '../utils/errorHandler';
 
+/**
+ * Thunk to search for documents
+ * @param {string} query
+ * @param {number} [offset=0]
+ * @returns {object} action to dispatch
+ */
 export function searchDocuments(query, offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -20,6 +26,12 @@ export function searchDocuments(query, offset = 0) {
   };
 }
 
+/**
+ * Thunk to search for users
+ * @param {string} query
+ * @param {number} [offset=0]
+ * @returns {object} action to dispatch
+ */
 export function searchUsers(query, offset = 0) {
   return (dispatch) => {
     dispatch(beginAjaxCall());

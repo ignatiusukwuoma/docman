@@ -6,15 +6,15 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: { args: true, msg: 'Name cannot be empty' }
-      },
-    },
+      }
+    }
   }, {
     classMethods: {
       associate: (models) => {
         Role.hasMany(models.User, {
           foreignKey: 'roleId',
           as: 'users',
-          onDelete: 'CASCADE',
+          onDelete: 'CASCADE'
         });
       }
     }

@@ -4,55 +4,74 @@ import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import SignupForm from '../forms/SignupForm.jsx';
 import handleError from '../../utils/errorHandler';
-import { signupValidator } from '../../utils/validator';
+import * as validate from '../../utils/validate';
 import { updateUser } from '../../actions/userActions';
 import Sidebar from '../layouts/Sidebar.jsx';
 
+/**
+ * Controls the edit profile page
+ * @class EditProfilePage
+ * @extends {React.Component}
+ */
 class EditProfilePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
     this.state = {
-      confirmPassword: '',
-      signupErrors: {},
-      signupDetails: {
-        name: '',
-        email: '',
-        username: '',
-        password: ''
+      editprofileErrors: {},
+      editprofileDetails: {
+        name: `${props.user.name}`,
+        email: `${props.user.email}`,
+        username: `${props.user.username}`,
+        roleId: `${props.user.roleId}`
       }
     };
   }
+  componentDidMount() {
+    $('select').material_select();
+    $('#select-role').on('change', this.handleChange);
+  }
 
+  /**
+   * Sets the form value to state
+   * @param {object} event
+   * @memberOf EditProfilePage
+   */
   handleChange(event) {
-    const signupDetails = this.state.signupDetails;
-    signupDetails[event.target.name] = event.target.value.substr(0, 30);
-    this.setState({ signupDetails });
+    const editprofileDetails = this.state.editprofileDetails;
+    editprofileDetails[event.target.name] = event.target.value.substr(0, 30);
+    this.setState({ editprofileDetails });
   }
 
-  handleConfirmPassword(event) {
-    this.setState({ confirmPassword: event.target.value.substr(0, 30) });
-  }
-
+  /**
+   * Submits the form to edit profile
+   * @param {object} event
+   * @memberOf EditProfilePage
+   */
   onSubmit(event) {
     event.preventDefault();
-    const { valid, errors } = signupValidator(this
-    .state.signupDetails, this.state.confirmPassword);
+    const { valid, errors } = validate.editprofile(this
+    .state.editprofileDetails);
     if (valid) {
-      this.props.updateUser(this.props.user.id, this.state.signupDetails)
+      this.props.updateUser(this.props.user.id, this.state.editprofileDetails)
       .then(() => {
         this.context.router.push(`/user/${this.props.user.id}`);
         toastr.success('Profile updated successfully');
       })
       .catch(error => handleError(error));
     } else {
-      this.setState({ signupErrors: errors });
+      this.setState({ editprofileErrors: errors });
     }
   }
 
+  /**
+   * Renders the edit profile page
+   * @returns {object} jsx
+   * @memberOf EditProfilePage
+   */
   render() {
+    const { pathname, user, access } = this.props;
     return (
       <div className="edit-profile-page">
         <div className="row">
@@ -65,13 +84,13 @@ class EditProfilePage extends React.Component {
             </div>
             <div className="edit-profile-form">
               <SignupForm
-                pathname={this.props.pathname}
+                disabled={access.user.id !== user.id}
+                access={access}
+                pathname={pathname}
                 onSubmit={this.onSubmit}
                 handleChange={this.handleChange}
-                signupErrors={this.state.signupErrors}
-                signupDetails={this.state.signupDetails}
-                confirmPassword={this.state.confirmPassword}
-                handleConfirmPassword={this.handleConfirmPassword}
+                signupErrors={this.state.editprofileErrors}
+                signupDetails={this.state.editprofileDetails}
               />
             </div>
           </div>
@@ -83,6 +102,7 @@ class EditProfilePage extends React.Component {
 
 EditProfilePage.propTypes = {
   user: PropTypes.object,
+  access: PropTypes.object.isRequired,
   pathname: PropTypes.string.isRequired
 };
 
@@ -90,11 +110,18 @@ EditProfilePage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+/**
+ * Make the state available in props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} pathname and user
+ */
 function mapStateToProps(state, ownProps) {
   const pathname = ownProps.location.pathname;
   return {
     pathname,
-    user: state.user
+    user: state.user,
+    access: state.userAccess
   };
 }
 

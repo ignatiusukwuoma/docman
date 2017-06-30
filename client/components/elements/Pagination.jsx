@@ -1,5 +1,10 @@
 import React, { PropTypes } from 'react';
 
+/**
+ * Displays pagination
+ * @param {any} { documents, nextPage, prevPage, pageData }
+ * @returns {object} jsx that displays the pagintion
+ */
 function Pagination({ documents, nextPage, prevPage, pageData }) {
   if (pageData.pageSize > 0) {
     return (

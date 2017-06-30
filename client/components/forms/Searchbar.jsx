@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import TextInput from '../forms/TextInput.jsx';
 import { searchUsers, searchDocuments } from '../../actions/searchActions';
 
+/**
+ * The search form
+ * @class Searchbar
+ * @extends {React.Component}
+ */
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
@@ -13,10 +18,20 @@ class Searchbar extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  /**
+   * Handles the character change to the search box
+   * @param {object} event
+   * @memberOf Searchbar
+   */
   handleChange(event) {
     this.setState({ search: event.target.value });
   }
 
+  /**
+   * Called when the search form submits
+   * @param {object} event
+   * @memberOf Searchbar
+   */
   submitSearch(event) {
     event.preventDefault();
     if (location.pathname === '/manageusers') {
@@ -26,10 +41,16 @@ class Searchbar extends React.Component {
     }
   }
 
+  /**
+   * The searchbar
+   * @returns {object} jsx to display the search form
+   * @memberOf Searchbar
+   */
   render() {
     return (
       <form onSubmit={this.submitSearch} className="searchbar">
         <TextInput
+          id="search-bar"
           name="search"
           type="text"
           floatText={location.pathname === '/manageusers'
@@ -44,15 +65,6 @@ class Searchbar extends React.Component {
     );
   }
 }
-Searchbar.propTypes = {
-  documents: PropTypes.array
-};
 
-function mapStateToProps(state, ownProps) {
-  return {
-    documents: state.documents
-  };
-}
 
-export default connect(mapStateToProps,
-{ searchUsers, searchDocuments })(Searchbar);
+export default connect(null, { searchUsers, searchDocuments })(Searchbar);

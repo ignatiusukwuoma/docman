@@ -1,6 +1,17 @@
+# Dependency directories
 node_modules
-.env
-npm-debug.log
+
+# Coverage directory used by tools like istanbul
 coverage
+
+# Application build on local
+lib
+
+#Environment variables
+.env
+
+# nyc test coverage
 .nyc_output
+
 .DS_Store
+npm-debug.log

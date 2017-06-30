@@ -49,7 +49,7 @@ global.navigator = {
 };
 global.localStorage = {
   setItem: () => {},
-  removeItem: () => {},
+  removeItem: () => {}
 };
 
 var documentRef = document;

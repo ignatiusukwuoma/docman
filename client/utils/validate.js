@@ -1,5 +1,11 @@
 import validator from 'validator';
 
+/**
+ * Confirm that all required fields are filled
+ * @param {array} [inputFields=[]]
+ * @param {array} [requiredFields=[]]
+ * @returns {object} errors and valid
+ */
 export function validateFields(inputFields = [], requiredFields = []) {
   const errors = {};
   let valid = true;
@@ -13,7 +19,14 @@ export function validateFields(inputFields = [], requiredFields = []) {
   return { errors, valid };
 }
 
-export function signupValidator({
+/**
+ * Validates the signup form
+ * @param {object} {
+ *   name = '', email = '', username = '', password = '' }
+ * @param {string} confirmPassword
+ * @returns {object} validate
+ */
+export function signup({
   name = '', email = '', username = '', password = '' }, confirmPassword) {
   const validate = validateFields(
     [username, password, name, email],
@@ -36,7 +49,36 @@ export function signupValidator({
   return validate;
 }
 
-export function signinValidator({ username = '', password = '' }) {
+/**
+ * Validates the edit profile form
+ * @param {object} {
+ *   name = '', email = '', username = '' }
+ * @returns {object} validate
+ */
+export function editprofile({
+  name = '', email = '', username = '' }) {
+  const validate = validateFields(
+    [username, name, email],
+    ['username', 'name', 'email']);
+  if (/\s/.test(username) || (/\W/).test(username)) {
+    validate.errors.username = 'Please enter a valid username';
+    validate.valid = false;
+  }
+
+  if (!validator.isEmail(email)) {
+    validate.errors.email = 'Please enter a valid email';
+    validate.valid = false;
+  }
+
+  return validate;
+}
+
+/**
+ * Validates the signin form
+ * @param {object} { username = '', password = '' }
+ * @returns {object} validate
+ */
+export function signin({ username = '', password = '' }) {
   const validate = validateFields(
     [username, password],
     ['username', 'password']);
@@ -47,7 +89,12 @@ export function signinValidator({ username = '', password = '' }) {
   return validate;
 }
 
-export function documentValidator({ title = '', access = '', content = '' }) {
+/**
+ * Validates the document form
+ * @param {string} { title = '', access = '', content = '' }
+ * @returns {object} validate
+ */
+export function document({ title = '', access = '', content = '' }) {
   const validate = validateFields(
     [title, access, content],
     ['title', 'access', 'content']);

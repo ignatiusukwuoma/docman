@@ -5,18 +5,24 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
+import * as validate from '../../utils/validate';
 import SelectInput from '../forms/SelectInput.jsx';
 import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
 import handleError from '../../utils/errorHandler';
 
+/**
+ * Control the edit document page
+ * @class EditDocumentPage
+ * @extends {React.Component}
+ */
 class EditDocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       document: Object.assign({}, props.document),
-      error: {},
+      errors: {},
       saving: false
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -24,50 +30,87 @@ class EditDocumentPage extends React.Component {
     this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
+  /**
+   * Initialises the select box
+   * @memberOf EditDocumentPage
+   */
   componentDidMount() {
     $('select').material_select();
     $('#select-box').on('change', this.handleChange);
   }
 
+  /**
+   * Add props to state
+   * @param {object} nextProps
+   * @memberOf EditDocumentPage
+   */
   componentWillReceiveProps(nextProps) {
-    // debugger;
     if (this.state.document.id !== nextProps.document.id) {
       this.setState({ document: Object.assign({}, nextProps.document) });
     }
   }
 
+  /**
+   * Handle the change event for the title and access fields
+   * @param {object} event
+   * @memberOf EditDocumentPage
+   */
   handleChange(event) {
     const document = this.state.document;
     document[event.target.name] = event.target.value.substr(0, 60);
-    // debugger;
     this.setState({ document });
   }
 
+  /**
+   * Handles the change event for the content field
+   * @param {object} event
+   * @memberOf EditDocumentPage
+   */
   handleEditorChange(event) {
     const document = this.state.document;
     document.content = event.target.getContent();
-    // debugger;
     this.setState({ document });
   }
 
+  /**
+   * Submits the edited document
+   * @param {object} event
+   * @memberOf EditDocumentPage
+   */
   onSubmit(event) {
     event.preventDefault();
-    this.setState({ saving: true });
-    this.props.actions.updateDocument(this.state.document)
-    .then(() => this.redirect())
-    .catch((error) => {
-      this.setState({ saving: false });
-      handleError(error);
-    });
+    const { valid, errors } = validate.document(this.state.document);
+    if (valid) {
+      this.setState({ saving: true });
+      this.props.actions.updateDocument(this.state.document)
+      .then(() => this.redirect())
+      .catch((error) => {
+        this.setState({ saving: false });
+        handleError(error);
+      });
+    } else {
+      this.setState({ errors });
+    }
   }
 
+  /**
+   * Called after form is submitted
+   * @memberOf EditDocumentPage
+   */
   redirect() {
     this.setState({ saving: false });
     toastr.success('Document updated successfully');
-    this.context.router.push('/home');
+    this.context.router.push(`/document/${this.state.document.id}`);
   }
 
+  /**
+   * Renders the edit document form
+   * @returns {object} jsx
+   * @memberOf EditDocumentPage
+   */
   render() {
+    const { title, access, content } = this.state.document;
+    const { errors, saving } = this.state;
     return (
       <div className="new-document-page">
         <div className="row">
@@ -80,25 +123,27 @@ class EditDocumentPage extends React.Component {
               <form onSubmit={this.onSubmit}>
                 <div>
                   <TextInput
+                    id="document-title"
                     name="title"
                     type="text"
-                    errorText=""
+                    errorText={errors.title}
                     floatText="Title"
                     handleChange={this.handleChange}
-                    value={this.state.document.title}
+                    value={title}
                   />
                 </div>
                 <div className="select-input">
                   <SelectInput
                     id="select-box"
                     name="access"
+                    error={errors.access}
                     handleChange={this.handleChange}
-                    value={this.state.document.access}
+                    value={access}
                   />
                 </div>
                 <div className="tiny-mce">
                   <TinyMCE
-                    content={this.state.document.content}
+                    content={content}
                     config={{
                       plugins: 'link image code',
                       toolbar: 'undo redo | bold italic |\
@@ -107,13 +152,19 @@ class EditDocumentPage extends React.Component {
                     onChange={this.handleEditorChange}
                   />
                 </div>
-                <FlatButton
-                  backgroundColor="#a4c639"
-                  hoverColor="#8AA62F"
-                  disable={this.props.saving}
-                  label={this.props.saving ? 'Updating' : 'Update Document'}
-                  onClick={this.onSubmit}
-                />
+                {errors.content
+                && <div className="red-text small">
+                  {errors.content}
+                </div>}
+                <div className="btn-create">
+                  <FlatButton
+                    backgroundColor="#a4c639"
+                    hoverColor="#8AA62F"
+                    disable={saving}
+                    label={saving ? 'Updating' : 'Update Document'}
+                    onClick={this.onSubmit}
+                  />
+                </div>
               </form>
             </div>
           </div>

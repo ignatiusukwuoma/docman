@@ -2,12 +2,19 @@ import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextInput from '../forms/TextInput.jsx';
 
+/**
+ * Renders the sign in form
+ * @param {any} {
+ *   onSigninSubmit, handleSigninChange, signinDetails, signinErrors }
+ * @returns {object} jsx to display a form
+ */
 function SigninForm({
   onSigninSubmit, handleSigninChange, signinDetails, signinErrors }) {
   return (
     <form onSubmit={onSigninSubmit} id="signin-form">
       <div>
         <TextInput
+          id="signin-username"
           name="username"
           type="text"
           errorText={signinErrors.username}
@@ -18,6 +25,7 @@ function SigninForm({
       </div>
       <div>
         <TextInput
+          id="signin-password"
           name="password"
           type="password"
           errorText={signinErrors.password}

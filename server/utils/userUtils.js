@@ -6,13 +6,25 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET;
 
 export default {
+  /**
+   * Generate JWT Token from user details
+   * @param {object} user
+   * @returns {string} token
+   */
   generateJwtToken(user) {
     const token = jwt.sign({
-      data: user,
-    }, secret, { expiresIn: '48h' });
+      data: user
+    }, secret, { expiresIn: '92h' });
     return token;
   },
 
+  /**
+   * Confirms that user is registered and logs user in
+   * @param {object} user
+   * @param {object} req
+   * @param {objet} res
+   * @returns {object} response message with token
+   */
   loginUser(user, req, res) {
     let response = {};
     if (!user) {
@@ -41,9 +53,9 @@ export default {
       response = res.status(200)
         .json({
           message: 'Login successful',
-          token,
+          token
         });
       return response;
     }
-  },
+  }
 };

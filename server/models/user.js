@@ -9,14 +9,14 @@ export default (sequelize, DataTypes) => {
       validate: {
         notEmpty: { args: true, msg: 'Username cannot be empty' },
         not: { args: ['\\s+'], msg: 'Username cannot contain spaces' }
-      },
+      }
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { args: true, msg: 'Please input your full name' },
-      },
+        notEmpty: { args: true, msg: 'Please input your full name' }
+      }
     },
     email: {
       type: DataTypes.STRING,
@@ -24,31 +24,31 @@ export default (sequelize, DataTypes) => {
       unique: { args: true, msg: 'Email already exist' },
       validate: {
         isEmail: { args: true, msg: 'Use a valid email' },
-        notEmpty: { args: true, msg: 'Email cannot be empty' },
-      },
+        notEmpty: { args: true, msg: 'Email cannot be empty' }
+      }
     },
     roleId: {
       type: DataTypes.INTEGER,
-      defaultValue: 3,
+      defaultValue: 3
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-      },
-    },
+        notEmpty: { args: true, msg: 'Password is invalid' }
+      }
+    }
   }, {
     classMethods: {
       associate: (models) => {
         User.hasMany(models.Document, {
           foreignKey: 'userId',
           as: 'documents',
-          onDelete: 'CASCADE',
+          onDelete: 'CASCADE'
         });
         User.belongsTo(models.Role, {
           foreignKey: 'roleId',
-          onDelete: 'CASCADE',
+          onDelete: 'CASCADE'
         });
       }
     },
@@ -65,7 +65,7 @@ export default (sequelize, DataTypes) => {
         user.hashPassword();
       },
       beforeUpdate(user) {
-        if (user.password) {
+        if (user._changed.password) {
           user.hashPassword();
         }
       }

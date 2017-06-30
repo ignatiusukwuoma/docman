@@ -13,8 +13,13 @@ dotenv.config();
 
 // Setup Express App
 const app = express();
-app.use(require('compression')());
 app.use(express.static('client'));
+// Log requests to the console
+app.use(logger('dev'));
+// Parse incoming request data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const compiler = webpack(webpackConfig);
 app.use(webpackMiddleware(compiler, {
   hot: true,
@@ -22,13 +27,6 @@ app.use(webpackMiddleware(compiler, {
   noInfo: true
 }));
 app.use(webpackHotMiddleware(compiler));
-
-// Log requests to the console
-app.use(logger('dev'));
-
-// Parse incoming request data
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 // Require our routes into the application
 routes(app);

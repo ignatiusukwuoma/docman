@@ -4,6 +4,11 @@ import rootReducer from '../reducers';
 
 const middleware = [thunk];
 
+/**
+ * Single Store
+ * @param {object} initialState
+ * @returns {function} store configuration
+ */
 export default function configureStore(initialState) {
   return createStore(
     rootReducer,

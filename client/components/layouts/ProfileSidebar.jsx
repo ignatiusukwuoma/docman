@@ -7,12 +7,22 @@ import { orangeA700, redA700, white,
 import insertRole from '../../utils/insertRole';
 import avatar from '../../img/avatar.png';
 
+/**
+ * Renders the profile information sidebar
+ * @param {any} { user, access, deleteUser }
+ * @returns {object} jsx
+ */
 function ProfileSidebar({ user, access, deleteUser }) {
   return (
     <Card>
       <CardMedia
-        overlay={<CardTitle title={user.username}
-        subtitle={user.email} />}>
+        overlay={
+          <CardTitle
+            title={user.username}
+            subtitle={user.email}
+          />
+        }
+      >
         <img src={avatar} />
       </CardMedia>
       <CardTitle
@@ -23,15 +33,22 @@ function ProfileSidebar({ user, access, deleteUser }) {
       {(access.user.roleId === 1 || access.user.id === user.id)
        && <CardActions>
         <Link to={`/user/${user.id}/edit`}>
-          <RaisedButton label="EDIT PROFILE" labelColor={white}
-            backgroundColor={greenA700} />
+          <RaisedButton
+            label={access.user.roleId === 1 && user.id !== 1
+            ? 'UPGRADE USER' : 'EDIT PROFILE'}
+            labelColor={white}
+            backgroundColor={greenA700}
+          />
         </Link>
-        <a href="#!" onClick={deleteUser}>
-          <RaisedButton label="DELETE" labelColor={white}
-            backgroundColor={redA700} />
-        </a>
-      </CardActions>
-      }
+        {access.user.id === user.id
+        && <a href="#!" onClick={deleteUser}>
+          <RaisedButton
+            label="DELETE ACCOUNT"
+            labelColor={white}
+            backgroundColor={redA700}
+          />
+        </a>}
+      </CardActions>}
     </Card>
   );
 }

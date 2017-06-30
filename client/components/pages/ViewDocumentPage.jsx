@@ -7,16 +7,29 @@ import handleError from '../../utils/errorHandler';
 import Sidebar from '../layouts/Sidebar.jsx';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 
+/**
+ * Page for an individual document
+ * @class ViewDocumentPage
+ * @extends {React.Component}
+ */
 class ViewDocumentPage extends React.Component {
   constructor(props) {
     super(props);
     this.deleteDocument = this.deleteDocument.bind(this);
   }
 
+  /**
+   * Calls actions to get the document by id
+   * @memberOf ViewDocumentPage
+   */
   componentWillMount() {
     this.props.getDocument(this.props.params.id);
   }
 
+  /**
+   * Deletes document after a sweetalert confirmation
+   * @memberOf ViewDocumentPage
+   */
   deleteDocument = () => {
     swal({
       title: 'Are you sure?',
@@ -40,8 +53,13 @@ class ViewDocumentPage extends React.Component {
       swal('Cancelled', 'The document is safe :)', 'error'));
   }
 
+  /**
+   * Renders the page to display the entire content of a document
+   * @returns {object} jsx
+   * @memberOf ViewDocumentPage
+   */
   render() {
-    const { document } = this.props;
+    const { document, access } = this.props;
     return (
       <div className="view-document">
         <div className="row">
@@ -52,23 +70,27 @@ class ViewDocumentPage extends React.Component {
             <div className="container">
               <div>
               <h4>{document.title}</h4>
-              <div className="document-actions">
+              {(access.user.id === document.userId)
+              && <div className="document-actions">
                 <Link to={`/document/${document.id}/edit`}
-                  className="btn-floating waves-effect waves-light green">
+                  className="btn-floating waves-effect waves-light green"
+                  title="Edit document"
+                >
                   <i className="material-icons">mode_edit</i>
                 </Link>
                 <a href="#!" onClick={this.deleteDocument}
-                  className="btn-floating waves-effect waves-light red">
+                  className="btn-floating waves-effect waves-light red
+                  btn-delete" title="Delete document"
+                >
                   <i className="material-icons">delete_forever</i>
                 </a>
-              </div>
+              </div>}
               <h6>
-                Posted on {new Date(document.createdAt).toDateString()},
-                by: <span className="blue-text">
-                  <strong>
-                    {document.User ? document.User.username : ''}
-                  </strong>
+                <span id="document-rights">
+                  {document.access} document by
+                  {document.User ? ` ${document.User.username}. ` : ''}
                 </span>
+                Posted on {new Date(document.createdAt).toDateString()}.
               </h6>
               </div>
               <Divider />
@@ -84,16 +106,24 @@ class ViewDocumentPage extends React.Component {
 
 ViewDocumentPage.propTypes = {
   document: PropTypes.object.isRequired,
-  getDocument: PropTypes.func.isRequired
+  getDocument: PropTypes.func.isRequired,
+  access: PropTypes.object.isRequired
 };
 
 ViewDocumentPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+/**
+ * Make state available as props
+ * @param {object} state
+ * @param {object} ownProps
+ * @returns {object} props
+ */
 function mapStateToProps(state, ownProps) {
   return {
-    document: state.document
+    document: state.document,
+    access: state.userAccess
   };
 }
 

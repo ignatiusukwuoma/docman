@@ -1,6 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
 import initialState from '../store/initialState';
 
+/**
+ * Reducers for pagedata
+ * @param {object} [state=initialState.pageData]
+ * @param {object} action
+ * @returns {object} pagedata state
+ */
 function pageData(state = initialState.pageData, action) {
   switch (action.type) {
     case actionTypes.GET_USERS_SUCCESS:

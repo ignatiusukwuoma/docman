@@ -12,16 +12,6 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  admin1: {
-    id: 7,
-    name: faker.name.findName(),
-    username: faker.internet.userName(),
-    email: 'admin@gmail.com',
-    password: faker.internet.password(),
-    roleId: 2,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
   advertizer1: {
     id: 25,
     name: 'advertizer',
@@ -40,13 +30,23 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  admin3: {
+  author1: {
     id: 6,
     name: faker.name.findName(),
-    username: 'admin',
+    username: 'wonderwoman',
     email: faker.internet.email(),
     password: faker.internet.password(),
-    roleId: 2,
+    roleId: 3,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  author2: {
+    id: 7,
+    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    email: 'author@gmail.com',
+    password: faker.internet.password(),
+    roleId: 3,
     createdAt: new Date(),
     updatedAt: new Date()
   },
@@ -69,19 +69,19 @@ export default {
     updatedAt: new Date()
   },
   superadmin: {
-    username: 'superadmin',
+    username: 'superman',
     password: 'password'
   },
   admin: {
-    username: 'admin',
+    username: 'batman',
     password: 'password'
   },
   author: {
-    username: 'author',
+    username: 'wonderwoman',
     password: 'password'
   },
   editor: {
-    username: 'editor',
+    username: 'spiderman',
     password: 'password'
   },
   noEmail: {
@@ -111,5 +111,5 @@ export default {
     roleId: 3,
     createdAt: new Date(),
     updatedAt: new Date()
-  },
+  }
 };

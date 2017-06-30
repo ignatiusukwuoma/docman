@@ -7,6 +7,11 @@ import DocumentSidebar from './DocumentSidebar.jsx';
 import handleError from '../../utils/errorHandler';
 import { deleteUser, logout } from '../../actions/userActions';
 
+/**
+ * The entire sidebar
+ * @class Sidebar
+ * @extends {React.Component}
+ */
 class Sidebar extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -17,12 +22,22 @@ class Sidebar extends React.Component {
     this.deleteUser = this.deleteUser.bind(this);
   }
 
+  /**
+   * Checks if new user prop have been received and
+   * stores it to state
+   * @param {object} nextProps
+   * @memberOf Sidebar
+   */
   componentWillReceiveProps(nextProps) {
     if (this.state.user.id !== nextProps.user.id) {
       this.setState({ user: Object.assign({}, nextProps.user) });
     }
   }
 
+  /**
+   * Deletes a user after a confirmation alert
+   * @memberOf Sidebar
+   */
   deleteUser() {
     swal({
       title: 'Are you sure?',
@@ -43,10 +58,14 @@ class Sidebar extends React.Component {
       swal('Cancelled', 'The user is safe :)', 'error'));
   }
 
+  /**
+   * Delete confirmation and redirect after delete is completed
+   * @memberOf Sidebar
+   */
   redirect() {
     if (this.state.access.user.roleId === 1) {
       swal('Deleted!', 'The user has been deleted.', 'success');
-      this.context.router.push('/home');
+      this.context.router.push('/manageusers');
     } else {
       this.props.logout();
       this.context.router.push('/');
@@ -54,15 +73,20 @@ class Sidebar extends React.Component {
     }
   }
 
+  /**
+   * Renders the sidebar, controls which other sidebars are visible
+   * @returns {object} jsx
+   * @memberOf Sidebar
+   */
   render() {
     return (
       <div className="card sidebar">
         {this.state.user
         && location.pathname === `/user/${this.state.user.id}`
-        && <ProfileSidebar {...this.state} deleteUser={this.deleteUser}/>}
+        && <ProfileSidebar {...this.state} deleteUser={this.deleteUser} />}
         <DocumentSidebar {...this.state} />
         {this.state.access.user.roleId <= 2
-        && <AdminSidebar access={this.state.access}/>}
+        && <AdminSidebar access={this.state.access} />}
       </div>
     );
   }

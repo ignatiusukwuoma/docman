@@ -9,12 +9,24 @@ import documentData from '../testData/documentData';
 const { admin, author, editor, advertizer1, advertizer2 } = userData;
 const { role5 } = roleData;
 const { publicDocument, publicDocument2, privateDocument } = documentData;
-let authorToken, adminToken, advertizer1Token;
+let authorToken;
+let adminToken;
+let advertizer1Token;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Documents', () => {
+  before((done) => {
+    models.User.destroy({
+      where: { id: { $notIn: [1, 2, 3, 4] } }
+    })
+    .then(() => models.Role.destroy({
+      where: { id: { $notIn: [1, 2, 3, 4] } }
+    }))
+    .then(() => done());
+  });
+
   before((done) => {
     models.Role.create(role5)
     .then((role) => {
@@ -60,7 +72,7 @@ describe('Documents', () => {
     it("should return a user's document(s) given the user's id", (done) => {
       chai.request(server)
         .get('/users/3/documents')
-        .set({ 'x-access-token': authorToken })
+        .set('x-access-token', authorToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object')
@@ -147,28 +159,29 @@ describe('Documents', () => {
 
   // GET /documents
   describe('/GET documents', () => {
-    it('should return all documents if the user is an admin', (done) => {
+    it('should get public and role documents for admins', (done) => {
       chai.request(server)
         .get('/documents')
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res).to.have.status(200);
-          expect(res.body.documents).to.be.an('array').that.have.lengthOf(6);
+          expect(res.body.documents).to.be.an('array').that.have.lengthOf(4);
           expect(res.body.pageData).to.be.an('object')
             .that.have.keys('count', 'pageSize', 'pageNumber', 'totalPages');
           done();
         });
     });
 
-    it("should not return other user's private documents if user is not admin",
-    (done) => {
+    it("should not return other user's private documents", (done) => {
       chai.request(server)
         .get('/documents')
         .set({ 'x-access-token': authorToken })
         .end((err, res) => {
           let privateDocs = false;
           res.body.documents.forEach((document) => {
-            if (document.access === 'private') privateDocs = true;
+            if (document.access === 'private') {
+              privateDocs = true;
+            }
           });
           expect(res).to.have.status(200);
           expect(res.body.documents).to.be.an('array').that.have.lengthOf(4);
@@ -184,7 +197,9 @@ describe('Documents', () => {
         .end((err, res) => {
           let roleDocs = false;
           res.body.documents.forEach((document) => {
-            if (document.access === 'role') roleDocs = true;
+            if (document.access === 'role') {
+              roleDocs = true;
+            }
           });
           expect(res).to.have.status(200);
           expect(res.body.documents).to.be.an('array').that.have.lengthOf(4);
@@ -210,8 +225,7 @@ describe('Documents', () => {
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res).to.have.status(200);
-          expect(res.body.documents).to.be.an('array').that.have.lengthOf(4);
-          expect(res.body.documents[0].id).to.equal(1);
+          expect(res.body.documents).to.be.an('array').that.have.lengthOf(2);
           done();
         });
     });
@@ -322,7 +336,7 @@ describe('Documents', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('object');
-          expect(res.body.updatedDocument.title)
+          expect(res.body.document.title)
             .to.equal('Private document title');
           done();
         });
@@ -350,7 +364,7 @@ describe('Documents', () => {
         .set({ 'x-access-token': adminToken })
         .send({ title: 'Private document title' })
         .end((err, res) => {
-          expect(res.status).to.equal(403);
+          expect(res.status).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body.message).to.eql('Title already exist');
           done();
@@ -379,7 +393,8 @@ describe('Documents', () => {
       .delete(`/documents/${privateDocument.id}`)
       .set({ 'x-access-token': advertizer1Token })
       .end((err, res) => {
-        expect(res.status).to.equal(204);
+        expect(res.status).to.equal(200);
+        expect(res.body.message).to.equal('Deleted successfully');
         done();
       });
     });

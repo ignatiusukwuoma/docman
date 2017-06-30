@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import userAccess from './userAccessReducers';
 import { users, user } from './userReducers';
 import { documents, document } from './documentReducers';
-import { roles } from './roleReducers';
-import pageData from './pageDataReducers';
 import ajaxCallsInProgress from './ajaxStatusReducer';
+import userAccess from './userAccessReducers';
+import pageData from './pageDataReducers';
+import roles from './roleReducers';
 
 const rootReducer = combineReducers({
   ajaxCallsInProgress,

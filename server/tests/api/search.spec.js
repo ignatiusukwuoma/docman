@@ -36,12 +36,12 @@ describe('Search', () => {
   describe('GET /search/users', () => {
     it('should return the correct user(s) for a search query', (done) => {
       chai.request(server)
-        .get('/search/users/?q=author')
+        .get('/search/users/?q=wonderwoman')
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.users).to.be.an('array');
-          expect(res.body.users[0].username).to.equal('author');
+          expect(res.body.users[0].username).to.equal('wonderwoman');
           expect(res.body.pageData).to.be.an('object')
             .that.have.keys('count', 'pageSize', 'pageNumber', 'totalPages');
           done();

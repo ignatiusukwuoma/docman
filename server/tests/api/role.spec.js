@@ -7,7 +7,9 @@ import roleData from '../testData/roleData';
 const { superadmin, admin, author } = userData;
 const { role5, role6, role7, role8 } = roleData;
 
-let authorToken, adminToken, superadminToken;
+let authorToken;
+let adminToken;
+let superadminToken;
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -98,7 +100,7 @@ describe('Roles', () => {
         .send(role7)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.errors[0].message).to.equal('Role already exist');
+          expect(res.body.message).to.eql('Role already exist');
           done();
         });
     });
@@ -124,7 +126,8 @@ describe('Roles', () => {
       .delete(`/roles/${role6.id}`)
       .set({ 'x-access-token': superadminToken })
       .end((err, res) => {
-        expect(res).to.have.status(204);
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('Deleted successfully');
         done();
       });
     });

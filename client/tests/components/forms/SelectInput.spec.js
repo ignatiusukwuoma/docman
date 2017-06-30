@@ -3,11 +3,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SelectInput from '../../../components/forms/SelectInput.jsx';
 
-function setup(id, error = '') {
+function setup(id, error = '', pathname) {
   const props = {
     id,
     name: '',
     error,
+    access: { user: { roleId: 1 } },
+    pathname,
     handleChange: () => {},
     value: 'public'
   };
@@ -40,5 +42,15 @@ describe('SelectInput', () => {
   it('does not display a second div when error is falsy', () => {
     const wrapper = setup('select-box', null);
     expect(wrapper.find('div').length).toBe(1);
+  });
+
+  it('display the select role field when user is superadmin', () => {
+    const wrapper = setup('select-box', null, '/user/5/edit');
+    expect(wrapper.find('option').length).toBe(3);
+  });
+
+  it('does not display select role field for other users', () => {
+    const wrapper = setup('select-box', null, '/');
+    expect(wrapper.find('option').length).toBe(4);
   });
 });
