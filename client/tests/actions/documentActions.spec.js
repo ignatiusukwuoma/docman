@@ -31,6 +31,9 @@ describe('Document Actions', () => {
   afterEach(() => moxios.uninstall());
 
   describe('Get Documents', () => {
+    beforeEach(() => moxios.install());
+    afterEach(() => moxios.uninstall());
+
     it('gets documents and dispatches GET_DOCUMENTS_SUCCESS', () => {
       moxios.stubRequest('/documents?offset=0', {
         status: 200,
