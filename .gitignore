@@ -1,6 +1,9 @@
 # Dependency directories
 node_modules
 
+# Reports from nightwatch
+reports
+
 # Coverage directory used by tools like istanbul
 coverage
 
