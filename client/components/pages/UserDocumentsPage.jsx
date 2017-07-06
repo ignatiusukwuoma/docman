@@ -7,15 +7,14 @@ import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Searchbar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
-import * as userActions from '../../actions/userActions';
-import * as documentActions from '../../actions/documentActions';
+import { getUserDocuments } from '../../actions/documentActions';
 
 /**
  * The logged in user's documents
  * @class UserDocumentsPage
  * @extends {React.Component}
  */
-class UserDocumentsPage extends React.Component {
+export class UserDocumentsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -33,7 +32,7 @@ class UserDocumentsPage extends React.Component {
    * @memberOf UserDocumentsPage
    */
   componentWillMount() {
-    this.props.actions.getUserDocuments(this.props.params.id);
+    this.props.getUserDocuments(this.props.params.id);
   }
 
   /**
@@ -60,7 +59,7 @@ class UserDocumentsPage extends React.Component {
     if (this.state.documents.length < 9) {
       return;
     }
-    return this.props.actions.getUserDocuments(this.state.access.user.id,
+    return this.props.getUserDocuments(this.state.access.user.id,
     this.state.pageData.offset + 9);
   }
 
@@ -73,7 +72,7 @@ class UserDocumentsPage extends React.Component {
     if (this.state.pageData.offset < 1) {
       return;
     }
-    return this.props.actions.getUserDocuments(this.state.access.user.id,
+    return this.props.getUserDocuments(this.state.access.user.id,
     this.state.pageData.offset - 9);
   }
 
@@ -136,7 +135,7 @@ class UserDocumentsPage extends React.Component {
 }
 
 UserDocumentsPage.propTypes = {
-  actions: PropTypes.object.isRequired,
+  getUserDocuments: PropTypes.func.isRequired,
   documents: PropTypes.array.isRequired,
   pageData: PropTypes.object.isRequired,
   access: PropTypes.object.isRequired
@@ -156,17 +155,5 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-/**
- * Make actions available as props
- * @param {function} dispatch
- * @returns {function} actions
- */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(
-      Object.assign(documentActions, userActions),
-      dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserDocumentsPage);
+export default connect(mapStateToProps,
+{ getUserDocuments })(UserDocumentsPage);

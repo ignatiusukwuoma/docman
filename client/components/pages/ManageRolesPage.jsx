@@ -20,9 +20,9 @@ import handleError from '../../utils/errorHandler';
  * @class ManageRolesPage
  * @extends {React.Component}
  */
-class ManageRolesPage extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+export class ManageRolesPage extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       roles: [...props.roles],
       newRole: { title: '' },
@@ -152,8 +152,8 @@ class ManageRolesPage extends React.Component {
         });
       }
     })
-    .catch((er) =>
-      swal('Cancelled', 'The role is not deleted :)', 'error'));
+    .catch((err) =>
+      swal('Cancelled', 'The role is not deleted :)'));
   }
 
   /**
@@ -230,7 +230,7 @@ class ManageRolesPage extends React.Component {
                   />
                   <div className="center-align">
                     <FlatButton
-                      backgroundColor="#a4c639"
+                      backgroundColor="#26a69a"
                       hoverColor="#8AA62F"
                       label="Add Role"
                       disabled={this.state.newRole.title.length === 0}
@@ -253,7 +253,7 @@ class ManageRolesPage extends React.Component {
                       value={this.state.editRole.title}
                     />
                     <FlatButton
-                      backgroundColor="#a4c639"
+                      backgroundColor="#26a69a"
                       hoverColor="#8AA62F"
                       label="Edit Role"
                       disabled={this.state.editRole.title.length === 0}

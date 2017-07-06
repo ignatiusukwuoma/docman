@@ -11,23 +11,23 @@ import EditDocumentPage from './components/pages/EditDocumentPage.jsx';
 import UserDocumentsPage from './components/pages/UserDocumentsPage.jsx';
 import EditProfilePage from './components/pages/EditProfilePage.jsx';
 import ManageRolesPage from './components/pages/ManageRolesPage.jsx';
-import isLoggedIn from './components/protectors/isLoggedIn.jsx';
-import isAdmin from './components/protectors/isAdmin.jsx';
-import isSuperAdmin from './components/protectors/isSuperAdmin.jsx';
+import IsLoggedIn from './components/protectors/IsLoggedIn.jsx';
+import IsAdmin from './components/protectors/IsAdmin.jsx';
+import IsSuperAdmin from './components/protectors/IsSuperAdmin.jsx';
 
 export default
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage} />
 
-    <Route component={isAdmin}>
+    <Route component={IsAdmin}>
       <Route path="/manageusers" component={ManageUsersPage} />
     </Route>
 
-    <Route component={isSuperAdmin}>
+    <Route component={IsSuperAdmin}>
       <Route path="/manageroles" component={ManageRolesPage} />
     </Route>
 
-    <Route component={isLoggedIn}>
+    <Route component={IsLoggedIn}>
       <Route path="/home" component={HomePage} />
       <Route path="/user/:id" components={ProfilePage} />
       <Route path="/document/new" component={NewDocumentPage} />

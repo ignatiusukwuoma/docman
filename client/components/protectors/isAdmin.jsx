@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 /**
  * Parent component to confirm that user is admin
- * @class isAdmin
+ * @class IsAdmin
  * @extends {React.Component}
  */
-class isAdmin extends React.Component {
+export class IsAdmin extends React.Component {
 
   /**
    * Checks if user is logged in and roleId is 1 or 2
    * @returns {function} push pathnameto router
-   * @memberOf isAdmin
+   * @memberOf IsAdmin
    */
   componentWillMount() {
     if (!this.props.access.loggedIn) {
@@ -25,7 +25,7 @@ class isAdmin extends React.Component {
   /**
    * Renders the main component if user is admin
    * @returns {object} children components
-   * @memberOf isAdmin
+   * @memberOf IsAdmin
    */
   render() {
     if (this.props.access.user.roleId <= 2) {
@@ -35,13 +35,13 @@ class isAdmin extends React.Component {
   }
 }
 
-isAdmin.propTypes = {
+IsAdmin.propTypes = {
   access: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired
 };
 
-isAdmin.contextTypes = {
+IsAdmin.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default connect(state => ({ access: state.userAccess }))(isAdmin);
+export default connect(state => ({ access: state.userAccess }))(IsAdmin);

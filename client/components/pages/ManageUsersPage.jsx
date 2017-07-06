@@ -20,7 +20,7 @@ import insertRole from '../../utils/insertRole';
  * @class ManageUsersPage
  * @extends {React.Component}
  */
-class ManageUsersPage extends React.Component {
+export class ManageUsersPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

@@ -12,7 +12,7 @@ import { deleteUser, logout } from '../../actions/userActions';
  * @class Sidebar
  * @extends {React.Component}
  */
-class Sidebar extends React.Component {
+export class Sidebar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -50,12 +50,20 @@ class Sidebar extends React.Component {
     })
     .then((isConfirm) => {
       if (isConfirm) {
-        this.props.deleteUser(this.state.user.id)
-        .then(() => this.redirect());
+        this.delete();
       }
     })
-    .catch((er) =>
-      swal('Cancelled', 'The user is safe :)', 'error'));
+    .catch((err) =>
+      swal('Cancelled', 'The user is safe :)'));
+  }
+
+  delete() {
+    this.props.deleteUser(this.state.user.id)
+      .then(() => {
+        this.props.logout();
+        this.context.router.push('/');
+        this.redirect();
+      });
   }
 
   /**
@@ -63,14 +71,7 @@ class Sidebar extends React.Component {
    * @memberOf Sidebar
    */
   redirect() {
-    if (this.state.access.user.roleId === 1) {
-      swal('Deleted!', 'The user has been deleted.', 'success');
-      this.context.router.push('/manageusers');
-    } else {
-      this.props.logout();
-      this.context.router.push('/');
-      swal('Deleted!', 'Your Account has been deleted.', 'success');
-    }
+    swal('Deleted!', 'Your Account has been deleted.', 'success');
   }
 
   /**

@@ -5,14 +5,14 @@ import toastr from 'toastr';
 import LoginTabs from '../elements/LoginTabs.jsx';
 import handleError from '../../utils/errorHandler';
 import * as validate from '../../utils/validate';
-import * as userActions from '../../actions/userActions';
+import { signup, signin } from '../../actions/userActions';
 
 /**
  * The Landing Page
  * @class LandingPage
  * @extends {React.Component}
  */
-class LandingPage extends React.Component {
+export class LandingPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
@@ -89,7 +89,7 @@ class LandingPage extends React.Component {
     const { valid, errors } = validate
       .signup(this.state.signupDetails, this.state.confirmPassword);
     if (valid) {
-      this.props.actions.signup(this.state.signupDetails)
+      this.props.signup(this.state.signupDetails)
       .then(() => {
         this.context.router.push('/home');
         toastr.success('You have signed up successfully');
@@ -110,7 +110,7 @@ class LandingPage extends React.Component {
     const { valid, errors } = validate
       .signin(this.state.signinDetails);
     if (valid) {
-      this.props.actions.signin(this.state.signinDetails)
+      this.props.signin(this.state.signinDetails)
       .then(() => {
         this.context.router.push('/home');
         toastr.success('You are successfully logged in');
@@ -168,7 +168,8 @@ LandingPage.propTypes = {
   pathname: PropTypes.string.isRequired,
   loggedIn: PropTypes.bool,
   user: PropTypes.object,
-  actions: PropTypes.object.isRequired
+  signup: PropTypes.func.isRequired,
+  signin: PropTypes.func.isRequired
 };
 
 LandingPage.contextTypes = {
@@ -185,20 +186,9 @@ function mapStateToProps(state, ownProps) {
   const pathname = ownProps.location.pathname;
   return {
     pathname,
-    loggedIn: state.loggedIn,
+    loggedIn: state.userAccess.loggedIn,
     user: state.user
   };
 }
 
-/**
- * Makes action creators available as props
- * @param {function} dispatch
- * @returns {function} actioncreators
- */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(userActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default connect(mapStateToProps, { signup, signin })(LandingPage);

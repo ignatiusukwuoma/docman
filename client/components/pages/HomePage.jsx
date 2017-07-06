@@ -16,7 +16,7 @@ import * as documentActions from '../../actions/documentActions';
  * @class HomePage
  * @extends {React.Component}
  */
-class HomePage extends React.Component {
+export class HomePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

@@ -12,7 +12,7 @@ import { getDocument, deleteDocument } from '../../actions/documentActions';
  * @class ViewDocumentPage
  * @extends {React.Component}
  */
-class ViewDocumentPage extends React.Component {
+export class ViewDocumentPage extends React.Component {
   constructor(props) {
     super(props);
     this.deleteDocument = this.deleteDocument.bind(this);
@@ -27,7 +27,7 @@ class ViewDocumentPage extends React.Component {
   }
 
   /**
-   * Deletes document after a sweetalert confirmation
+   * Calls the deleteDocument after a sweetalert confirmation
    * @memberOf ViewDocumentPage
    */
   deleteDocument = () => {
@@ -42,15 +42,29 @@ class ViewDocumentPage extends React.Component {
     })
     .then((isConfirm) => {
       if (isConfirm) {
-        this.props.deleteDocument(this.props.params.id)
-        .then(() => {
-          swal('Deleted!', 'This document has been deleted.', 'success');
-          this.context.router.push('/home');
-        });
+        this.delete();
       }
     })
     .catch((er) =>
       swal('Cancelled', 'The document is safe :)', 'error'));
+  }
+
+  /**
+   * Deletes the document
+   * @memberOf ViewDocumentPage
+   */
+  delete() {
+    this.props.deleteDocument(this.props.params.id)
+    .then(() => this.redirect());
+  }
+
+  /**
+   * Displays a sweetalert success message
+   * @memberOf ViewDocumentPage
+   */
+  redirect() {
+    swal('Deleted!', 'This document has been deleted.', 'success');
+    this.context.router.push('/home');
   }
 
   /**
@@ -71,20 +85,20 @@ class ViewDocumentPage extends React.Component {
               <div>
               <h4>{document.title}</h4>
               {(access.user.id === document.userId)
-              && <div className="document-actions">
-                <Link to={`/document/${document.id}/edit`}
-                  className="btn-floating waves-effect waves-light green"
-                  title="Edit document"
-                >
-                  <i className="material-icons">mode_edit</i>
-                </Link>
-                <a href="#!" onClick={this.deleteDocument}
-                  className="btn-floating waves-effect waves-light red
-                  btn-delete" title="Delete document"
-                >
-                  <i className="material-icons">delete_forever</i>
-                </a>
-              </div>}
+            && <div className="document-actions">
+              <Link to={`/document/${document.id}/edit`}
+                className="btn-floating waves-effect waves-light green"
+                title="Edit document"
+              >
+                <i className="material-icons">mode_edit</i>
+              </Link>
+              <a href="#!" onClick={this.deleteDocument}
+                className="btn-floating waves-effect waves-light red btn-delete"
+                title="Delete document"
+              >
+                <i className="material-icons">delete_forever</i>
+              </a>
+            </div>}
               <h6>
                 <span id="document-rights">
                   {document.access} document by
@@ -107,6 +121,7 @@ class ViewDocumentPage extends React.Component {
 ViewDocumentPage.propTypes = {
   document: PropTypes.object.isRequired,
   getDocument: PropTypes.func.isRequired,
+  deleteDocument: PropTypes.func.isRequired,
   access: PropTypes.object.isRequired
 };
 

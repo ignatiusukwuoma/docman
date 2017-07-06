@@ -17,7 +17,7 @@ import Sidebar from '../layouts/Sidebar.jsx';
  * @class NewDocumentPage
  * @extends {React.Component}
  */
-class NewDocumentPage extends React.Component {
+export class NewDocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -150,7 +150,7 @@ class NewDocumentPage extends React.Component {
                 </div>}
                 <div className="btn-create">
                   <FlatButton
-                    backgroundColor="#a4c639"
+                    backgroundColor="#26a69a"
                     hoverColor="#8AA62F"
                     disable={saving}
                     label={saving
@@ -166,6 +166,9 @@ class NewDocumentPage extends React.Component {
     );
   }
 }
+NewDocumentPage.propTypes = {
+  createDocument: PropTypes.func.isRequired
+};
 
 NewDocumentPage.contextTypes = {
   router: PropTypes.object.isRequired

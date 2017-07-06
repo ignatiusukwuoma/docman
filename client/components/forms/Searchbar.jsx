@@ -8,7 +8,7 @@ import { searchUsers, searchDocuments } from '../../actions/searchActions';
  * @class Searchbar
  * @extends {React.Component}
  */
-class Searchbar extends React.Component {
+export class Searchbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,6 +65,9 @@ class Searchbar extends React.Component {
     );
   }
 }
-
+Searchbar.propTypes = {
+  searchUsers: PropTypes.func.isRequired,
+  searchDocuments: PropTypes.func.isRequired
+};
 
 export default connect(null, { searchUsers, searchDocuments })(Searchbar);
