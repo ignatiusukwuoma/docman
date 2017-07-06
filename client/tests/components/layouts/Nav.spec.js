@@ -30,9 +30,7 @@ describe('Nav', () => {
 
   it('should logout when logout button is clicked', () => {
     const wrapper = setup(true);
-    const logoutButton = wrapper.find('a').last();
-    expect(logoutButton.text()).toBe('Logout');
-    logoutButton.simulate('click');
+    wrapper.instance().logout();
     expect(logout.callCount).toEqual(1);
   });
 });

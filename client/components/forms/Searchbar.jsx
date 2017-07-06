@@ -66,8 +66,8 @@ export class Searchbar extends React.Component {
   }
 }
 Searchbar.propTypes = {
-  searchUsers: PropTypes.func.isRequired,
-  searchDocuments: PropTypes.func.isRequired
+  searchUsers: PropTypes.func,
+  searchDocuments: PropTypes.func
 };
 
 export default connect(null, { searchUsers, searchDocuments })(Searchbar);

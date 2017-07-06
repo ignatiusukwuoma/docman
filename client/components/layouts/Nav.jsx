@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import { logout } from '../../actions/userActions';
@@ -21,7 +21,8 @@ export class Nav extends React.Component {
    * @memberOf Nav
    */
   logout() {
-    this.props.logout();
+    this.props.logout()
+      .then(() => browserHistory.push('/'));
   }
 
   /**

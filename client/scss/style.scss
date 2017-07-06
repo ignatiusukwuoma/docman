@@ -41,6 +41,12 @@ body {
     .forms {
       .login-tabs {
         margin-top: 20px;
+        .tabs {
+          background-color: whitesmoke;
+          a {
+            color: $primary-color;
+          }
+        }
       }
       h5 {
         font-family: $secondary-font;
