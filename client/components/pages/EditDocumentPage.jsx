@@ -161,6 +161,7 @@ export class EditDocumentPage extends React.Component {
                   <FlatButton
                     backgroundColor="#26a69a"
                     hoverColor="#8AA62F"
+                    id="edit-document-button"
                     disable={saving}
                     label={saving ? 'Updating' : 'Update Document'}
                     onClick={this.onSubmit}

@@ -108,7 +108,9 @@ export class HomePage extends React.Component {
           <a href="#!">
             BY {document.User ? document.User.username : ''}
           </a>
-          <Link to={`/document/${document.id}`}>READ</Link>
+          <Link className="read-link" to={`/document/${document.id}`}>
+            READ
+          </Link>
         </div>
       </div>
     </div>;
@@ -129,7 +131,7 @@ export class HomePage extends React.Component {
           <div className="col s12 m8 l9">
             <div className="row">
               <div className="headers">
-                <h3> All Documents </h3>
+                <h3>All Documents</h3>
                 <Searchbar />
               </div>
                 {documents

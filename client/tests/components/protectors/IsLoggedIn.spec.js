@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
-import { IsLoggedIn } from '../../../components/protectors/IsLoggedIn.jsx';
+import { IsLoggedIn } from '../../../components/protectors/IsLoggedIn';
 
 const props = {
   access: { loggedIn: true },

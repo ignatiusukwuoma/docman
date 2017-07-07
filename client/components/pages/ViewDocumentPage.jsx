@@ -87,7 +87,7 @@ export class ViewDocumentPage extends React.Component {
               {(access.user.id === document.userId)
             && <div className="document-actions">
               <Link to={`/document/${document.id}/edit`}
-                className="btn-floating waves-effect waves-light green"
+                className="btn-floating waves-effect waves-light green btn-edit"
                 title="Edit document"
               >
                 <i className="material-icons">mode_edit</i>

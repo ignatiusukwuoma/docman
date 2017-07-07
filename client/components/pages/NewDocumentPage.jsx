@@ -152,6 +152,7 @@ export class NewDocumentPage extends React.Component {
                   <FlatButton
                     backgroundColor="#26a69a"
                     hoverColor="#8AA62F"
+                    id="create-document-button"
                     disable={saving}
                     label={saving
                     ? 'Creating' : 'Create New Document'}

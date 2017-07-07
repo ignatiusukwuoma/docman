@@ -37,6 +37,7 @@ function SigninForm({
       <FlatButton
         backgroundColor="#26a69a"
         hoverColor="#8AA62F"
+        id="sign-in-button"
         label="Log In"
         onClick={onSigninSubmit}
       />
