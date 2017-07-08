@@ -1,5 +1,5 @@
-[![Coverage Status](https://coveralls.io/repos/github/andela-iukwuoma/docman/badge.svg?branch=develop)](https://coveralls.io/github/andela-iukwuoma/docman?branch=develop)
-# Docman Pro - A Fullstack Document Management System
+# Docman Pro  [![Build Status](https://travis-ci.org/andela-iukwuoma/docman.svg?branch=develop)](https://travis-ci.org/andela-iukwuoma/docman) [![Coverage Status](https://coveralls.io/repos/github/andela-iukwuoma/docman/badge.svg?branch=develop)](https://coveralls.io/github/andela-iukwuoma/docman?branch=develop) [![Code Climate](https://codeclimate.com/github/andela-iukwuoma/docman/badges/gpa.svg)](https://codeclimate.com/github/andela-iukwuoma/docman)
+## A Full-Stack Document Management System
 
 Docman Pro is an application that helps users manage their documents in an organized way. A User can create, read, update and delete a document. Public documents are visible to every user while private documents can be seen only by the owner and the admins. Role documents can be seen by everyone on the same role with the owner as well as the admins.
 The application uses RESTful API for managing documents, users, roles and searches.

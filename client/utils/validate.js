@@ -1,5 +1,5 @@
 import validator from 'validator';
-
+const acceptedCharacters = /\s|[^A-Za-z0-9_.]/;
 /**
  * Confirm that all required fields are filled
  * @param {array} [inputFields=[]]
@@ -31,7 +31,7 @@ export function signup({
   const validate = validateFields(
     [username, password, name, email],
     ['username', 'password', 'name', 'email']);
-  if (/\s/.test(username) || (/\W/).test(username)) {
+  if (acceptedCharacters.test(username)) {
     validate.errors.username = 'Please enter a valid username';
     validate.valid = false;
   }
@@ -60,7 +60,7 @@ export function editprofile({
   const validate = validateFields(
     [username, name, email],
     ['username', 'name', 'email']);
-  if (/\s/.test(username) || (/\W/).test(username)) {
+  if (acceptedCharacters.test(username)) {
     validate.errors.username = 'Please enter a valid username';
     validate.valid = false;
   }
@@ -82,7 +82,7 @@ export function signin({ username = '', password = '' }) {
   const validate = validateFields(
     [username, password],
     ['username', 'password']);
-  if (/\s/.test(username) || (/\W/).test(username)) {
+  if (acceptedCharacters.test(username)) {
     validate.errors.username = 'Please enter a valid username';
     validate.valid = false;
   }

@@ -34,6 +34,7 @@ function ProfileSidebar({ user, access, deleteUser }) {
        && <CardActions>
         <Link to={`/user/${user.id}/edit`}>
           <RaisedButton
+            className="edit-profile-button"
             label={access.user.roleId === 1 && user.id !== 1
             ? 'UPGRADE USER' : 'EDIT PROFILE'}
             labelColor={white}

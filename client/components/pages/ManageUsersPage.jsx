@@ -117,7 +117,7 @@ export class ManageUsersPage extends React.Component {
           <div className="col s12 m8 l9">
             <div className="row">
               <div className="headers">
-                <h3> Users </h3>
+                <h3>Users</h3>
                 <Searchbar />
               </div>
               <Card className="users-card">
