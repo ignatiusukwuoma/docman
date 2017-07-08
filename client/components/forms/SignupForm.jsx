@@ -85,13 +85,14 @@ function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
           access={access}
         />
       </div>}
-      <FlatButton
-        backgroundColor="#a4c639"
-        hoverColor="#8AA62F"
-        label={pathname === '/'
-        ? 'Create an Account' : 'Update Account'}
-        onClick={onSubmit}
-      />
+       <FlatButton
+          backgroundColor="#26a69a"
+          hoverColor="#8AA62F"
+          id="sign-up-button"
+          label={pathname === '/'
+          ? 'Create an Account' : 'Update Account'}
+          onClick={onSubmit}
+        />
     </form>
   );
 }

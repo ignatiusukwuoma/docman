@@ -55,6 +55,28 @@ describe('Document Actions', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
     });
+
+    it('gets user documents and dispatches GET_DOCUMENTS_SUCCESS', () => {
+      moxios.stubRequest('/users/2/documents?offset=0', {
+        status: 200,
+        response: {
+          documents: [{ title: 'Ignatius docs' }],
+          pageData: {}
+        }
+      });
+      const expectedActions = [
+        { type: 'BEGIN_AJAX_CALL' },
+        { type: 'GET_DOCUMENTS_SUCCESS',
+          documents: [{ title: 'Ignatius docs' }],
+          pageData: {},
+          offset: 0 }
+      ];
+      const store = mockStore();
+      return store.dispatch(documentActions.getUserDocuments(2))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
   });
 
   describe('Create Document', () => {
@@ -85,7 +107,7 @@ describe('Document Actions', () => {
   describe('Delete Document', () => {
     it('deletes a document and dispatches DELETE_DOCUMENT_SUCCESS', () => {
       moxios.stubRequest('/documents/3', {
-        status: 204
+        status: 200
       });
 
       const expectedActions = [
@@ -114,6 +136,31 @@ describe('Document Actions', () => {
       ];
       const store = mockStore();
       return store.dispatch(documentActions.getDocument(3))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+  });
+
+  describe('Update Document', () => {
+    it('updates a document and dispatches UPDATE_DOCUMENT_SUCCESS', () => {
+      moxios.stubRequest('/documents/4', {
+        status: 200,
+        response: {
+          message: 'Success',
+          document: { title: 'Mandela' }
+        }
+      });
+
+      const expectedActions = [
+        { type: 'BEGIN_AJAX_CALL' },
+        { type: 'UPDATE_DOCUMENT_SUCCESS',
+          message: 'Success',
+          document: { title: 'Mandela' }
+        }
+      ];
+      const store = mockStore({});
+      return store.dispatch(documentActions.updateDocument({ id: 4 }))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });

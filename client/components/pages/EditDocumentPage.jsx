@@ -11,13 +11,14 @@ import TextInput from '../forms/TextInput.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
 import handleError from '../../utils/errorHandler';
+import getDocument from '../../utils/getDocument';
 
 /**
  * Control the edit document page
  * @class EditDocumentPage
  * @extends {React.Component}
  */
-class EditDocumentPage extends React.Component {
+export class EditDocumentPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -158,8 +159,9 @@ class EditDocumentPage extends React.Component {
                 </div>}
                 <div className="btn-create">
                   <FlatButton
-                    backgroundColor="#a4c639"
+                    backgroundColor="#26a69a"
                     hoverColor="#8AA62F"
+                    id="edit-document-button"
                     disable={saving}
                     label={saving ? 'Updating' : 'Update Document'}
                     onClick={this.onSubmit}
@@ -183,21 +185,12 @@ EditDocumentPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-function getDocumentById(allDocuments, id) {
-  const documentToUpdate = allDocuments
-    .filter(eachDocument => eachDocument.id === Number(id));
-  if (documentToUpdate) {
-    return documentToUpdate[0];
-  }
-  return null;
-}
-
 function mapStateToProps(state, ownProps) {
   const documentId = ownProps.params.id;
   const documentToEdit = {};
   let currentDocument;
   if (documentId && state.documents.length > 0) {
-    currentDocument = getDocumentById(state.documents, documentId);
+    currentDocument = getDocument(state.documents, documentId);
     documentToEdit.id = currentDocument.id;
     documentToEdit.title = currentDocument.title;
     documentToEdit.access = currentDocument.access;

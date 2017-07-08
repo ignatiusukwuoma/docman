@@ -1,10 +1,7 @@
 import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
-import enzymify from 'expect-enzyme';
 import LoginTabs from '../../../components/elements/LoginTabs.jsx';
-
-expect.extend(enzymify());
 
 function setup() {
   const props = {
@@ -25,13 +22,18 @@ function setup() {
 }
 
 describe('LoginTabs', () => {
-  it('renders one Tabs', () => {
+  it('renders a div with className login-tabs', () => {
     const wrapper = setup();
-    expect(wrapper.find('Tabs').length).toBe(1);
+    expect(wrapper.find('.login-tabs').length).toBe(1);
   });
 
-  it('renders two Tab', () => {
+  it('renders a SigninForm', () => {
     const wrapper = setup();
-    expect(wrapper.find('Tab').length).toBe(2);
+    expect(wrapper.find('SigninForm').length).toBe(1);
+  });
+
+  it('renders a SignupForm', () => {
+    const wrapper = setup();
+    expect(wrapper.find('SignupForm').length).toBe(1);
   });
 });

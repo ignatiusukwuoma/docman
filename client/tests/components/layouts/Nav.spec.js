@@ -1,12 +1,15 @@
 import React from 'react';
 import expect from 'expect';
+import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 import { Nav } from '../../../components/layouts/Nav.jsx';
+
+const logout = sinon.spy(() => Promise.resolve());
 
 function setup(signedIn = false) {
   const props = {
     access: { loggedIn: signedIn, user: {} },
-    logout: () => {}
+    logout
   };
   return mount(<Nav {...props} />);
 }
@@ -27,7 +30,7 @@ describe('Nav', () => {
 
   it('should logout when logout button is clicked', () => {
     const wrapper = setup(true);
-    const logoutButton = wrapper.find('a').last();
-    expect(logoutButton.text()).toBe('Logout');
+    wrapper.instance().logout();
+    expect(logout.callCount).toEqual(1);
   });
 });

@@ -13,7 +13,7 @@ import Sidebar from '../layouts/Sidebar.jsx';
  * @class EditProfilePage
  * @extends {React.Component}
  */
-class EditProfilePage extends React.Component {
+export class EditProfilePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
@@ -107,7 +107,7 @@ EditProfilePage.propTypes = {
 };
 
 EditProfilePage.contextTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 /**

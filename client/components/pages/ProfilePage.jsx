@@ -15,7 +15,7 @@ import * as documentActions from '../../actions/documentActions';
  * @class ProfilePage
  * @extends {React.Component}
  */
-class ProfilePage extends React.Component {
+export class ProfilePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

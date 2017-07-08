@@ -25,7 +25,7 @@ function DocumentSidebar({ access }) {
         }>My Documents
         <i className="material-icons document-icons">person_pin</i>
       </Link>
-      <Link to={`/user/${access.user.id}`}
+      <Link to={`/user/${access.user.id}`} id="profile-page"
         className={
           `collection-item${makeActive(`/user/${access.user.id}`)}`
         }>My Profile
