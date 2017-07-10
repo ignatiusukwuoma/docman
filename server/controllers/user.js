@@ -115,7 +115,7 @@ export default {
    */
   destroy(req, res) {
     const userId = parseInt(req.params.userId, 10);
-    if (req.decoded.data.roleId !== 1 && req.decoded.data.id !== userId) {
+    if (req.decoded.data.id !== userId) {
       return res.status(401).json({
         message: 'You do not have the permission to do that'
       });

@@ -39,6 +39,7 @@ function SigninForm({
         hoverColor="#8AA62F"
         id="sign-in-button"
         label="Log In"
+        type='submit'
         onClick={onSigninSubmit}
       />
     </form>

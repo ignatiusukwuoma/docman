@@ -12,6 +12,16 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
+  admin1: {
+    id: 27,
+    name: faker.name.findName(),
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+    roleId: 2,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
   advertizer1: {
     id: 25,
     name: 'advertizer',

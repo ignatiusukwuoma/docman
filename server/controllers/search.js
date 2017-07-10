@@ -1,5 +1,6 @@
 import models from '../models';
 import generalUtils from '../utils/generalUtils';
+import documentUtils from '../utils/documentUtils';
 
 export default {
   /**
@@ -39,23 +40,18 @@ export default {
    * @returns {object} response
    */
   searchDocuments(req, res) {
-    const queries = req.query.q.split(' ');
-    const query = `%${queries[0]}%`;
-    const query1 = queries[1] ? `%${queries[1]}%` : '';
-    const query2 = queries[2] ? `%${queries[2]}%` : '';
+    const documentQuery = documentUtils.documentQuery(req);
+    const splitQuery = documentUtils.splitQuery(req);
     const limit = req.query.limit > 0 ? req.query.limit : 9;
     const offset = req.query.offset > 0 ? req.query.offset : 0;
     return models.Document
       .findAndCountAll({
         limit,
         offset,
-        where: { title: {
-          $or: [
-          { $iLike: query },
-          { $iLike: query1 },
-          { $iLike: query2 }
-          ]
-        } },
+        where: {
+          $and: [documentQuery.where,
+          { title: { $or: splitQuery } }]
+        },
         include: [{
           model: models.User,
           attributes: ['username', 'roleId']

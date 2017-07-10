@@ -6,10 +6,6 @@ const isSuperAdmin = authMiddlewares.isSuperAdmin;
 const isAdmin = authMiddlewares.isAdmin;
 
 const Routes = (app) => {
-  app.get('/v1', (req, res) => res.status(200).send({
-    message: 'Welcome to Docman Pro API'
-  }));
-
   app.use('/roles', validateToken, isSuperAdmin);
   app.route('/roles')
     .get(controllers.role.list)

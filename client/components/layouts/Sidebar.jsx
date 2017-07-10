@@ -62,6 +62,7 @@ export class Sidebar extends React.Component {
       .then(() => {
         this.props.logout();
         this.context.router.push('/');
+        location.reload();
         this.redirect();
       });
   }
@@ -70,7 +71,7 @@ export class Sidebar extends React.Component {
    * Delete confirmation and redirect after delete is completed
    * @memberOf Sidebar
    */
-  redirect() {
+  redirect = () => {
     swal('Deleted!', 'Your Account has been deleted.', 'success');
   }
 
