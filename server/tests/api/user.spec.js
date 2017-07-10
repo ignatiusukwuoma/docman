@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import server from '../../app';
 import userData from '../testData/userData';
 
-const { superadmin, admin, author, editor, author1, author2, author3,
+const { superadmin, admin, admin1, author, editor, author1, author2, author3,
   noEmail, invalidEmail, noUsername } = userData;
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -37,6 +37,18 @@ describe('Users', () => {
           expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
           expect(res.body.message).to.eql('Wrong password');
+          done();
+        });
+    });
+
+    it('should fail if password is not provided', (done) => {
+      chai.request(server)
+        .post('/users/login')
+        .send({ username: 'spiderman' })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.eql('Invalid password');
           done();
         });
     });
@@ -100,6 +112,17 @@ describe('Users', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.message).to.equal('Username already exist');
+        done();
+      });
+    });
+
+    it('should fail if user is trying to create an admin', (done) => {
+      chai.request(server)
+      .post('/users')
+      .send(admin1)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal('You cannot create an Admin');
         done();
       });
     });
@@ -224,153 +247,170 @@ describe('Users', () => {
           done();
         });
     });
+  });
 
     // GET /users/:id
-    describe('GET /users/:id', () => {
-      it('should return a particular user when passed an id', (done) => {
-        chai.request(server)
-          .get('/users/4')
-          .set({ 'x-access-token': authorToken })
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            expect(res.body.id).to.equal(4);
-            expect(res.body).to.eql({
-              id: 4,
-              username: 'spiderman',
-              name: 'Spiderman',
-              email: 'editor@gmail.com',
-              roleId: 4
-            });
-            done();
+  describe('GET /users/:id', () => {
+    it('should return a particular user when passed an id', (done) => {
+      chai.request(server)
+        .get('/users/4')
+        .set({ 'x-access-token': authorToken })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.id).to.equal(4);
+          expect(res.body).to.eql({
+            id: 4,
+            username: 'spiderman',
+            name: 'Spiderman',
+            email: 'editor@gmail.com',
+            roleId: 4
           });
-      });
-
-      it('should deny access if no token was provided', (done) => {
-        chai.request(server)
-          .get('/users/3')
-          .end((err, res) => {
-            expect(res).to.have.status(401);
-            expect(res.body).to.be.an('object');
-            expect(res.body.message)
-              .to.equal('You are not signed in. Please sign in.');
-            done();
-          });
-      });
-
-      it('should return 404 for invalid userId', (done) => {
-        chai.request(server)
-          .get('/users/100')
-          .set({ 'x-access-token': adminToken })
-          .end((err, res) => {
-            expect(res).to.have.status(404);
-            expect(res.body).to.be.an('object');
-            expect(res.body.message).to.equal('User not found');
-            done();
-          });
-      });
-
-      it('should fail if the provided id is out of range', (done) => {
-        chai.request(server)
-          .get('/users/5000000000')
-          .set({ 'x-access-token': authorToken })
-          .end((err, res) => {
-            expect(res.status).to.equal(400);
-            expect(res.body).to.be.a('object');
-            expect(res.body.message)
-              .to.equal('value "5000000000" is out of range for type integer');
-            done();
-          });
-      });
+          done();
+        });
     });
+
+    it('should deny access if no token was provided', (done) => {
+      chai.request(server)
+        .get('/users/3')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message)
+            .to.equal('You are not signed in. Please sign in.');
+          done();
+        });
+    });
+
+    it('should return 404 for invalid userId', (done) => {
+      chai.request(server)
+        .get('/users/100')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('User not found');
+          done();
+        });
+    });
+
+    it('should fail if the provided id is out of range', (done) => {
+      chai.request(server)
+        .get('/users/5000000000')
+        .set({ 'x-access-token': authorToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body.message)
+            .to.equal('value "5000000000" is out of range for type integer');
+          done();
+        });
+    });
+  });
 
     // PUT /users/:id
-    describe('PUT /users/:id', () => {
-      it('should allow users update their details', (done) => {
-        chai.request(server)
-          .put('/users/3')
-          .set({ 'x-access-token': authorToken })
-          .send({ name: 'Superwoman' })
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.eql({
-              id: 3,
-              username: 'wonderwoman',
-              name: 'Superwoman',
-              email: 'author@gmail.com',
-              roleId: 3
-            });
-            done();
+  describe('PUT /users/:id', () => {
+    it('should allow users update their profile details', (done) => {
+      chai.request(server)
+        .put('/users/3')
+        .set({ 'x-access-token': authorToken })
+        .send({ name: 'Superwoman' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.eql({
+            id: 3,
+            username: 'wonderwoman',
+            name: 'Superwoman',
+            email: 'author@gmail.com',
+            roleId: 3
           });
-      });
-
-      it('should allow Superadmin to upgrade a user', (done) => {
-        chai.request(server)
-          .put('/users/4')
-          .set({ 'x-access-token': superadminToken })
-          .send({ roleId: 2 })
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an('object');
-            expect(res.body).to.eql({
-              id: 4,
-              username: 'spiderman',
-              name: 'Spiderman',
-              email: 'editor@gmail.com',
-              roleId: 2
-            });
-            done();
-          });
-      });
-
-      it('should not allow a user to use an existing username', (done) => {
-        chai.request(server)
-          .put('/users/3')
-          .set({ 'x-access-token': authorToken })
-          .send({ username: editor.username })
-          .end((err, res) => {
-            expect(res.status).to.equal(400);
-            expect(res.body).to.be.an('object');
-            expect(res.body.message).to.eql('Username already exist');
-            done();
-          });
-      });
-
-      it('should not allow admin to upgrade user role to admin', (done) => {
-        chai.request(server)
-          .put('/users/3')
-          .set({ 'x-access-token': adminToken })
-          .send({ roleId: '2' })
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body).to.be.an('object');
-            expect(res.body.message)
-              .to.equal('Access denied: SuperAdmin credentials required');
-            done();
-          });
-      });
-
-      it('should not allow user to update another user role', (done) => {
-        chai.request(server)
-          .put('/users/4')
-          .set({ 'x-access-token': authorToken })
-          .send({ Name: 'Personal Editor' })
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body).to.be.an('object');
-            expect(res.body.message)
-              .to.equal('You do not have the permission to do that');
-            done();
-          });
-      });
+          done();
+        });
     });
 
-    // DELETE /users/:id
-    describe('DELETE /users/:id', () => {
-      it('should not allow a user to delete another user profile', (done) => {
-        chai.request(server)
-        .delete('/users/4')
+    it('should allow users change their password', (done) => {
+      chai.request(server)
+        .put('/users/3')
         .set({ 'x-access-token': authorToken })
+        .send({ password: 'password$' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.eql({
+            id: 3,
+            username: 'wonderwoman',
+            name: 'Superwoman',
+            email: 'author@gmail.com',
+            roleId: 3
+          });
+          done();
+        });
+    });
+
+    it('should allow Superadmin to upgrade a user', (done) => {
+      chai.request(server)
+        .put('/users/4')
+        .set({ 'x-access-token': superadminToken })
+        .send({ roleId: 2 })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.eql({
+            id: 4,
+            username: 'spiderman',
+            name: 'Spiderman',
+            email: 'editor@gmail.com',
+            roleId: 2
+          });
+          done();
+        });
+    });
+
+    it('should fail if user is not found', (done) => {
+      chai.request(server)
+        .put('/users/250')
+        .set({ 'x-access-token': superadminToken })
+        .send({ roleId: 2 })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('User not found');
+          done();
+        });
+    });
+
+    it('should not allow a user to use an existing username', (done) => {
+      chai.request(server)
+        .put('/users/3')
+        .set({ 'x-access-token': authorToken })
+        .send({ username: editor.username })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.eql('Username already exist');
+          done();
+        });
+    });
+
+    it('should not allow admin to upgrade user role to admin', (done) => {
+      chai.request(server)
+        .put('/users/3')
+        .set({ 'x-access-token': adminToken })
+        .send({ roleId: '2' })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message)
+            .to.equal('Access denied: SuperAdmin credentials required');
+          done();
+        });
+    });
+
+    it('should not allow user to update another user role', (done) => {
+      chai.request(server)
+        .put('/users/4')
+        .set({ 'x-access-token': authorToken })
+        .send({ name: 'Personal Editor' })
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.be.an('object');
@@ -378,56 +418,73 @@ describe('Users', () => {
             .to.equal('You do not have the permission to do that');
           done();
         });
-      });
+    });
 
-      it("should not allow admin to delete a user's profile", (done) => {
-        chai.request(server)
-        .delete('/users/4')
-        .set({ 'x-access-token': adminToken })
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          expect(res.body).to.be.an('object');
-          expect(res.body.message)
-            .to.equal('You do not have the permission to do that');
-          done();
-        });
-      });
-
-      it('should allow a user/admin to delete their own account', (done) => {
-        chai.request(server)
-        .delete('/users/3')
-        .set({ 'x-access-token': authorToken })
-        .end((err, res) => {
-          expect(res).to.have.status(204);
-          done();
-        });
-      });
-
-      it('should return 404 for invalid id', (done) => {
-        chai.request(server)
-        .delete('/users/100')
+    it('should fail if the provided id is out of range', (done) => {
+      chai.request(server)
+        .put('/users/5000000000')
+        .send({ roleId: 2 })
         .set({ 'x-access-token': superadminToken })
         .end((err, res) => {
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(400);
           expect(res.body).to.be.a('object');
-          expect(res.body.message).to.eql('User not found');
+          expect(res.body.message)
+            .to.equal('value "5000000000" is out of range for type integer');
           done();
         });
+    });
+  });
+
+  // DELETE /users/:id
+  describe('DELETE /users/:id', () => {
+    it('should not allow a user to delete another user profile', (done) => {
+      chai.request(server)
+      .delete('/users/4')
+      .set({ 'x-access-token': authorToken })
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message)
+          .to.equal('You do not have the permission to do that');
+        done();
       });
     });
 
+    it("should not allow admin to delete a user's profile", (done) => {
+      chai.request(server)
+      .delete('/users/4')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message)
+          .to.equal('You do not have the permission to do that');
+        done();
+      });
+    });
+
+    it('should allow a user/admin to delete their own account', (done) => {
+      chai.request(server)
+      .delete('/users/3')
+      .set({ 'x-access-token': authorToken })
+      .end((err, res) => {
+        expect(res).to.have.status(204);
+        done();
+      });
+    });
+  });
+
       // POST /users/logout
-    describe('/POST/logout', () => {
-      it('can logout a user', (done) => {
-        chai.request(server)
-        .post('/users/logout')
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body.message)
-            .to.equal('You have signed out');
-          done();
-        });
+  describe('/POST/logout', () => {
+    it('can logout a user', (done) => {
+      chai.request(server)
+      .post('/users/logout')
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message)
+          .to.equal('You have signed out');
+        done();
       });
     });
   });

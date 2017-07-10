@@ -13,7 +13,7 @@ function DocumentSidebar({ access }) {
       <Link to="/document/new"
         className={`collection-item${makeActive('/document/new')}`}>
         New Document
-        <i className="material-icons document-icons">mail_outline</i>
+        <i className="material-icons document-icons">note_add</i>
       </Link>
       <Link to="/home" className={`collection-item${makeActive('/home')}`}>
         All Documents

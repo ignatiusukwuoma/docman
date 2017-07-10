@@ -173,7 +173,7 @@ export default {
         const userId = req.decoded.data.id;
         if (documentToUpdate.userId !== userId) {
           return res.status(401).json({
-            message: 'You are not permitted to access this document'
+            message: 'You are not permitted to edit this document'
           });
         }
         return documentToUpdate

@@ -89,6 +89,7 @@ function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
           backgroundColor="#26a69a"
           hoverColor="#8AA62F"
           id="sign-up-button"
+          type='submit'
           label={pathname === '/'
           ? 'Create an Account' : 'Update Account'}
           onClick={onSubmit}

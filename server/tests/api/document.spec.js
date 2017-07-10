@@ -6,6 +6,7 @@ import roleData from '../testData/roleData';
 import userData from '../testData/userData';
 import documentData from '../testData/documentData';
 
+const invalidToken = 'aaaaaaaa.bbbbbbbbbbbbbb.ccccccccccccccc';
 const { admin, author, editor, advertizer1, advertizer2 } = userData;
 const { role5 } = roleData;
 const { publicDocument, publicDocument2, privateDocument } = documentData;
@@ -229,10 +230,34 @@ describe('Documents', () => {
           done();
         });
     });
+
+    it('should not return documents if user is not logged in', (done) => {
+      chai.request(server)
+        .get('/documents')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message)
+            .to.equal('You are not signed in. Please sign in.');
+          done();
+        });
+    });
+
+    it('should not return documents if token is not authenticated', (done) => {
+      chai.request(server)
+        .get('/documents')
+        .set({ 'x-access-token': invalidToken })
+        .end((err, res) => {
+          expect(res).to.have.status(403);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('Token Authentication failed');
+          done();
+        });
+    });
   });
 
   // GET /documents/:id
-  describe('GET/ /users/:id document', () => {
+  describe('GET /users/:id document', () => {
     let editorToken;
     before((done) => {
       chai.request(server)
@@ -352,7 +377,7 @@ describe('Documents', () => {
         expect(res.status).to.equal(401);
         expect(res.body).to.be.an('object');
         expect(res.body.message).to
-          .equal('You are not permitted to access this document');
+          .equal('You are not permitted to edit this document');
         done();
       });
     });
@@ -369,6 +394,35 @@ describe('Documents', () => {
           expect(res.body.message).to.eql('Title already exist');
           done();
         });
+    });
+
+    it('should return an error message if document does not exist',
+    (done) => {
+      chai.request(server)
+        .put('/documents/20')
+        .set({ 'x-access-token': adminToken })
+        .send({ title: 'Andela Nigeria' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.equal('Document not found');
+          done();
+        });
+    });
+
+    it('should fail if the provided id is out of range',
+    (done) => {
+      chai.request(server)
+      .delete('/documents/3000000000')
+      .set({ 'x-access-token': adminToken })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message).to.equal(
+          'value "3000000000" is out of range for type integer'
+        );
+        done();
+      });
     });
   });
 

@@ -31,7 +31,12 @@ function Pagination({ documents, nextPage, prevPage, pageData }) {
     );
   }
   return (
-    <div><p className="center-align">No documents found</p></div>
+    <div>
+      <p className="center-align">
+        {location.pathname === '/manageusers' ? 'No users found'
+        : 'No documents found'}
+      </p>
+    </div>
   );
 }
 
