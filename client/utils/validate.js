@@ -52,11 +52,11 @@ export function signup({
 /**
  * Validates the edit profile form
  * @param {object} {
- *   name = '', email = '', username = '' }
+ * name = '', email = '', username = '', password = '' }
  * @returns {object} validate
  */
 export function editprofile({
-  name = '', email = '', username = '' }) {
+  name = '', email = '', username = '', password = '' }, confirmPassword) {
   const validate = validateFields(
     [username, name, email],
     ['username', 'name', 'email']);
@@ -67,6 +67,11 @@ export function editprofile({
 
   if (!validator.isEmail(email)) {
     validate.errors.email = 'Please enter a valid email';
+    validate.valid = false;
+  }
+
+  if (!validator.equals(password, confirmPassword)) {
+    validate.errors.confirmPassword = 'Passwords must match';
     validate.valid = false;
   }
 

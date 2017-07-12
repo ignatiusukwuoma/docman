@@ -18,13 +18,18 @@ export class EditProfilePage extends React.Component {
     super(props, context);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSwitch = this.handleSwitch.bind(this);
+    this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
     this.state = {
+      switchOn: false,
+      confirmPassword: '',
       editprofileErrors: {},
       editprofileDetails: {
         name: `${props.user.name}`,
         email: `${props.user.email}`,
         username: `${props.user.username}`,
-        roleId: `${props.user.roleId}`
+        roleId: `${props.user.roleId}`,
+        password: ''
       }
     };
   }
@@ -45,6 +50,24 @@ export class EditProfilePage extends React.Component {
   }
 
   /**
+   * Toggles the value of the switch in state
+   * @memberOf EditProfilePage
+   */
+  handleSwitch() {
+    const switchOn = this.state.switchOn;
+    this.setState({ switchOn: !switchOn });
+  }
+
+  /**
+   * Sets confirm password field in state
+   * @param {object} event
+   * @memberOf LandingPage
+   */
+  handleConfirmPassword(event) {
+    this.setState({ confirmPassword: event.target.value.substr(0, 30) });
+  }
+
+  /**
    * Submits the form to edit profile
    * @param {object} event
    * @memberOf EditProfilePage
@@ -52,7 +75,7 @@ export class EditProfilePage extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const { valid, errors } = validate.editprofile(this
-    .state.editprofileDetails);
+    .state.editprofileDetails, this.state.confirmPassword);
     if (valid) {
       this.props.updateUser(this.props.user.id, this.state.editprofileDetails)
       .then(() => {
@@ -77,20 +100,38 @@ export class EditProfilePage extends React.Component {
         <div className="row">
           <div className="col s12 m4 l3">
             <Sidebar />
+            {this.props.access.user.id === this.props.user.id
+            && <div id="toggle-password" className="center-align">
+              <div className="switch">
+                <label>
+                  Off
+                  <input
+                    type="checkbox"
+                    onChange={this.handleSwitch}
+                    checked={this.state.switchOn}
+                  />
+                  <span className="lever"></span>
+                  On
+                </label>
+              </div>
+              <span className="small">Change your password</span>
+            </div>}
           </div>
           <div className="col s12 m8 l9 center-align center-all">
             <div className="headers">
-              <h4> Edit Your Profile </h4>
+              <h4> Edit Profile </h4>
             </div>
             <div className="edit-profile-form">
               <SignupForm
                 disabled={access.user.id !== user.id}
+                switchOn={this.state.switchOn}
                 access={access}
                 pathname={pathname}
                 onSubmit={this.onSubmit}
                 handleChange={this.handleChange}
                 signupErrors={this.state.editprofileErrors}
                 signupDetails={this.state.editprofileDetails}
+                handleConfirmPassword={this.handleConfirmPassword}
               />
             </div>
           </div>

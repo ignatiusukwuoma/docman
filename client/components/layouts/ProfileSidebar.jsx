@@ -14,7 +14,7 @@ import avatar from '../../img/avatar.png';
  */
 function ProfileSidebar({ user, access, deleteUser }) {
   return (
-    <Card>
+    <Card className="animated fadeInDown">
       <CardMedia
         overlay={
           <CardTitle
@@ -35,7 +35,7 @@ function ProfileSidebar({ user, access, deleteUser }) {
         <Link to={`/user/${user.id}/edit`}>
           <RaisedButton
             className="edit-profile-button"
-            label={access.user.roleId === 1 && user.id !== 1
+            label={access.user.roleId === 1 && user.roleId !== 1
             ? 'UPGRADE USER' : 'EDIT PROFILE'}
             labelColor={white}
             backgroundColor={greenA700}
@@ -44,7 +44,8 @@ function ProfileSidebar({ user, access, deleteUser }) {
         {access.user.id === user.id
         && <a href="#!" onClick={deleteUser}>
           <RaisedButton
-            label="DELETE ACCOUNT"
+            title="This will delete your account"
+            label="DELETE"
             labelColor={white}
             backgroundColor={redA700}
           />

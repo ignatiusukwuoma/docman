@@ -19,7 +19,7 @@ export class ProfilePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      user: [...props.user],
+      user: Object.assign({}, props.user),
       access: props.access,
       documents: [...props.documents],
       pageData: Object.assign({}, props.pageData),
@@ -46,7 +46,7 @@ export class ProfilePage extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.state.pageData !== nextProps.pageData) {
       this.setState({
-        user: [...nextProps.user],
+        user: Object.assign({}, nextProps.user),
         documents: [...nextProps.documents],
         pageData: Object.assign({}, nextProps.pageData),
         documentsLoaded: true
@@ -100,8 +100,8 @@ export class ProfilePage extends React.Component {
         <div className="card-action">
           <a href="#!">{document.access}</a>
           {document.access === 'private'
-          && this.state.access.user.id !== this.state.user.id
-          ? '' : <Link to={`/document/${document.id}`}>READ</Link>}
+          && this.state.access.user.id === this.state.user.id
+          && <Link to={`/document/${document.id}`}>READ</Link>}
         </div>
       </div>
     </div>;
