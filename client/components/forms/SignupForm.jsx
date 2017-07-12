@@ -10,7 +10,8 @@ import SelectInput from '../forms/SelectInput.jsx';
  * @returns {object} jsx object to display form
  */
 function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
-  signupDetails, handleConfirmPassword, confirmPassword, signupErrors }) {
+  signupDetails, handleConfirmPassword, confirmPassword,
+  signupErrors, switchOn }) {
   return (
     <form onSubmit={onSubmit} id="signup-form">
       <div>
@@ -49,7 +50,7 @@ function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
           value={signupDetails.username}
         />
       </div>
-      { pathname === '/'
+      {(pathname === '/' || switchOn)
       && <div>
         <div>
           <TextInput
@@ -85,6 +86,7 @@ function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
           access={access}
         />
       </div>}
+      <div className="btn-create">
        <FlatButton
           backgroundColor="#26a69a"
           hoverColor="#8AA62F"
@@ -94,11 +96,13 @@ function SignupForm({ access, pathname, onSubmit, handleChange, disabled,
           ? 'Create an Account' : 'Update Account'}
           onClick={onSubmit}
         />
+      </div>
     </form>
   );
 }
 
 SignupForm.propTypes = {
+  switchOn: PropTypes.bool,
   disabled: PropTypes.bool,
   pathname: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,

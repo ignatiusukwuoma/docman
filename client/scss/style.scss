@@ -121,6 +121,9 @@ body {
 .edit-profile-page {
   padding: 10px;
   min-height: 100vh;
+  #toggle-password {
+    margin-top: 50px;
+  }
   .center-all {
     display: flex;
     flex-direction: column;

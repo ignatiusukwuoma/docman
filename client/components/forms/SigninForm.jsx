@@ -34,14 +34,16 @@ function SigninForm({
           value={signinDetails.password}
         />
       </div>
-      <FlatButton
-        backgroundColor="#26a69a"
-        hoverColor="#8AA62F"
-        id="sign-in-button"
-        label="Log In"
-        type='submit'
-        onClick={onSigninSubmit}
-      />
+      <div className="btn-create">
+        <FlatButton
+          backgroundColor="#26a69a"
+          hoverColor="#8AA62F"
+          id="sign-in-button"
+          label="Log In"
+          type='submit'
+          onClick={onSigninSubmit}
+        />
+      </div>
     </form>
   );
 }

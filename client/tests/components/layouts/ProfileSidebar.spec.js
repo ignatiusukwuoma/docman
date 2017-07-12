@@ -42,7 +42,7 @@ describe('ProfileSidebar', () => {
     expect(wrapper.find('a').length).toBe(1);
     expect(wrapper.find('RaisedButton').length).toBe(2);
     const deleteButton = wrapper.find('RaisedButton').last();
-    expect(deleteButton.props().label).toBe('DELETE ACCOUNT');
+    expect(deleteButton.props().label).toBe('DELETE');
     wrapper.find('a').simulate('click');
     expect(deleteUser.calledOnce).toBe(true);
   });

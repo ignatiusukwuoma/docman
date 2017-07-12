@@ -100,7 +100,13 @@ export default {
           });
         }
         return user
-          .update(req.body, { field: Object.keys(req.body) })
+          .update({
+            name: req.body.name || user.name,
+            username: req.body.username || user.username,
+            email: req.body.email || user.email,
+            password: req.body.password || user.password,
+            roleId: req.body.roleId || user.roleId
+          })
           .then(() => res.status(200).send(generalUtils.userPayload(user)))
           .catch(error => generalUtils.handleError(error, res));
       })
