@@ -105,7 +105,7 @@ export class HomePage extends React.Component {
           </p>
         </div>
         <div className="card-action">
-          <a href="#!">
+          <a className="access" href="#!">
             BY {document.User ? document.User.username : ''}
           </a>
           <Link className="read-link" to={`/document/${document.id}`}>

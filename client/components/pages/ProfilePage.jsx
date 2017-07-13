@@ -98,9 +98,10 @@ export class ProfilePage extends React.Component {
           </p>
         </div>
         <div className="card-action">
-          <a href="#!">{document.access}</a>
-          {document.access === 'private'
-          && this.state.access.user.id === this.state.user.id
+          <a className="access" href="#!">{document.access}</a>
+          {(document.access === 'public' || document.access === 'role'
+          || (document.access === 'private'
+          && this.state.access.user.id === this.state.user.id))
           && <Link to={`/document/${document.id}`}>READ</Link>}
         </div>
       </div>

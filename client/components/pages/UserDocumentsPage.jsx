@@ -94,7 +94,7 @@ export class UserDocumentsPage extends React.Component {
           </p>
         </div>
         <div className="card-action">
-          <a href="#!">{document.access}</a>
+          <a className="access" href="#!">{document.access}</a>
           <Link to={`/document/${document.id}`}>READ</Link>
         </div>
       </div>
