@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
+import Document from '../elements/Document.jsx';
 import Searchbar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
@@ -88,34 +87,6 @@ export class HomePage extends React.Component {
   }
 
   /**
-   * Place the documents on the component
-   * @memberOf HomePage
-   */
-  placeDocuments = (document) =>
-    <div className="col m6 l4 animated zoomIn" key={document.id}>
-      <div className="card">
-        <div className="card-content enlarge-card">
-          <span className="card-title">
-            {document.title.length > 30
-            ? `${document.title.substr(0, 30)}...` : document.title}
-          </span>
-          <Divider />
-          <p dangerouslySetInnerHTML=
-            {{ __html: `${document.content.substr(0, 120)}...` }}>
-          </p>
-        </div>
-        <div className="card-action">
-          <a className="access" href="#!">
-            BY {document.User ? document.User.username : ''}
-          </a>
-          <Link className="read-link" to={`/document/${document.id}`}>
-            READ
-          </Link>
-        </div>
-      </div>
-    </div>;
-
-  /**
    * Renders the home page
    * @returns {object} jsx
    * @memberOf HomePage
@@ -135,7 +106,13 @@ export class HomePage extends React.Component {
                 <Searchbar />
               </div>
                 {documents
-                && documents.map(this.placeDocuments)}
+                && documents.map(document =>
+                  <Document
+                    key={document.id}
+                    document={document}
+                    pathname={this.props.pathname}
+                  />
+                )}
             </div>
             {documentsLoaded
             && <Pagination
@@ -151,6 +128,7 @@ export class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
+  pathname: PropTypes.string.isRequired,
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   pageData: PropTypes.object.isRequired,
@@ -164,7 +142,9 @@ HomePage.propTypes = {
  * @returns {object} props
  */
 function mapStateToProps(state, ownProps) {
+  const pathname = ownProps.location.pathname;
   return {
+    pathname,
     documents: state.documents,
     pageData: state.pageData,
     access: state.userAccess

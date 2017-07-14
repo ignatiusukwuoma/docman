@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
-import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Searchbar from '../forms/Searchbar.jsx';
+import Document from '../elements/Document.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
 import * as documentActions from '../../actions/documentActions';
@@ -81,33 +80,6 @@ export class ProfilePage extends React.Component {
   }
 
   /**
-   * Place documents on the component
-   * @memberOf ProfilePage
-   */
-  placeDocuments = (document) =>
-    <div className="col m6 l4 animated zoomIn" key={document.id}>
-      <div className="card">
-        <div className="card-content enlarge-card">
-          <span className="card-title">
-            {document.title.length > 30
-            ? `${document.title.substr(0, 30)}...` : document.title}
-          </span>
-          <Divider />
-          <p dangerouslySetInnerHTML=
-            {{ __html: document.content.substr(0, 120) }}>
-          </p>
-        </div>
-        <div className="card-action">
-          <a className="access" href="#!">{document.access}</a>
-          {(document.access === 'public' || document.access === 'role'
-          || (document.access === 'private'
-          && this.state.access.user.id === this.state.user.id))
-          && <Link to={`/document/${document.id}`}>READ</Link>}
-        </div>
-      </div>
-    </div>;
-
-  /**
    * Renders the profile page
    * @returns {object} jsx
    * @memberOf ProfilePage
@@ -126,7 +98,15 @@ export class ProfilePage extends React.Component {
                 <Searchbar />
               </div>
                 {this.state.documents
-                && this.state.documents.map(this.placeDocuments)}
+                && this.state.documents.map(document =>
+                  <Document
+                    key={document.id}
+                    document={document}
+                    access={this.props.access}
+                    paramsId={this.props.paramsId}
+                    pathname={this.props.pathname}
+                  />
+                )}
             </div>
             {this.state.documentsLoaded
             && <Pagination
@@ -142,6 +122,8 @@ export class ProfilePage extends React.Component {
 }
 
 ProfilePage.propTypes = {
+  paramsId: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
@@ -156,7 +138,11 @@ ProfilePage.propTypes = {
  * @returns {object} props
  */
 function mapStateToProps(state, ownProps) {
+  const pathname = ownProps.location.pathname;
+  const paramsId = ownProps.params.id;
   return {
+    pathname,
+    paramsId,
     documents: state.documents,
     pageData: state.pageData,
     access: state.userAccess,

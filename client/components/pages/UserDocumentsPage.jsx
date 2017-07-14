@@ -1,12 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Divider from 'material-ui/Divider';
 import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Searchbar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
+import Document from '../elements/Document.jsx';
 import { getUserDocuments } from '../../actions/documentActions';
 
 /**
@@ -77,30 +75,6 @@ export class UserDocumentsPage extends React.Component {
   }
 
   /**
-   * Place documents on component
-   * @memberOf UserDocumentsPage
-   */
-  placeDocuments = (document) =>
-    <div className="col m6 l4 animated zoomIn" key={document.id}>
-      <div className="card">
-        <div className="card-content enlarge-card">
-          <span className="card-title">
-            {document.title.length > 30
-            ? `${document.title.substr(0, 30)}...` : document.title}
-          </span>
-          <Divider />
-          <p dangerouslySetInnerHTML=
-            {{ __html: document.content.substr(0, 120) }}>
-          </p>
-        </div>
-        <div className="card-action">
-          <a className="access" href="#!">{document.access}</a>
-          <Link to={`/document/${document.id}`}>READ</Link>
-        </div>
-      </div>
-    </div>;
-
-  /**
    * Renders the page to display user's documents
    * @returns {object} jsx
    * @memberOf UserDocumentsPage
@@ -119,7 +93,13 @@ export class UserDocumentsPage extends React.Component {
                 <Searchbar />
               </div>
                 {this.state.documents
-                && this.state.documents.map(this.placeDocuments)}
+                && this.state.documents.map(document =>
+                  <Document
+                    key={document.id}
+                    document={document}
+                    pathname={this.props.pathname}
+                  />
+                )}
             </div>
             {this.state.documentsLoaded
             && <Pagination
@@ -135,6 +115,7 @@ export class UserDocumentsPage extends React.Component {
 }
 
 UserDocumentsPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
   getUserDocuments: PropTypes.func.isRequired,
   documents: PropTypes.array.isRequired,
   pageData: PropTypes.object.isRequired,
@@ -148,7 +129,9 @@ UserDocumentsPage.propTypes = {
  * @returns {object} props
  */
 function mapStateToProps(state, ownProps) {
+  const pathname = ownProps.location.pathname;
   return {
+    pathname,
     documents: state.documents,
     pageData: state.pageData,
     access: state.userAccess
