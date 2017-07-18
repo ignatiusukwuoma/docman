@@ -93,7 +93,7 @@ export class NewDocumentPage extends React.Component {
   redirect() {
     this.setState({ saving: false });
     toastr.success('Document added successfully');
-    this.context.router.push('/home');
+    this.context.router.push('/home/');
   }
 
   /**

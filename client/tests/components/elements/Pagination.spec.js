@@ -1,10 +1,12 @@
 import React from 'react';
 import expect from 'expect';
+import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import enzymify from 'expect-enzyme';
 import Pagination from '../../../components/elements/Pagination.jsx';
 
 expect.extend(enzymify());
+const nextPage = sinon.spy(() => Promise.resolve());
 
 function setup(pageSize = 9, pageNumber = 1) {
   const props = {
@@ -13,7 +15,7 @@ function setup(pageSize = 9, pageNumber = 1) {
       totalPages: 2,
       pageSize,
       count: 12 },
-    nextPage: () => {},
+    nextPage,
     prevPage: () => {}
   };
 
@@ -58,5 +60,12 @@ describe('Pagination', () => {
   it('renders a disabled previous button in page 1', () => {
     const wrapper = setup(9, 2);
     expect(wrapper.find('li').first()).toHaveClass('waves-effect');
+  });
+
+  it('calls nextPage when the next button is clicked', () => {
+    const wrapper = setup();
+    const next = wrapper.find('.next');
+    next.simulate('click');
+    expect(nextPage.callCount).toBe(1);
   });
 });

@@ -39,32 +39,17 @@ export default {
     const roleId = req.decoded.data.roleId;
     return Document
       .findAndCountAll({
+        include: [documentQuery.include],
         where: documentQuery.where,
         limit,
         offset,
-        include: [{
-          model: models.User,
-          attributes: ['username', 'roleId']
-        }],
         order: [['createdAt', 'DESC']]
       })
       .then((documentDatabase) => {
-        let omitted = 0;
-        const visibleDocuments = roleId <= 2 ? documentDatabase.rows
-        : documentDatabase.rows.filter((document) => {
-          if (document.access === 'role') {
-            if (document.User.roleId !== roleId) {
-              omitted += 1;
-              return false;
-            }
-            return true;
-          }
-          return true;
-        });
         const response = {
-          documents: visibleDocuments,
+          documents: documentDatabase.rows,
           pageData: generalUtils
-            .formatPage(documentDatabase.count - omitted, limit, offset)
+            .formatPage(documentDatabase.count, limit, offset)
         };
         res.status(200).send(response);
       })

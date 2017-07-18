@@ -15,7 +15,8 @@ function DocumentSidebar({ access }) {
         New Document
         <i className="material-icons document-icons">note_add</i>
       </Link>
-      <Link to="/home" className={`collection-item${makeActive('/home')}`}>
+      <Link to="/home" className=
+        {`collection-item${makeActive('/home')}${makeActive('/home/')}`}>
         All Documents
         <i className="material-icons document-icons">public</i>
       </Link>

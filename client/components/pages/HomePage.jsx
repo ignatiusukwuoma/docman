@@ -7,6 +7,7 @@ import Document from '../elements/Document.jsx';
 import Searchbar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
+import { nextPage, prevPage } from '../../utils/paginate';
 import * as searchActions from '../../actions/searchActions';
 import * as documentActions from '../../actions/documentActions';
 
@@ -23,8 +24,6 @@ export class HomePage extends React.Component {
       pageData: Object.assign({}, props.pageData),
       documentsLoaded: false
     };
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
   }
 
   /**
@@ -48,42 +47,6 @@ export class HomePage extends React.Component {
         documentsLoaded: true
       });
     }
-  }
-
-  /**
-   * Next page function for pagination component
-   * @returns {function} call to load next set of documents
-   * @memberOf HomePage
-   */
-  nextPage() {
-    if (this.state.documents.length < 9) {
-      return;
-    }
-    if (this.state.pageData.query) {
-      return this.props.actions.searchDocuments(
-        this.state.pageData.query,
-        this.state.pageData.offset + 9
-      );
-    }
-    return this.props.actions.getDocuments(this.state.pageData.offset + 9);
-  }
-
-  /**
-   * Previous page function for pagination component
-   * @returns {function} call to load previous documents
-   * @memberOf HomePage
-   */
-  prevPage() {
-    if (this.state.pageData.offset < 1) {
-      return;
-    }
-    if (this.state.pageData.query) {
-      return this.props.actions.searchDocuments(
-        this.state.pageData.query,
-        this.state.pageData.offset - 9
-      );
-    }
-    return this.props.actions.getDocuments(this.state.pageData.offset - 9);
   }
 
   /**
@@ -117,8 +80,21 @@ export class HomePage extends React.Component {
             {documentsLoaded
             && <Pagination
               documents={documents}
-              nextPage={this.nextPage}
-              prevPage={this.prevPage}
+              nextPage={() => nextPage(
+                documents,
+                this.props.actions.getDocuments,
+                0,
+                pageData.offset,
+                pageData.query,
+                this.props.actions.searchDocuments
+              )}
+              prevPage={() => prevPage(
+                this.props.actions.getDocuments,
+                0,
+                pageData.offset,
+                pageData.query,
+                this.props.actions.searchDocuments
+              )}
               pageData={pageData} />}
           </div>
         </div>
@@ -128,7 +104,7 @@ export class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  pathname: PropTypes.string.isRequired,
+  pathname: PropTypes.string,
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
   pageData: PropTypes.object.isRequired,

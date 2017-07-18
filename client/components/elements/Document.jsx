@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import Divider from 'material-ui/Divider';
 
+/**
+ * Displays a document
+ * @param {any} { document, pathname, access, paramsId }
+ * @returns {jsx} document
+ */
 function Document({ document, pathname, access, paramsId }) {
   return (
     <div className="col m6 l4 animated zoomIn">
@@ -45,7 +50,7 @@ function Document({ document, pathname, access, paramsId }) {
 
 Document.propTypes = {
   document: PropTypes.object.isRequired,
-  pathname: PropTypes.string.isRequired,
+  pathname: PropTypes.string,
   access: PropTypes.object,
   paramsId: PropTypes.string
 };

@@ -1,18 +1,25 @@
+import models from '../models';
 export default {
   /**
-   * Creates a custom `where` for documents
-   * @param {object} req
+   * Creates a custom `where` and `include` for documents
+   * @param {object} request
    * @returns {object} query
    */
-  documentQuery(req) {
+  documentQuery(request) {
     const query = {};
-    const userId = req.decoded.data.id;
+    const include = {};
+    const userId = request.decoded.data.id;
+    const roleId = request.decoded.data.roleId;
     query.where = {
       $or: [
         { access: 'public' },
         { access: 'role' },
         { userId }
       ]
+    };
+    query.include = {
+      model: models.User,
+      attributes: ['username', 'roleId']
     };
     return query;
   },

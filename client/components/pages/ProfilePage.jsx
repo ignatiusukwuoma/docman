@@ -7,7 +7,9 @@ import Searchbar from '../forms/Searchbar.jsx';
 import Document from '../elements/Document.jsx';
 import Pagination from '../elements/Pagination.jsx';
 import * as userActions from '../../actions/userActions';
+import { nextPage, prevPage } from '../../utils/paginate';
 import * as documentActions from '../../actions/documentActions';
+
 
 /**
  * The Profile page for each user
@@ -24,8 +26,6 @@ export class ProfilePage extends React.Component {
       pageData: Object.assign({}, props.pageData),
       documentsLoaded: false
     };
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
   }
 
   /**
@@ -54,37 +54,12 @@ export class ProfilePage extends React.Component {
   }
 
   /**
-   * Calls the next set of user documents with an offset
-   * @returns {function} action
-   * @memberOf ProfilePage
-   */
-  nextPage() {
-    if (this.state.documents.length < 9) {
-      return;
-    }
-    return this.props.actions.getUserDocuments(this.state.user.id,
-    this.state.pageData.offset + 9);
-  }
-
-  /**
-   * Calls the previous set of user documents with an offset
-   * @returns {function} action
-   * @memberOf ProfilePage
-   */
-  prevPage() {
-    if (this.state.pageData.offset < 1) {
-      return;
-    }
-    return this.props.actions.getUserDocuments(this.state.user.id,
-    this.state.pageData.offset - 9);
-  }
-
-  /**
    * Renders the profile page
    * @returns {object} jsx
    * @memberOf ProfilePage
    */
   render() {
+    const { documents, documentsLoaded, user, pageData } = this.state;
     return (
       <div className="home-page">
         <div className="row">
@@ -97,8 +72,8 @@ export class ProfilePage extends React.Component {
                 <h3> Documents </h3>
                 <Searchbar />
               </div>
-                {this.state.documents
-                && this.state.documents.map(document =>
+                {documents
+                && documents.map(document =>
                   <Document
                     key={document.id}
                     document={document}
@@ -108,11 +83,20 @@ export class ProfilePage extends React.Component {
                   />
                 )}
             </div>
-            {this.state.documentsLoaded
+            {documentsLoaded
             && <Pagination
-              documents={this.state.documents}
-              nextPage={this.nextPage}
-              prevPage={this.prevPage}
+              documents={documents}
+              nextPage={() => nextPage(
+                documents,
+                this.props.actions.getUserDocuments,
+                user.id,
+                pageData.offset
+              )}
+              prevPage={() => prevPage(
+                this.props.actions.getUserDocuments,
+                user.id,
+                pageData.offset
+              )}
               pageData={this.state.pageData} />}
           </div>
         </div>
@@ -122,8 +106,8 @@ export class ProfilePage extends React.Component {
 }
 
 ProfilePage.propTypes = {
-  paramsId: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired,
+  paramsId: PropTypes.string,
+  pathname: PropTypes.string,
   user: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   documents: PropTypes.array.isRequired,
