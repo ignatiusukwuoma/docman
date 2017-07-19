@@ -36,7 +36,7 @@ function ProfileSidebar({ user, access, deleteUser }) {
           <RaisedButton
             className="edit-profile-button"
             label={access.user.roleId === 1 && user.roleId !== 1
-            ? 'UPGRADE USER' : 'EDIT PROFILE'}
+            ? 'CHANGE USER ROLE' : 'EDIT PROFILE'}
             labelColor={white}
             backgroundColor={greenA700}
           />

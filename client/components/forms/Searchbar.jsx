@@ -54,7 +54,7 @@ export class Searchbar extends React.Component {
           name="search"
           type="text"
           floatText={location.pathname === '/manageusers'
-            ? 'Search Users' : 'Search Documents'}
+            ? 'Search Users' : 'Search All Documents'}
           handleChange={this.handleChange}
           value={this.state.search}
         />

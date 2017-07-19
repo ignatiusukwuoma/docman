@@ -18,11 +18,14 @@ export default (sequelize, DataTypes) => {
       validate: { notEmpty: { msg: 'Access field cannot be empty' },
         isIn: { args: [['public', 'private', 'role']],
           msg: 'Select an option' } }
+    },
+    ownerRoleId: {
+      type: DataTypes.INTEGER,
+      defaultValue: 3
     }
   }, {
     classMethods: {
       associate: (models) => {
-        // associations can be defined here
         Document.belongsTo(models.User, {
           foreignKey: 'userId',
           onDelete: 'CASCADE'

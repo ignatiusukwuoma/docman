@@ -38,6 +38,15 @@ module.exports = {
           key: 'id',
           as: 'userId'
         }
+      },
+      ownerRoleId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Roles',
+          key: 'id',
+          as: 'ownerRoleId'
+        }
       }
     }),
   down: queryInterface =>

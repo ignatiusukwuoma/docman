@@ -10,16 +10,26 @@ export default {
     const include = {};
     const userId = request.decoded.data.id;
     const roleId = request.decoded.data.roleId;
-    query.where = {
-      $or: [
-        { access: 'public' },
-        { access: 'role' },
-        { userId }
-      ]
-    };
+    if (roleId <= 2) {
+      query.where = {
+        $or: [
+          { access: 'public' },
+          { access: 'role' },
+          { userId }
+        ]
+      };
+    } else {
+      query.where = {
+        $or: [
+          { access: 'public' },
+          { $and: [{ access: 'role' }, { ownerRoleId: roleId }] },
+          { userId }
+        ]
+      };
+    }
     query.include = {
       model: models.User,
-      attributes: ['username', 'roleId']
+      attributes: ['username']
     };
     return query;
   },

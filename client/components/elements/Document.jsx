@@ -24,8 +24,8 @@ function Document({ document, pathname, access, paramsId }) {
         <div className="card-action">
           <a className="access" href="#!">
             {
-              pathname === '/home'
-              ? `BY ${document.User.username}`
+              (/^\/home/).test(pathname)
+              ? document.User && `BY ${document.User.username}`
               : document.access
             }
           </a>
