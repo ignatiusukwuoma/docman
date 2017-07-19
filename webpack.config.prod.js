@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 export default {
-  devtool: 'source-map',
+  devtool: 'cheap-eval-source-map',
   target: 'web',
   entry: path.join(__dirname, 'client/index'),
   output: {
