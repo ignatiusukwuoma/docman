@@ -109,6 +109,7 @@ export default {
       .click('a#profile-page')
       .waitForElementVisible('.edit-profile-button')
       .click('.edit-profile-button')
+      .pause(500)
       .waitForElementVisible('Input[id=signup-name]')
       .assert.value('input[id=signup-name]', name)
       .clearValue('input[id=signup-name]')
