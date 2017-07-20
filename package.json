@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Full-stack document management system",
   "main": "index.js",
+  "engines": {
+    "node": "6.10.2"
+  },
   "scripts": {
     "start": "babel-node ./server/index.js",
     "start:dev": "nodemon --watch server --exec babel-node -- ./bin/www",
