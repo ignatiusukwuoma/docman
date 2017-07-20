@@ -7,7 +7,6 @@ import { ViewDocumentPage } from
 
 const getDocument = sinon.spy(() => Promise.resolve());
 const deleteDocument = sinon.spy(() => Promise.resolve());
-const spyDelete = sinon.spy(ViewDocumentPage.prototype, 'delete');
 
 const props = {
   params: { id: 4 },
@@ -23,13 +22,5 @@ describe('ViewDocumentPage', () => {
     const wrapper = shallow(<ViewDocumentPage {...props} />,
       { context: { router: { push: () => {} } } });
     expect(wrapper.find('.view-document').length).toBe(1);
-  });
-
-  it('calls deleteDocument when delete function runs', () => {
-    const wrapper = shallow(<ViewDocumentPage {...props} />,
-      { context: { router: { push: () => {} } } });
-    wrapper.instance().delete();
-    expect(spyDelete.callCount).toBe(1);
-    expect(deleteDocument.callCount).toBe(1);
   });
 });

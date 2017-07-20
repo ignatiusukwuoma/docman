@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import swal from 'sweetalert';
 import Divider from 'material-ui/Divider';
 import { Card } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -142,18 +143,20 @@ export class ManageRolesPage extends React.Component {
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel this!'
-    })
-    .then((isConfirm) => {
+      cancelButtonText: 'No, cancel this!',
+      closeOnConfirm: false
+    }, (isConfirm) => {
       if (isConfirm) {
         this.props.actions.deleteRole(roleId)
         .then(() => {
           swal('Deleted!', 'The role has been deleted.', 'success');
-        });
+        })
+        .catch((err) =>
+          swal('Cancelled', 'The role is not deleted :)'));
+      } else {
+        toastr.info('The role is safe');
       }
-    })
-    .catch((err) =>
-      swal('Cancelled', 'The role is not deleted :)'));
+    });
   }
 
   /**

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import swal from 'sweetalert';
 import Divider from 'material-ui/Divider';
 import handleError from '../../utils/errorHandler';
 import Sidebar from '../layouts/Sidebar.jsx';
@@ -38,33 +39,21 @@ export class ViewDocumentPage extends React.Component {
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel this!'
-    })
-    .then((isConfirm) => {
+      cancelButtonText: 'No, cancel this!',
+      closeOnConfirm: false
+    }, (isConfirm) => {
       if (isConfirm) {
-        this.delete();
+        this.props.deleteDocument(this.props.params.id)
+        .then(() => {
+          swal('Deleted!', 'This document has been deleted.', 'success');
+          this.context.router.push('/home');
+        })
+        .catch((er) =>
+          swal('Cancelled', 'The document cannot be deleted :)', 'error'));
+      } else {
+        toastr.info('The document is safe');
       }
-    })
-    .catch((er) =>
-      swal('Cancelled', 'The document is safe :)', 'error'));
-  }
-
-  /**
-   * Deletes the document
-   * @memberOf ViewDocumentPage
-   */
-  delete() {
-    this.props.deleteDocument(this.props.params.id)
-    .then(() => this.redirect());
-  }
-
-  /**
-   * Displays a sweetalert success message
-   * @memberOf ViewDocumentPage
-   */
-  redirect() {
-    swal('Deleted!', 'This document has been deleted.', 'success');
-    this.context.router.push('/home');
+    });
   }
 
   /**

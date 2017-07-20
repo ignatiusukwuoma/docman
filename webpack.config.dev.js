@@ -20,7 +20,7 @@ export default {
         loaders: ['react-hot-loader', 'babel-loader']
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {

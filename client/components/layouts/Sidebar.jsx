@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
+import swal from 'sweetalert';
 import AdminSidebar from './AdminSidebar.jsx';
 import ProfileSidebar from './ProfileSidebar.jsx';
 import DocumentSidebar from './DocumentSidebar.jsx';
@@ -46,33 +47,24 @@ export class Sidebar extends React.Component {
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel this!'
-    })
-    .then((isConfirm) => {
+      cancelButtonText: 'No, cancel this!',
+      closeOnConfirm: false
+    }, (isConfirm) => {
       if (isConfirm) {
-        this.delete();
+        this.props.deleteUser(this.state.user.id)
+        .then(() => {
+          toastr.info('You have deleted your account');
+          this.props.logout();
+          this.context.router.push('/');
+          location.reload();
+        })
+        .catch((err) =>
+          swal('Unable to delete account')
+        );
+      } else {
+        toastr.info('Your account is safe');
       }
-    })
-    .catch((err) =>
-      swal('Cancelled', 'The user is safe :)'));
-  }
-
-  delete() {
-    this.props.deleteUser(this.state.user.id)
-      .then(() => {
-        this.props.logout();
-        this.context.router.push('/');
-        location.reload();
-        this.redirect();
-      });
-  }
-
-  /**
-   * Delete confirmation and redirect after delete is completed
-   * @memberOf Sidebar
-   */
-  redirect = () => {
-    swal('Deleted!', 'Your Account has been deleted.', 'success');
+    });
   }
 
   /**
