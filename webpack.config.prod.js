@@ -40,7 +40,7 @@ export default {
         loaders: ['babel-loader']
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
       },
       {
