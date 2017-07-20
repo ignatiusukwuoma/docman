@@ -121,7 +121,7 @@ describe('Documents', () => {
         expect(res).to.have.status(201);
         expect(res.body.document).to.have.keys(
           ['id', 'title', 'content', 'access',
-            'createdAt', 'updatedAt', 'userId']
+            'createdAt', 'updatedAt', 'userId', 'ownerRoleId']
         );
         expect(res.body.message).to
           .equal('New document was successfully created');
@@ -257,7 +257,7 @@ describe('Documents', () => {
   });
 
   // GET /documents/:id
-  describe('GET /users/:id document', () => {
+  describe('GET /documents/:id document', () => {
     let editorToken;
     before((done) => {
       chai.request(server)
@@ -277,7 +277,7 @@ describe('Documents', () => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
-            'userId', 'createdAt', 'updatedAt', 'User']);
+            'userId', 'ownerRoleId', 'createdAt', 'updatedAt', 'User']);
           expect(res.body.title).to.equal('Welcome Message');
           done();
         });
@@ -318,7 +318,7 @@ describe('Documents', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.keys(['id', 'title', 'content', 'access',
-          'userId', 'createdAt', 'updatedAt', 'User']);
+          'userId', 'ownerRoleId', 'createdAt', 'updatedAt', 'User']);
         done();
       });
     });

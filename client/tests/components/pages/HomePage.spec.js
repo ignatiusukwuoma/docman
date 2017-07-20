@@ -2,21 +2,22 @@ import expect from 'expect';
 import sinon from 'sinon';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { nextPage, prevPage } from '../../../utils/paginate';
 import { HomePage } from
 '../../../components/pages/HomePage.jsx';
 
 const getDocuments = sinon.spy(() => Promise.resolve());
 const searchDocuments = sinon.spy(() => Promise.resolve());
 const componentMount = sinon.spy(HomePage.prototype, 'componentWillMount');
-const nextPage = sinon.spy(HomePage.prototype, 'nextPage');
-const prevPage = sinon.spy(HomePage.prototype, 'prevPage');
+const nextPageSpy = sinon.spy(nextPage);
+const prevPageSpy = sinon.spy(prevPage);
 
 const props = {
   documents:[
     { title: 'The growth of Software Technology in Nigeria and Africa',
       content: 'Nigeria has experienced...' }
   ],
-  pageData: { offset: 0 },
+  pageData: { offset: 0, query: 'a' },
   access: {},
   documentsLoaded: false,
   actions: {
@@ -46,87 +47,14 @@ describe('HomePage', () => {
 
   it('calls nextPage when next page function runs', () => {
     const wrapper = shallow(<HomePage {...props} />);
-    wrapper.instance().nextPage();
-    expect(nextPage.calledOnce).toEqual(true);
-  });
-
-  it('calls getDocuments when documents are greater than 9', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    wrapper.setState({ documents:[
-      { title: 'A', content: 'A' },
-      { title: 'B', content: 'A' },
-      { title: 'C', content: 'A' },
-      { title: 'D', content: 'A' },
-      { title: 'E', content: 'A' },
-      { title: 'F', content: 'A' },
-      { title: 'G', content: 'A' },
-      { title: 'H', content: 'A' },
-      { title: 'I', content: 'A' },
-      { title: 'J', content: 'A' },
-      { title: 'K', content: 'A' }] });
-    wrapper.instance().nextPage();
-    expect(getDocuments.called).toBe(true);
-  });
-
-  it('calls searchDocuments when there is a query', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    wrapper.setState({ documents:[
-      { title: 'A', content: 'A' },
-      { title: 'B', content: 'A' },
-      { title: 'C', content: 'A' },
-      { title: 'D', content: 'A' },
-      { title: 'E', content: 'A' },
-      { title: 'F', content: 'A' },
-      { title: 'G', content: 'A' },
-      { title: 'H', content: 'A' },
-      { title: 'I', content: 'A' },
-      { title: 'J', content: 'A' },
-      { title: 'K', content: 'A' }],
-      pageData: {
-        count: 3, pageNumber: 1, totalPages: 1, pageSize: 3, query:'andela'
-      }
-    });
-    wrapper.instance().nextPage();
-    expect(searchDocuments.calledOnce).toBe(true);
-  });
-
-  it('calls prevPage when prev page function runs', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    wrapper.instance().prevPage();
-    expect(prevPage.calledOnce).toEqual(true);
-  });
-
-  it('calls searchDocuments when there is a query', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    wrapper.setState({ documents:[
-      { title: 'A', content: 'A' },
-      { title: 'B', content: 'A' },
-      { title: 'C', content: 'A' },
-      { title: 'D', content: 'A' },
-      { title: 'E', content: 'A' },
-      { title: 'F', content: 'A' },
-      { title: 'G', content: 'A' }],
-      pageData: {
-        count: 3, pageNumber: 1, totalPages: 1, offset: 9, query:'andela'
-      }
-    });
-    wrapper.instance().prevPage();
-    expect(searchDocuments.called).toBe(true);
-  });
-
-  it('calls getDocuments when documents are greater than 9', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    wrapper.setState({ documents:[
-      { title: 'A', content: 'A' },
-      { title: 'B', content: 'A' },
-      { title: 'C', content: 'A' },
-      { title: 'D', content: 'A' },
-      { title: 'E', content: 'A' }],
-      pageData: {
-        count: 3, pageNumber: 1, totalPages: 1, offset: 9
-      }
-    });
-    wrapper.instance().prevPage();
-    expect(getDocuments.called).toBe(true);
+    nextPageSpy(
+      wrapper.state().documents,
+      wrapper.instance().getDocuments,
+      0,
+      wrapper.state().pageData.offset,
+      wrapper.state().pageData.query,
+      wrapper.instance().searchDocuments
+    );
+    expect(nextPageSpy.callCount).toBe(1);
   });
 });

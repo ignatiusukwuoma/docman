@@ -17,7 +17,8 @@ export default {
         title: req.body.title,
         content: req.body.content,
         access: req.body.access,
-        userId: req.decoded.data.id
+        userId: req.decoded.data.id,
+        ownerRoleId: req.decoded.data.roleId
       })
       .then(document => res.status(201).json({
         message: 'New document was successfully created',
@@ -39,32 +40,17 @@ export default {
     const roleId = req.decoded.data.roleId;
     return Document
       .findAndCountAll({
+        include: [documentQuery.include],
         where: documentQuery.where,
         limit,
         offset,
-        include: [{
-          model: models.User,
-          attributes: ['username', 'roleId']
-        }],
         order: [['createdAt', 'DESC']]
       })
       .then((documentDatabase) => {
-        let omitted = 0;
-        const visibleDocuments = roleId <= 2 ? documentDatabase.rows
-        : documentDatabase.rows.filter((document) => {
-          if (document.access === 'role') {
-            if (document.User.roleId !== roleId) {
-              omitted += 1;
-              return false;
-            }
-            return true;
-          }
-          return true;
-        });
         const response = {
-          documents: visibleDocuments,
+          documents: documentDatabase.rows,
           pageData: generalUtils
-            .formatPage(documentDatabase.count - omitted, limit, offset)
+            .formatPage(documentDatabase.count, limit, offset)
         };
         res.status(200).send(response);
       })
@@ -96,7 +82,7 @@ export default {
             offset,
             include: [{
               model: models.User,
-              attributes: ['username', 'roleId']
+              attributes: ['username']
             }],
             order: [['createdAt', 'DESC']]
           })
@@ -131,7 +117,7 @@ export default {
       .findById(req.params.documentId, {
         include: [{
           model: models.User,
-          attributes: ['username', 'roleId']
+          attributes: ['username']
         }]
       })
       .then((document) => {
@@ -144,8 +130,8 @@ export default {
         const roleId = req.decoded.data.roleId;
         if (document.access !== 'public'
           && document.userId !== userId
-          && !(document.access === 'role' && document.User.roleId === roleId)
-          && !(document.access === 'role' && roleId < 2)) {
+          && !(document.access === 'role' && document.ownerRoleId === roleId)
+          && !(document.access === 'role' && roleId <= 2)) {
           return res.status(401).json({
             message: 'You are not permitted to access this document'
           });
@@ -203,7 +189,6 @@ export default {
           });
         }
         const userId = req.decoded.data.id;
-        const roleId = req.decoded.data.roleId;
         if (document.userId !== userId) {
           return res.status(401).json({
             message: 'You are not permitted to delete this document'

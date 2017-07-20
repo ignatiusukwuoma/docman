@@ -51,11 +51,4 @@ describe('Sidebar Component', () => {
     expect(spy.calledOnce).toEqual(true);
   });
 
-  it('deletes a user when delete functions runs', () => {
-    const wrapper = shallow(<Sidebar {...props} />,
-    { context: { router: { push: () => {} } } });
-    wrapper.instance().delete();
-    expect(deleteUser.calledOnce).toBe(true);
-  });
-
 });

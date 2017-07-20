@@ -11,6 +11,7 @@ import Nav from '../layouts/Nav.jsx';
 import Sidebar from '../layouts/Sidebar.jsx';
 import Searchbar from '../forms/Searchbar.jsx';
 import Pagination from '../elements/Pagination.jsx';
+import { nextPage, prevPage } from '../../utils/paginate';
 import * as userActions from '../../actions/userActions';
 import * as searchActions from '../../actions/searchActions';
 import insertRole from '../../utils/insertRole';
@@ -28,8 +29,6 @@ export class ManageUsersPage extends React.Component {
       pageData: Object.assign({}, props.pageData),
       usersLoaded: false
     };
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
   }
 
   /**
@@ -56,38 +55,6 @@ export class ManageUsersPage extends React.Component {
   }
 
   /**
-   * Next page function for validation
-   * @returns {function} action call
-   * @memberOf ManageUsersPage
-   */
-  nextPage() {
-    if (this.state.users.length < 9) {
-      return;
-    }
-    if (this.state.pageData.query) {
-      return this.props.actions.searchUsers(this.state.pageData.query,
-        this.state.pageData.offset + 9);
-    }
-    return this.props.actions.getUsers(this.state.pageData.offset + 9);
-  }
-
-  /**
-   * Previous page function for validation
-   * @returns {function} action call
-   * @memberOf ManageUsersPage
-   */
-  prevPage() {
-    if (this.state.pageData.offset < 1) {
-      return;
-    }
-    if (this.state.pageData.query) {
-      return this.props.actions.searchUsers(this.state.pageData.query,
-        this.state.pageData.offset - 9);
-    }
-    return this.props.actions.getUsers(this.state.pageData.offset - 9);
-  }
-
-  /**
    * Place retrieved users on the component
    * @memberOf ManageUsersPage
    */
@@ -108,6 +75,7 @@ export class ManageUsersPage extends React.Component {
    * @memberOf ManageUsersPage
    */
   render() {
+    const { users, usersLoaded, pageData } = this.state;
     return (
       <div className="users-page">
         <div className="row">
@@ -140,18 +108,31 @@ export class ManageUsersPage extends React.Component {
                     displayRowCheckbox={false}
                     stripedRows={true}
                   >
-                  {this.state.users
-                  && this.state.users.map(this.placeUsers)}
+                  {users
+                  && users.map(this.placeUsers)}
                   </TableBody>
                 </Table>
               </Card>
             </div>
-            {this.state.usersLoaded
+            {usersLoaded
             && <Pagination
-              documents={this.state.users}
-              nextPage={this.nextPage}
-              prevPage={this.prevPage}
-              pageData={this.state.pageData} />}
+              documents={users}
+              nextPage={() => nextPage(
+                users,
+                this.props.actions.getUsers,
+                0,
+                pageData.offset,
+                pageData.query,
+                this.props.actions.searchUsers
+              )}
+              prevPage={() => prevPage(
+                this.props.actions.getUsers,
+                0,
+                pageData.offset,
+                pageData.query,
+                this.props.actions.searchUsers
+              )}
+              pageData={pageData} />}
           </div>
         </div>
       </div>

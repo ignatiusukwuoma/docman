@@ -19,7 +19,7 @@ function Pagination({ documents, nextPage, prevPage, pageData }) {
             Page {pageData.pageNumber} of {pageData.totalPages}
           </li>
           <li className={documents.length < 9 ? 'disabled' : 'waves-effect'}>
-            <a onClick={nextPage} href="#!">
+            <a onClick={nextPage} href="#!" className="next">
               <i className="material-icons">chevron_right</i>
             </a>
           </li>

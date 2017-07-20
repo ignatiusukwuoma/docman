@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { getDocuments } from './actions/documentActions';
+import '../node_modules/sweetalert/dist/sweetalert.css';
 import { LOGIN_SUCCESS } from './actions/actionTypes';
 import configureStore from './store/configureStore';
 import { login } from './actions/userActions';
