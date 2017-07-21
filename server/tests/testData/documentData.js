@@ -15,7 +15,7 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  publicDocument2: {
+  titleExist: {
     title: 'Public doc title',
     content: 'Different Public document content',
     access: 'public',

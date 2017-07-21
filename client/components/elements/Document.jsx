@@ -18,8 +18,13 @@ function Document({ document, pathname, access, paramsId }) {
           </span>
           <Divider />
           <p dangerouslySetInnerHTML=
-            {{ __html: document.content.substr(0, 120) }}>
+            {{ __html: `${document.content.substr(0, 100)}...` }}>
           </p>
+          <span className="document-date">
+            <p className="small">
+              {new Date(document.createdAt).toLocaleDateString()}
+            </p>
+          </span>
         </div>
         <div className="card-action">
           <a className="access" href="#!">

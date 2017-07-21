@@ -9,7 +9,7 @@ import documentData from '../testData/documentData';
 const invalidToken = 'aaaaaaaa.bbbbbbbbbbbbbb.ccccccccccccccc';
 const { admin, author, editor, advertizer1, advertizer2 } = userData;
 const { role5 } = roleData;
-const { publicDocument, publicDocument2, privateDocument } = documentData;
+const { publicDocument, titleExist, privateDocument } = documentData;
 let authorToken;
 let adminToken;
 let advertizer1Token;
@@ -83,7 +83,7 @@ describe('Documents', () => {
         });
     });
 
-    it('should send 404 for invalid id', (done) => {
+    it('should return 404 for invalid id', (done) => {
       chai.request(server)
         .get('/users/100/documents')
         .set({ 'x-access-token': adminToken })
@@ -112,7 +112,7 @@ describe('Documents', () => {
 
   // POST /documents
   describe('/POST document', () => {
-    it('can create a new document', (done) => {
+    it('can create a new document with complete document details', (done) => {
       chai.request(server)
       .post('/documents')
       .send(publicDocument)
@@ -132,10 +132,10 @@ describe('Documents', () => {
       });
     });
 
-    it('should fail if document title already exists', (done) => {
+    it('should fail if document title already exist', (done) => {
       chai.request(server)
         .post('/documents')
-        .send(publicDocument2)
+        .send(titleExist)
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -144,7 +144,7 @@ describe('Documents', () => {
         });
     });
 
-    it('can create a new document with correct user details', (done) => {
+    it("creates new document which contains the owner's ID", (done) => {
       chai.request(server)
         .post('/documents')
         .send(privateDocument)
@@ -191,7 +191,7 @@ describe('Documents', () => {
         });
     });
 
-    it('should not return role documents with higher User roleId', (done) => {
+    it('should not return role documents with a different role', (done) => {
       chai.request(server)
         .get('/documents')
         .set({ 'x-access-token': advertizer1Token })
@@ -269,7 +269,7 @@ describe('Documents', () => {
         });
     });
 
-    it('should return a particular document given an id', (done) => {
+    it('should return a particular document given the ID', (done) => {
       chai.request(server)
         .get('/documents/1')
         .set({ 'x-access-token': adminToken })
@@ -323,7 +323,7 @@ describe('Documents', () => {
       });
     });
 
-    it('should send 404 for an invalid document id', (done) => {
+    it('should return 404 for an invalid document ID', (done) => {
       chai.request(server)
       .get('/documents/100')
       .set({ 'x-access-token': adminToken })
@@ -367,6 +367,19 @@ describe('Documents', () => {
         });
     });
 
+    it('should not allow a user to use an existing document title', (done) => {
+      chai.request(server)
+        .put(`/documents/${publicDocument.id}`)
+        .set({ 'x-access-token': adminToken })
+        .send({ title: 'Private document title' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.eql('Title already exist');
+          done();
+        });
+    });
+
     it("should deny access if a user tries to update another user's document",
     (done) => {
       chai.request(server)
@@ -380,20 +393,6 @@ describe('Documents', () => {
           .equal('You are not permitted to edit this document');
         done();
       });
-    });
-
-    it('should not allow a user to use an existing document title',
-    (done) => {
-      chai.request(server)
-        .put(`/documents/${publicDocument.id}`)
-        .set({ 'x-access-token': adminToken })
-        .send({ title: 'Private document title' })
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body).to.be.an('object');
-          expect(res.body.message).to.eql('Title already exist');
-          done();
-        });
     });
 
     it('should return an error message if document does not exist',
@@ -453,7 +452,7 @@ describe('Documents', () => {
       });
     });
 
-    it('should send 404 given an invalid document id', (done) => {
+    it('should return 404 given an invalid document id', (done) => {
       chai.request(server)
       .delete('/documents/100')
       .set({ 'x-access-token': adminToken })

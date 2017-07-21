@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import server from '../../app';
 import userData from '../testData/userData';
 
-const { superadmin, admin, admin1, author, editor, author1, author2, author3,
+const { superadmin, admin, admin1, author, editor, usernameExist, emailExist, author3,
   noEmail, invalidEmail, noUsername } = userData;
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -29,7 +29,7 @@ describe('Users', () => {
         });
     });
 
-    it('should fail when password is incorrect', (done) => {
+    it('should fail if password is incorrect', (done) => {
       chai.request(server)
         .post('/users/login')
         .send({ username: 'spiderman', password: 'passwor' })
@@ -53,7 +53,7 @@ describe('Users', () => {
         });
     });
 
-    it('should fail when username is invalid', (done) => {
+    it('should fail if username is invalid', (done) => {
       chai.request(server)
         .post('/users/login')
         .send({ username: 'administrator', password: 'password' })
@@ -108,7 +108,7 @@ describe('Users', () => {
     it('should fail if username already exists', (done) => {
       chai.request(server)
       .post('/users')
-      .send(author1)
+      .send(usernameExist)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.message).to.equal('Username already exist');
@@ -130,7 +130,7 @@ describe('Users', () => {
     it('should fail if email already exists', (done) => {
       chai.request(server)
       .post('/users')
-      .send(author2)
+      .send(emailExist)
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
@@ -197,7 +197,7 @@ describe('Users', () => {
         });
     });
 
-    it('should deny access if user is not admin', (done) => {
+    it('should deny access if user is not an admin', (done) => {
       chai.request(server)
         .get('/users')
         .set({ 'x-access-token': authorToken })
@@ -281,7 +281,7 @@ describe('Users', () => {
         });
     });
 
-    it('should return 404 for invalid userId', (done) => {
+    it('should return 404 for invalid user', (done) => {
       chai.request(server)
         .get('/users/100')
         .set({ 'x-access-token': adminToken })
@@ -347,7 +347,7 @@ describe('Users', () => {
         });
     });
 
-    it('should allow Superadmin to upgrade a user', (done) => {
+    it("should allow Superadmin to upgrade a user's role", (done) => {
       chai.request(server)
         .put('/users/4')
         .set({ 'x-access-token': superadminToken })
@@ -366,7 +366,7 @@ describe('Users', () => {
         });
     });
 
-    it('should fail if user is not found', (done) => {
+    it('should return 404 for invalid user', (done) => {
       chai.request(server)
         .put('/users/250')
         .set({ 'x-access-token': superadminToken })
@@ -406,7 +406,7 @@ describe('Users', () => {
         });
     });
 
-    it('should not allow user to update another user role', (done) => {
+    it("should not allow user to update another user's role", (done) => {
       chai.request(server)
         .put('/users/4')
         .set({ 'x-access-token': authorToken })
@@ -437,7 +437,7 @@ describe('Users', () => {
 
   // DELETE /users/:id
   describe('DELETE /users/:id', () => {
-    it('should not allow a user to delete another user profile', (done) => {
+    it("should not allow a user to delete another user's profile", (done) => {
       chai.request(server)
       .delete('/users/4')
       .set({ 'x-access-token': authorToken })

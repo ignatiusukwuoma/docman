@@ -32,6 +32,14 @@ export class EditDocumentPage extends React.Component {
   }
 
   /**
+   * Calls actions to get the document by id
+   * @memberOf ViewDocumentPage
+   */
+  componentWillMount() {
+    this.props.actions.getDocument(this.props.params.id);
+  }
+
+  /**
    * Initialises the select box
    * @memberOf EditDocumentPage
    */
@@ -47,7 +55,9 @@ export class EditDocumentPage extends React.Component {
    */
   componentWillReceiveProps(nextProps) {
     if (this.state.document.id !== nextProps.document.id) {
-      this.setState({ document: Object.assign({}, nextProps.document) });
+      this.setState({
+        document: Object.assign({}, nextProps.document)
+      });
     }
   }
 
@@ -110,6 +120,7 @@ export class EditDocumentPage extends React.Component {
    * @memberOf EditDocumentPage
    */
   render() {
+    console.log(this.state.document, 'Current Document State');
     const { title, access, content } = this.state.document;
     const { errors, saving } = this.state;
     return (
@@ -186,11 +197,18 @@ EditDocumentPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  // debugger;
   const documentId = ownProps.params.id;
   const documentToEdit = {};
   let currentDocument;
   if (documentId && state.documents.length > 0) {
     currentDocument = getDocument(state.documents, documentId);
+    documentToEdit.id = currentDocument.id;
+    documentToEdit.title = currentDocument.title;
+    documentToEdit.access = currentDocument.access;
+    documentToEdit.content = currentDocument.content;
+  } else {
+    currentDocument = state.document;
     documentToEdit.id = currentDocument.id;
     documentToEdit.title = currentDocument.title;
     documentToEdit.access = currentDocument.access;

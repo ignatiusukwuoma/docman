@@ -40,7 +40,7 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  author1: {
+  usernameExist: {
     id: 6,
     name: faker.name.findName(),
     username: 'wonderwoman',
@@ -50,7 +50,7 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  author2: {
+  emailExist: {
     id: 7,
     name: faker.name.findName(),
     username: faker.internet.userName(),

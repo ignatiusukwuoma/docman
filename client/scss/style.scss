@@ -80,6 +80,14 @@ body {
       p {
         margin-top: 10px;
       }
+      .document-date {
+        position: absolute;
+        top: 65%;
+        left: 75%;
+        p {
+          color: $primary-color;
+        }
+      }
     }
   }
 }
