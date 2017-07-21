@@ -152,8 +152,10 @@ export class ManageRolesPage extends React.Component {
         });
       }
     })
-    .catch((err) =>
-      swal('Cancelled', 'The role is not deleted :)'));
+    .catch((err) => {
+      console.log('Error', err);
+      swal('Cancelled', 'The role is not deleted :)');
+    });
   }
 
   /**
