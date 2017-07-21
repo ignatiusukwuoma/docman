@@ -135,27 +135,27 @@ export class ManageRolesPage extends React.Component {
    * @memberOf ManageRolesPage
    */
   deleteRole(roleId) {
-    swal({
-      title: 'Are you sure?',
-      text: 'This role will be permanently deleted!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel this!'
-    })
-    .then((isConfirm) => {
-      if (isConfirm) {
-        this.props.actions.deleteRole(roleId)
-        .then(() => {
-          swal('Deleted!', 'The role has been deleted.', 'success');
-        });
-      }
-    })
-    .catch((err) => {
-      console.log('Error', err);
-      swal('Cancelled', 'The role is not deleted :)');
-    });
+    // swal({
+    //   title: 'Are you sure?',
+    //   text: 'This role will be permanently deleted!',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#DD6B55',
+    //   confirmButtonText: 'Yes, delete it!',
+    //   cancelButtonText: 'No, cancel this!'
+    // })
+    // .then((isConfirm) => {
+    //   if (isConfirm) {
+    this.props.actions.deleteRole(roleId);
+    //     .then(() => {
+    //       swal('Deleted!', 'The role has been deleted.', 'success');
+    //     });
+    //   }
+    // })
+    // .catch((err) => {
+    //   console.log('Error', err);
+    //   swal('Cancelled', 'The role is not deleted :)');
+    // });
   }
 
   /**
