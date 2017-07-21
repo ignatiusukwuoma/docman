@@ -120,7 +120,6 @@ export class EditDocumentPage extends React.Component {
    * @memberOf EditDocumentPage
    */
   render() {
-    console.log(this.state.document, 'Current Document State');
     const { title, access, content } = this.state.document;
     const { errors, saving } = this.state;
     return (
@@ -141,7 +140,7 @@ export class EditDocumentPage extends React.Component {
                     errorText={errors.title}
                     floatText="Title"
                     handleChange={this.handleChange}
-                    value={title}
+                    value={title || ''}
                   />
                 </div>
                 <div className="select-input">
@@ -197,7 +196,6 @@ EditDocumentPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  // debugger;
   const documentId = ownProps.params.id;
   const documentToEdit = {};
   let currentDocument;

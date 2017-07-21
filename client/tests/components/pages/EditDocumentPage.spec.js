@@ -5,15 +5,17 @@ import { shallow, mount } from 'enzyme';
 import { EditDocumentPage } from
 '../../../components/pages/EditDocumentPage.jsx';
 
+const getDocument = sinon.spy(() => Promise.resolve());
 const updateDocument = sinon.spy(() => Promise.resolve());
 const spyHandleChange = sinon.spy(EditDocumentPage.prototype, 'handleChange');
 const spyEditorChange = sinon
   .spy(EditDocumentPage.prototype, 'handleEditorChange');
 
 const props = {
+  params: { id: 2 },
   document: { id: 2, title: 'TIA', content: 'Andela', access: 'public' },
   errors: {},
-  actions: { updateDocument }
+  actions: { updateDocument, getDocument }
 };
 
 describe('EditDocumentPage', () => {
