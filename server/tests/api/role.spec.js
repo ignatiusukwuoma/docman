@@ -5,7 +5,7 @@ import userData from '../testData/userData';
 import roleData from '../testData/roleData';
 
 const { superadmin, admin, author } = userData;
-const { role5, role6, role7, role8 } = roleData;
+const { role5, role6, roleExist, role8 } = roleData;
 
 let authorToken;
 let adminToken;
@@ -108,7 +108,7 @@ describe('Roles', () => {
       chai.request(server)
         .post('/roles')
         .set({ 'x-access-token': superadminToken })
-        .send(role7)
+        .send(roleExist)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.message).to.eql('Role already exist');
@@ -160,7 +160,7 @@ describe('Roles', () => {
         });
     });
 
-    it('should deny access if user is not superadmin', (done) => {
+    it('should deny access if a non-admin attempts to update role', (done) => {
       chai.request(server)
         .put('/roles')
         .set({ 'x-access-token': authorToken })
@@ -173,7 +173,7 @@ describe('Roles', () => {
         });
     });
 
-    it('should return "Role not found" for invalid id', (done) => {
+    it('should return 404 for invalid id', (done) => {
       chai.request(server)
         .put('/roles/250')
         .set({ 'x-access-token': superadminToken })
@@ -238,7 +238,7 @@ describe('Roles', () => {
       });
     });
 
-    it('should return "Role not found" for invalid id', (done) => {
+    it('should return 404 for invalid id', (done) => {
       chai.request(server)
         .delete('/roles/250')
         .set({ 'x-access-token': superadminToken })

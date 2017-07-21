@@ -21,8 +21,7 @@ export class Nav extends React.Component {
    * @memberOf Nav
    */
   logout() {
-    this.props.logout()
-      .then(() => browserHistory.push('/'));
+    this.props.logout();
   }
 
   /**
@@ -34,7 +33,7 @@ export class Nav extends React.Component {
     if (this.props.access.loggedIn) {
       return (
         <div id="nav-mobile" className="right">
-          <Link to="" onClick={this.logout}>Logout</Link>
+          <a href="/" onClick={this.logout}>Logout</a>
         </div>
       );
     }

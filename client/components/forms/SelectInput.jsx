@@ -18,6 +18,7 @@ function SelectInput({ access, pathname, id, name,
         <option value={1}>SuperAdmin</option>
         <option value={2}>Admin</option>
         <option value={3}>Author</option>
+        <option value={4}>Editor</option>
       </select>
       {error && <div className="red-text small">{error}</div>}
     </div>

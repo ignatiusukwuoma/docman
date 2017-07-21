@@ -44,9 +44,10 @@ describe('SelectInput', () => {
     expect(wrapper.find('div').length).toBe(1);
   });
 
-  it('display the select role field when user is superadmin', () => {
+  it('display the change user role when user is superadmin', () => {
     const wrapper = setup('select-box', null, '/user/5/edit');
-    expect(wrapper.find('option').length).toBe(3);
+    expect(wrapper.find('option').first().text()).toBe('SuperAdmin');
+    expect(wrapper.find('option').last().text()).toBe('Editor');
   });
 
   it('does not display select role field for other users', () => {

@@ -24,6 +24,10 @@ body {
   margin-top: 20px;
 }
 
+.access {
+  cursor: text;
+}
+
 .landing-page {
   min-height: 100vh;
   .landing-content {
@@ -75,6 +79,14 @@ body {
       }
       p {
         margin-top: 10px;
+      }
+      .document-date {
+        position: absolute;
+        top: 65%;
+        left: 75%;
+        p {
+          color: $primary-color;
+        }
       }
     }
   }

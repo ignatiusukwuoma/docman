@@ -29,10 +29,10 @@ export default
 
     <Route component={IsLoggedIn}>
       <Route path="/home" component={HomePage} />
-      <Route path="/user/:id" components={ProfilePage} />
+      <Route path="/user/:id" component={ProfilePage} />
       <Route path="/document/new" component={NewDocumentPage} />
       <Route path="/document/:id" component={ViewDocumentPage} />
-      <Route path="/user/:id/edit" components={EditProfilePage} />
+      <Route path="/user/:id/edit" component={EditProfilePage} />
       <Route path="/document/:id/edit" component={EditDocumentPage} />
       <Route path="/user/:id/documents" component={UserDocumentsPage} />
       <Route path="*" component={HomePage} />

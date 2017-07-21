@@ -9,7 +9,7 @@ export default {
     createdAt: new Date(),
     updatedAt: new Date()
   },
-  role7: {
+  roleExist: {
     title: 'tester',
     createdAt: new Date(),
     updatedAt: new Date()
