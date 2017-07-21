@@ -31,22 +31,22 @@ export class ViewDocumentPage extends React.Component {
    * @memberOf ViewDocumentPage
    */
   deleteDocument = () => {
-    swal({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this document!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel this!'
-    })
-    .then((isConfirm) => {
-      if (isConfirm) {
-        this.delete();
-      }
-    })
-    .catch((er) =>
-      swal('Cancelled', 'The document is safe :)', 'error'));
+    // swal({
+    //   title: 'Are you sure?',
+    //   text: 'You will not be able to recover this document!',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#DD6B55',
+    //   confirmButtonText: 'Yes, delete it!',
+    //   cancelButtonText: 'No, cancel this!'
+    // })
+    // .then((isConfirm) => {
+    //   if (isConfirm) {
+    this.delete();
+    //   }
+    // })
+    // .catch((er) =>
+    //   swal('Cancelled', 'The document is safe :)', 'error'));
   }
 
   /**
@@ -63,7 +63,7 @@ export class ViewDocumentPage extends React.Component {
    * @memberOf ViewDocumentPage
    */
   redirect() {
-    swal('Deleted!', 'This document has been deleted.', 'success');
+    // swal('Deleted!', 'This document has been deleted.', 'success');
     this.context.router.push('/home');
   }
 
