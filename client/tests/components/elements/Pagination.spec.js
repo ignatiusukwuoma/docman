@@ -3,7 +3,7 @@ import expect from 'expect';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import enzymify from 'expect-enzyme';
-import Pagination from '../../../components/elements/Pagination.jsx';
+import Pagination from '../../../components/elements/Pagination';
 
 expect.extend(enzymify());
 const nextPage = sinon.spy(() => Promise.resolve());

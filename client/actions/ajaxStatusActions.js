@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 /**
- * Action creator that start is called when ajax call begins
+ * Action creator that's called when ajax call begins
  * @returns {object} action
  */
 export function beginAjaxCall() {

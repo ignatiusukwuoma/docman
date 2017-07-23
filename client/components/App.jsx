@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import loader from '../img/loader.gif';
-import Nav from '../components/layouts/Nav.jsx';
-import Footer from '../components/layouts/Footer.jsx';
+import Nav from '../components/layouts/Nav';
+import Footer from '../components/layouts/Footer';
 
 /**
  * Top level component

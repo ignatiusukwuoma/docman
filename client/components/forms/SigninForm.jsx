@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import TextInput from '../forms/TextInput.jsx';
+import TextInput from '../forms/TextInput';
 
 /**
  * Renders the sign in form

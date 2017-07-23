@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 import enzymify from 'expect-enzyme';
-import DocumentSidebar from '../../../components/layouts/DocumentSidebar.jsx';
+import DocumentSidebar from '../../../components/layouts/DocumentSidebar';
 
 expect.extend(enzymify());
 

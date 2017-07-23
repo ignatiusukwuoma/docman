@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
-import { Nav } from '../../../components/layouts/Nav.jsx';
+import { Nav } from '../../../components/layouts/Nav';
 
 const logout = sinon.spy(() => Promise.resolve());
 

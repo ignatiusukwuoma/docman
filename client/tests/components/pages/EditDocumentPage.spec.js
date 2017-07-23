@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { EditDocumentPage } from
-'../../../components/pages/EditDocumentPage.jsx';
+'../../../components/pages/EditDocumentPage';
 
 const getDocument = sinon.spy(() => Promise.resolve());
 const updateDocument = sinon.spy(() => Promise.resolve());

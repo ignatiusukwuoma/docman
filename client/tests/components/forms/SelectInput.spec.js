@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
-import SelectInput from '../../../components/forms/SelectInput.jsx';
+import SelectInput from '../../../components/forms/SelectInput';
 
 function setup(id, error = '', pathname) {
   const props = {

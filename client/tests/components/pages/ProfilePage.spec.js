@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { nextPage, prevPage } from '../../../utils/paginate';
 import { ProfilePage } from
-'../../../components/pages/ProfilePage.jsx';
+'../../../components/pages/ProfilePage';
 
 const getUser = sinon.spy(() => Promise.resolve());
 const getUserDocuments = sinon.spy(() => Promise.resolve());

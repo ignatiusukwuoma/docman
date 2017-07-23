@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { NewDocumentPage } from
-'../../../components/pages/NewDocumentPage.jsx';
+'../../../components/pages/NewDocumentPage';
 
 const createDocument = sinon.spy(() => Promise.resolve());
 const spyHandleChange = sinon.spy(NewDocumentPage.prototype, 'handleChange');

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import SignupForm from '../forms/SignupForm.jsx';
-import SigninForm from '../forms/SigninForm.jsx';
+import SignupForm from '../forms/SignupForm';
+import SigninForm from '../forms/SigninForm';
 
 function LoginTabs({ onSigninSubmit, signinDetails, signinErrors,
   handleSigninChange, pathname, onSubmit, handleChange, signupErrors,

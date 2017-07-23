@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 import enzymify from 'expect-enzyme';
-import Footer from '../../../components/layouts/Footer.jsx';
+import Footer from '../../../components/layouts/Footer';
 
 expect.extend(enzymify());
 

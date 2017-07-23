@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import { Card } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import { Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn } from 'material-ui/Table';
-import Nav from '../layouts/Nav.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
+import Nav from '../layouts/Nav';
+import TextInput from '../forms/TextInput';
+import Sidebar from '../layouts/Sidebar';
 import * as roleActions from '../../actions/roleActions';
 import insertRole from '../../utils/insertRole';
-import TextInput from '../forms/TextInput.jsx';
 import handleError from '../../utils/errorHandler';
 
 /**
@@ -35,19 +35,14 @@ export class ManageRolesPage extends React.Component {
     this.onEditSubmit = this.onEditSubmit.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  /**
-   * Calls action before component mounts
-   * @memberOf ManageRolesPage
-   */
-  componentWillMount() {
-    this.props.actions.getRoles();
-  }
 
   /**
+   * Calls action after component mounts
    * Initializes modal
    * @memberOf ManageRolesPage
    */
   componentDidMount = () => {
+    this.props.actions.getRoles();
     $('.modal').modal();
   }
 
@@ -135,27 +130,26 @@ export class ManageRolesPage extends React.Component {
    * @memberOf ManageRolesPage
    */
   deleteRole(roleId) {
-    // swal({
-    //   title: 'Are you sure?',
-    //   text: 'This role will be permanently deleted!',
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#DD6B55',
-    //   confirmButtonText: 'Yes, delete it!',
-    //   cancelButtonText: 'No, cancel this!'
-    // })
-    // .then((isConfirm) => {
-    //   if (isConfirm) {
-    this.props.actions.deleteRole(roleId);
-    //     .then(() => {
-    //       swal('Deleted!', 'The role has been deleted.', 'success');
-    //     });
-    //   }
-    // })
-    // .catch((err) => {
-    //   console.log('Error', err);
-    //   swal('Cancelled', 'The role is not deleted :)');
-    // });
+    swal({
+      title: 'Are you sure?',
+      text: 'This role will be permanently deleted!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel this!'
+    })
+    .then((isConfirm) => {
+      if (isConfirm) {
+        this.props.actions.deleteRole(roleId)
+        .then(() => {
+          swal('Deleted!', 'The role has been deleted.', 'success');
+        });
+      }
+    })
+    .catch((err) => {
+      swal('Cancelled', 'The role is not deleted :)');
+    });
   }
 
   /**

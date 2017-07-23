@@ -7,10 +7,10 @@ import { Card } from 'material-ui/Card';
 import {
   Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn } from 'material-ui/Table';
-import Nav from '../layouts/Nav.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
-import Searchbar from '../forms/Searchbar.jsx';
-import Pagination from '../elements/Pagination.jsx';
+import Nav from '../layouts/Nav';
+import Sidebar from '../layouts/Sidebar';
+import Searchbar from '../forms/Searchbar';
+import Pagination from '../elements/Pagination';
 import { nextPage, prevPage } from '../../utils/paginate';
 import * as userActions from '../../actions/userActions';
 import * as searchActions from '../../actions/searchActions';
@@ -32,10 +32,10 @@ export class ManageUsersPage extends React.Component {
   }
 
   /**
-   * Call to get users before component mounts
+   * Call to get users after component mounts
    * @memberOf ManageUsersPage
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.actions.getUsers();
   }
 

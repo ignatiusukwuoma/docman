@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { EditProfilePage } from
-'../../../components/pages/EditProfilePage.jsx';
+'../../../components/pages/EditProfilePage';
 
 const updateUser = sinon.spy(() => Promise.resolve());
 const spyHandleChange = sinon.spy(EditProfilePage.prototype, 'handleChange');

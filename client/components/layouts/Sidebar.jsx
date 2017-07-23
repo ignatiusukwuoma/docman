@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
-import AdminSidebar from './AdminSidebar.jsx';
-import ProfileSidebar from './ProfileSidebar.jsx';
-import DocumentSidebar from './DocumentSidebar.jsx';
+import AdminSidebar from './AdminSidebar';
+import ProfileSidebar from './ProfileSidebar';
+import DocumentSidebar from './DocumentSidebar';
 import handleError from '../../utils/errorHandler';
 import { deleteUser, logout } from '../../actions/userActions';
 
@@ -39,22 +39,22 @@ export class Sidebar extends React.Component {
    * @memberOf Sidebar
    */
   deleteUser() {
-    // swal({
-    //   title: 'Are you sure?',
-    //   text: 'This user will be permanently deleted!',
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#DD6B55',
-    //   confirmButtonText: 'Yes, delete it!',
-    //   cancelButtonText: 'No, cancel this!'
-    // })
-    // .then((isConfirm) => {
-    //   if (isConfirm) {
-    this.delete();
-    //   }
-    // })
-    // .catch((err) =>
-    //   swal('Cancelled', 'The user is safe :)'));
+    swal({
+      title: 'Are you sure?',
+      text: 'This user will be permanently deleted!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel this!'
+    })
+    .then((isConfirm) => {
+      if (isConfirm) {
+        this.delete();
+      }
+    })
+    .catch((err) =>
+      swal('Cancelled', 'The user is safe :)'));
   }
 
   delete() {
@@ -63,7 +63,7 @@ export class Sidebar extends React.Component {
         this.props.logout();
         this.context.router.push('/');
         location.reload();
-        // this.redirect();
+        this.redirect();
       });
   }
 
@@ -72,7 +72,7 @@ export class Sidebar extends React.Component {
    * @memberOf Sidebar
    */
   redirect = () => {
-    // swal('Deleted!', 'Your Account has been deleted.', 'success');
+    swal('Deleted!', 'Your Account has been deleted.', 'success');
   }
 
   /**

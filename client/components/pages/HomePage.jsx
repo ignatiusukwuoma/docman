@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Nav from '../layouts/Nav.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
-import Document from '../elements/Document.jsx';
-import Searchbar from '../forms/Searchbar.jsx';
-import Pagination from '../elements/Pagination.jsx';
+import Nav from '../layouts/Nav';
+import Sidebar from '../layouts/Sidebar';
+import Document from '../elements/Document';
+import Searchbar from '../forms/Searchbar';
+import Pagination from '../elements/Pagination';
 import * as userActions from '../../actions/userActions';
 import { nextPage, prevPage } from '../../utils/paginate';
 import * as searchActions from '../../actions/searchActions';
@@ -27,10 +27,10 @@ export class HomePage extends React.Component {
   }
 
   /**
-   * Calls function before component mounts
+   * Calls function after component mounts
    * @memberOf HomePage
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.actions.getDocuments();
   }
 

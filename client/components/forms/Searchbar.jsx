@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import TextInput from '../forms/TextInput.jsx';
+import TextInput from '../forms/TextInput';
 import { searchUsers, searchDocuments } from '../../actions/searchActions';
 
 /**

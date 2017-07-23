@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 import enzymify from 'expect-enzyme';
-import AdminSidebar from '../../../components/layouts/AdminSidebar.jsx';
+import AdminSidebar from '../../../components/layouts/AdminSidebar';
 
 expect.extend(enzymify());
 
