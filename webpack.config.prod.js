@@ -28,6 +28,7 @@ export default {
     new CleanWebpackPlugin(['lib/client']),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
+    new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
