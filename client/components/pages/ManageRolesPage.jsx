@@ -34,6 +34,7 @@ export class ManageRolesPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onEditSubmit = this.onEditSubmit.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.deleteRole = this.deleteRole.bind(this);
   }
 
   /**
@@ -166,7 +167,7 @@ export class ManageRolesPage extends React.Component {
             <i className="material-icons">edit</i>
           </a>
           {role.id > 3
-          && <a href="#!" onClick={() => { this.deleteRole(role.id); }}>
+          && <a className="delete" onClick={() => this.deleteRole(role.id)}>
               <i className="material-icons">delete_forever</i>
             </a>}
         </TableRowColumn>

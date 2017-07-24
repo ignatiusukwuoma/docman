@@ -92,7 +92,7 @@ export class ViewDocumentPage extends React.Component {
               >
                 <i className="material-icons">mode_edit</i>
               </Link>
-              <a href="#!" onClick={this.deleteDocument}
+              <a className="delete" onClick={this.deleteDocument}
                 className="btn-floating waves-effect waves-light red btn-delete"
                 title="Delete document"
               >

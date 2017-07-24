@@ -28,6 +28,10 @@ body {
   cursor: text;
 }
 
+.delete {
+  cursor: pointer;
+}
+
 .landing-page {
   min-height: 100vh;
   .landing-content {
