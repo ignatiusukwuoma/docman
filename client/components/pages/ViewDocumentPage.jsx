@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
 import handleError from '../../utils/errorHandler';
-import Sidebar from '../layouts/Sidebar.jsx';
+import Sidebar from '../layouts/Sidebar';
 import { getDocument, deleteDocument } from '../../actions/documentActions';
 
 /**
@@ -22,7 +22,7 @@ export class ViewDocumentPage extends React.Component {
    * Calls actions to get the document by id
    * @memberOf ViewDocumentPage
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.getDocument(this.props.params.id);
   }
 
@@ -92,7 +92,7 @@ export class ViewDocumentPage extends React.Component {
               >
                 <i className="material-icons">mode_edit</i>
               </Link>
-              <a href="#!" onClick={this.deleteDocument}
+              <a className="delete" onClick={this.deleteDocument}
                 className="btn-floating waves-effect waves-light red btn-delete"
                 title="Delete document"
               >

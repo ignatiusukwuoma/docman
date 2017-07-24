@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import SignupForm from '../forms/SignupForm.jsx';
+import SignupForm from '../forms/SignupForm';
 import handleError from '../../utils/errorHandler';
 import * as validate from '../../utils/validate';
 import { updateUser } from '../../actions/userActions';
-import Sidebar from '../layouts/Sidebar.jsx';
+import Sidebar from '../layouts/Sidebar';
 
 /**
  * Controls the edit profile page

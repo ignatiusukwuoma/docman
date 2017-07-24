@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { LandingPage } from
-'../../../components/pages/LandingPage.jsx';
+'../../../components/pages/LandingPage';
 
 const signup = sinon.spy(() => Promise.resolve());
 const signin = sinon.spy(() => Promise.resolve());

@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { ManageRolesPage } from
-'../../../components/pages/ManageRolesPage.jsx';
+'../../../components/pages/ManageRolesPage';
 
 const getRoles = sinon.spy(() => Promise.resolve());
 const createRole = sinon.spy(() => Promise.resolve());

@@ -4,11 +4,10 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { nextPage, prevPage } from '../../../utils/paginate';
 import { HomePage } from
-'../../../components/pages/HomePage.jsx';
+'../../../components/pages/HomePage';
 
 const getDocuments = sinon.spy(() => Promise.resolve());
 const searchDocuments = sinon.spy(() => Promise.resolve());
-const componentMount = sinon.spy(HomePage.prototype, 'componentWillMount');
 const nextPageSpy = sinon.spy(nextPage);
 const prevPageSpy = sinon.spy(prevPage);
 

@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Nav from '../layouts/Nav.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
-import Searchbar from '../forms/Searchbar.jsx';
-import Document from '../elements/Document.jsx';
-import Pagination from '../elements/Pagination.jsx';
+import Nav from '../layouts/Nav';
+import Sidebar from '../layouts/Sidebar';
+import Searchbar from '../forms/Searchbar';
+import Document from '../elements/Document';
+import Pagination from '../elements/Pagination';
 import * as userActions from '../../actions/userActions';
 import { nextPage, prevPage } from '../../utils/paginate';
 import * as documentActions from '../../actions/documentActions';
@@ -32,7 +32,7 @@ export class ProfilePage extends React.Component {
    * Calls actions to get user information and documents
    * @memberOf ProfilePage
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.actions.getUser(this.props.params.id);
     this.props.actions.getUserDocuments(this.props.params.id);
   }

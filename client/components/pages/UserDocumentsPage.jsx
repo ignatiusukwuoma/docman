@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Nav from '../layouts/Nav.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
-import Searchbar from '../forms/Searchbar.jsx';
-import Document from '../elements/Document.jsx';
-import Pagination from '../elements/Pagination.jsx';
+import Nav from '../layouts/Nav';
+import Sidebar from '../layouts/Sidebar';
+import Searchbar from '../forms/Searchbar';
+import Document from '../elements/Document';
+import Pagination from '../elements/Pagination';
 import { nextPage, prevPage } from '../../utils/paginate';
 import { getUserDocuments } from '../../actions/documentActions';
 
@@ -25,10 +25,10 @@ export class UserDocumentsPage extends React.Component {
   }
 
   /**
-   * Calls actions for the user's documents before component mounts
+   * Calls actions for the user's documents after component mounts
    * @memberOf UserDocumentsPage
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUserDocuments(this.props.params.id);
   }
 

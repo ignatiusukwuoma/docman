@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import LoginTabs from '../elements/LoginTabs.jsx';
+import LoginTabs from '../elements/LoginTabs';
 import handleError from '../../utils/errorHandler';
 import * as validate from '../../utils/validate';
 import { signup, signin } from '../../actions/userActions';

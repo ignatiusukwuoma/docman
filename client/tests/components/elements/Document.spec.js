@@ -1,7 +1,7 @@
 import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
-import Document from '../../../components/elements/Document.jsx';
+import Document from '../../../components/elements/Document';
 
 function setup() {
   const props = {

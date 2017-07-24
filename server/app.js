@@ -31,6 +31,11 @@ app.use(webpackHotMiddleware(compiler));
 // Require our routes into the application
 routes(app);
 
+// Setup route for api documentation
+app.get('/api', (req, res) => {
+  res.sendFile(path.join(__dirname, '../lib/client/api/index.html'));
+});
+
 // Setup default route that sends back a welcome message
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));

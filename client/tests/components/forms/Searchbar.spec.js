@@ -2,7 +2,7 @@ import expect from 'expect';
 import sinon from 'sinon';
 import React from 'react';
 import { mount } from 'enzyme';
-import { Searchbar } from '../../../components/forms/Searchbar.jsx';
+import { Searchbar } from '../../../components/forms/Searchbar';
 
 const spyHandleChange = sinon.spy(Searchbar.prototype, 'handleChange');
 const spySearch = sinon.spy(Searchbar.prototype, 'submitSearch');

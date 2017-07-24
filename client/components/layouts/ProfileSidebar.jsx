@@ -42,7 +42,7 @@ function ProfileSidebar({ user, access, deleteUser }) {
           />
         </Link>
         {access.user.id === user.id
-        && <a href="#!" onClick={deleteUser}>
+        && <a className="delete" onClick={deleteUser}>
           <RaisedButton
             title="This will delete your account"
             label="DELETE"

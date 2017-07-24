@@ -5,13 +5,14 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import TinyMCE from 'react-tinymce';
 import FlatButton from 'material-ui/FlatButton';
-import * as validate from '../../utils/validate';
-import SelectInput from '../forms/SelectInput.jsx';
-import TextInput from '../forms/TextInput.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
 import * as documentActions from '../../actions/documentActions';
 import handleError from '../../utils/errorHandler';
 import getDocument from '../../utils/getDocument';
+import * as validate from '../../utils/validate';
+import SelectInput from '../forms/SelectInput';
+import TextInput from '../forms/TextInput';
+import Sidebar from '../layouts/Sidebar';
+
 
 /**
  * Control the edit document page
@@ -32,18 +33,11 @@ export class EditDocumentPage extends React.Component {
   }
 
   /**
-   * Calls actions to get the document by id
-   * @memberOf ViewDocumentPage
-   */
-  componentWillMount() {
-    this.props.actions.getDocument(this.props.params.id);
-  }
-
-  /**
    * Initialises the select box
    * @memberOf EditDocumentPage
    */
   componentDidMount() {
+    this.props.actions.getDocument(this.props.params.id);
     $('select').material_select();
     $('#select-box').on('change', this.handleChange);
   }

@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
+import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import { Card } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import { Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn } from 'material-ui/Table';
-import Nav from '../layouts/Nav.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
+import Nav from '../layouts/Nav';
+import TextInput from '../forms/TextInput';
+import Sidebar from '../layouts/Sidebar';
 import * as roleActions from '../../actions/roleActions';
 import insertRole from '../../utils/insertRole';
-import TextInput from '../forms/TextInput.jsx';
 import handleError from '../../utils/errorHandler';
 
 /**
@@ -34,20 +34,16 @@ export class ManageRolesPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onEditSubmit = this.onEditSubmit.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-  /**
-   * Calls action before component mounts
-   * @memberOf ManageRolesPage
-   */
-  componentWillMount() {
-    this.props.actions.getRoles();
+    this.deleteRole = this.deleteRole.bind(this);
   }
 
   /**
+   * Calls action after component mounts
    * Initializes modal
    * @memberOf ManageRolesPage
    */
   componentDidMount = () => {
+    this.props.actions.getRoles();
     $('.modal').modal();
   }
 
@@ -152,8 +148,9 @@ export class ManageRolesPage extends React.Component {
         });
       }
     })
-    .catch((err) =>
-      swal('Cancelled', 'The role is not deleted :)'));
+    .catch((err) => {
+      swal('Cancelled', 'The role is not deleted :)');
+    });
   }
 
   /**
@@ -170,7 +167,7 @@ export class ManageRolesPage extends React.Component {
             <i className="material-icons">edit</i>
           </a>
           {role.id > 3
-          && <a href="#!" onClick={() => { this.deleteRole(role.id); }}>
+          && <a className="delete" onClick={() => this.deleteRole(role.id)}>
               <i className="material-icons">delete_forever</i>
             </a>}
         </TableRowColumn>

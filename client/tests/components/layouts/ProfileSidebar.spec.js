@@ -2,7 +2,7 @@ import React from 'react';
 import expect from 'expect';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import ProfileSidebar from '../../../components/layouts/ProfileSidebar.jsx';
+import ProfileSidebar from '../../../components/layouts/ProfileSidebar';
 
 const deleteUser = sinon.spy(() => Promise.resolve());
 

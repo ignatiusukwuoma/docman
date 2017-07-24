@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import TextInput from '../forms/TextInput.jsx';
-import SelectInput from '../forms/SelectInput.jsx';
+import TextInput from '../forms/TextInput';
+import SelectInput from '../forms/SelectInput';
 
 /**
  * Renders the sign up form or edit profile form

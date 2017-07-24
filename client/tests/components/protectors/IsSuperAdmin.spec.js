@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
-import { IsSuperAdmin } from '../../../components/protectors/IsSuperAdmin.jsx';
+import { IsSuperAdmin } from '../../../components/protectors/IsSuperAdmin';
 
 const props = {
   access: { loggedIn: true, user: { roleId: 1 } },

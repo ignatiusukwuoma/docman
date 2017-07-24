@@ -8,9 +8,9 @@ import FlatButton from 'material-ui/FlatButton';
 import { createDocument } from '../../actions/documentActions';
 import * as validate from '../../utils/validate';
 import handleError from '../../utils/errorHandler';
-import SelectInput from '../forms/SelectInput.jsx';
-import TextInput from '../forms/TextInput.jsx';
-import Sidebar from '../layouts/Sidebar.jsx';
+import SelectInput from '../forms/SelectInput';
+import TextInput from '../forms/TextInput';
+import Sidebar from '../layouts/Sidebar';
 
 /**
  * The Create New Document Page

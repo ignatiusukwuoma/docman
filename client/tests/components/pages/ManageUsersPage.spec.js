@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { nextPage, prevPage } from '../../../utils/paginate';
 import { ManageUsersPage } from
-'../../../components/pages/ManageUsersPage.jsx';
+'../../../components/pages/ManageUsersPage';
 
 const getUsers = sinon.spy(() => Promise.resolve());
 const searchUsers = sinon.spy(() => Promise.resolve());

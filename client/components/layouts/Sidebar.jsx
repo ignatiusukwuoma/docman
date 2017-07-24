@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
-import AdminSidebar from './AdminSidebar.jsx';
-import ProfileSidebar from './ProfileSidebar.jsx';
-import DocumentSidebar from './DocumentSidebar.jsx';
+import AdminSidebar from './AdminSidebar';
+import ProfileSidebar from './ProfileSidebar';
+import DocumentSidebar from './DocumentSidebar';
 import handleError from '../../utils/errorHandler';
 import { deleteUser, logout } from '../../actions/userActions';
 

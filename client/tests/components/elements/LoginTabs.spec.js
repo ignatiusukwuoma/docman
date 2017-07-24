@@ -1,7 +1,7 @@
 import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
-import LoginTabs from '../../../components/elements/LoginTabs.jsx';
+import LoginTabs from '../../../components/elements/LoginTabs';
 
 function setup() {
   const props = {

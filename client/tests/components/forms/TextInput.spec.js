@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
-import TextInput from '../../../components/forms/TextInput.jsx';
+import TextInput from '../../../components/forms/TextInput';
 
 function setup(errorText, value = 'ignatius@gmail.com') {
   const props = {
