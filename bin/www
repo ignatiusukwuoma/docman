@@ -1,6 +1,6 @@
 // Server setup
 import http from 'http';
-import app from '../app';
+import app from '../server/app';
 
 /**
  * Normalize a port into a number, string, or false.
@@ -18,7 +18,7 @@ const normalizePort = (val) => {
   return false;
 };
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '8000');
 
 const server = http.createServer(app);
 server.listen(port);
