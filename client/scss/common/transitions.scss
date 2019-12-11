@@ -1,0 +1,17 @@
+.swim-enter {
+  opacity: 0.01;
+}
+
+.swim-enter.swim-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.swim-leave {
+  opacity: 1;
+}
+
+.swim-leave.swim-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
